@@ -1,12 +1,23 @@
 import { ConfigPlugin } from "@expo/config-plugins";
 
-type WithIosAppClipConfigPluginProps = { name?: string };
+import { withAppClipAppDelegate } from "./withAppClipAppDelegate";
+import { withAppClipPlist } from "./withAppClipPlist";
+import { withAppClipEntitlements } from "./withAppClipEntitlements";
+import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
+import { withAppClipPodfile } from "./withAppClipPodfile";
+
+export type WithIosAppClipConfigPluginProps = { entryPoint?: string };
 
 const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config,
-  { name = "my-app" } = {}
+  { entryPoint }
 ) => {
-  config.name = name;
+  config = withAppClipAppDelegate(config, { entryPoint });
+  config = withAppClipPlist(config);
+  config = withAppClipEntitlements(config);
+  config = withAppClipXcodeTarget(config);
+  config = withAppClipPodfile(config);
+
   return config;
 };
 

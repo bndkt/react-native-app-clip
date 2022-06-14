@@ -23,19 +23,28 @@ export async function addAppClipXcodeTarget(
   const groupName = "Embed App Clips";
   const buildPath = quoted("$(CONTENTS_FOLDER_PATH)/AppClips");
 
+  // Add XCConfigurationList
   const xCConfigurationList = addXCConfigurationList(
     proj,
     appClipName,
     appClipBundleIdentifier
   );
+
+  // Add product file
   const productFile = addProductFile(proj, appClipName, targetUuid, groupName);
+
+  // Add target
   const target = addToPbxNativeTargetSection(proj, {
     appClipName,
     targetUuid,
     productFile,
     xCConfigurationList,
   });
+
+  // Add target to PBX project section
   addToPbxProjectSection(proj, target);
+
+  // Add target dependency
   addTargetDependency(proj, target);
 
   return true;

@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/bndkt/expo-config-plugin-ios-appclip/issues"
   },
-  "homepage": "https://github.com/bndkt/expo-config-plugin-ios-appclip#readme"
+  "homepage": "https://github.com/bndkt/expo-config-plugin-ios-appclip#readme",
+  "devDependencies": {
+    "expo-module-scripts": "^2.0.0"
+  }
 }

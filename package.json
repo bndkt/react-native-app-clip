@@ -2,7 +2,8 @@
   "name": "expo-config-plugin-ios-appclip",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/withIosAppClip.js",
+  "types": "build/withIosAppClip.d.ts",
   "scripts": {
     "build": "expo-module build",
     "clean": "expo-module clean",
@@ -16,12 +17,13 @@
     "url": "git+https://github.com/bndkt/expo-config-plugin-ios-appclip.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/bndkt/expo-config-plugin-ios-appclip/issues"
   },
   "homepage": "https://github.com/bndkt/expo-config-plugin-ios-appclip#readme",
   "devDependencies": {
     "expo-module-scripts": "^2.0.0"
-  }
+  },
+  "sideEffects": false
 }

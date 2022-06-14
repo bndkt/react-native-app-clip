@@ -1,0 +1,41 @@
+import { XcodeProject } from "@expo/config-plugins";
+
+import { PBXFile, quoted } from "./util";
+
+export default function addToPbxNativeTargetSection(
+  proj: XcodeProject,
+  {
+    appClipName,
+    targetUuid,
+    productFile,
+    xCConfigurationList,
+  }: {
+    appClipName: string;
+    targetUuid: string;
+    productFile: PBXFile;
+    xCConfigurationList: any;
+  }
+) {
+  const target = {
+    uuid: targetUuid,
+    pbxNativeTarget: {
+      isa: "PBXNativeTarget",
+      name: appClipName,
+      productName: appClipName,
+      productReference: productFile.fileRef,
+      productType: quoted(
+        "com.apple.product-type.application.on-demand-install-capable"
+      ),
+      buildConfigurationList: xCConfigurationList.uuid,
+      buildPhases: [],
+      buildRules: [],
+      dependencies: [],
+    },
+  };
+
+  proj.addToPbxNativeTargetSection(target);
+
+  console.log(`Added PBXNativeTarget ${target.uuid}`);
+
+  return target;
+}

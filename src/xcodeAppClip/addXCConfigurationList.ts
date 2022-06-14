@@ -41,12 +41,13 @@ export default function (
     },
   ];
 
-  // Add build configurations
-  const buildConfigurations = proj.addXCConfigurationList(
+  const xCConfigurationList = proj.addXCConfigurationList(
     buildConfigurationsList,
     "Release",
     `Build configuration list for PBXNativeTarget ${quoted(appClipName)} `
   );
 
-  console.log(`Added XCConfigurationList ${buildConfigurations.uuid}`);
+  console.log(`Added XCConfigurationList ${xCConfigurationList.uuid}`);
+
+  return xCConfigurationList;
 }

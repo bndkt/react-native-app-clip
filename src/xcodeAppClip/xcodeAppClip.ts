@@ -1,10 +1,11 @@
-import * as path from "path";
-import * as fs from "fs";
 import { XcodeProject } from "@expo/config-plugins";
 
 import { quoted } from "./util";
 import addXCConfigurationList from "./addXCConfigurationList";
 import addProductFile from "./addProductFile";
+import addToPbxNativeTargetSection from "./addToPbxNativeTargetSection";
+import addTargetDependency from "./addTargetDependency";
+import addToPbxProjectSection from "./addToPbxProjectSection";
 
 export async function addAppClipXcodeTarget(
   proj: XcodeProject,
@@ -20,12 +21,22 @@ export async function addAppClipXcodeTarget(
 ) {
   const targetUuid = proj.generateUuid();
   const groupName = "Embed App Clips";
-  const productType =
-    "com.apple.product-type.application.on-demand-install-capable";
   const buildPath = quoted("$(CONTENTS_FOLDER_PATH)/AppClips");
 
-  addXCConfigurationList(proj, appClipName, appClipBundleIdentifier);
-  addProductFile(proj, appClipName, targetUuid, groupName);
+  const xCConfigurationList = addXCConfigurationList(
+    proj,
+    appClipName,
+    appClipBundleIdentifier
+  );
+  const productFile = addProductFile(proj, appClipName, targetUuid, groupName);
+  const target = addToPbxNativeTargetSection(proj, {
+    appClipName,
+    targetUuid,
+    productFile,
+    xCConfigurationList,
+  });
+  addToPbxProjectSection(proj, target);
+  addTargetDependency(proj, target);
 
   return true;
 }

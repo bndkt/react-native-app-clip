@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/bndkt/expo-config-plugin-ios-appclip#readme",
   "devDependencies": {
+    "@types/node": "^17.0.42",
     "expo-module-scripts": "^2.0.0"
   },
   "sideEffects": false

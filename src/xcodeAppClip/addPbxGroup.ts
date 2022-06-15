@@ -1,6 +1,6 @@
 import { XcodeProject } from "@expo/config-plugins";
 
-export function addPbxGroup(
+export default function addPbxGroup(
   proj: XcodeProject,
   { appClipName }: { appClipName: string }
 ) {

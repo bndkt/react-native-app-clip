@@ -7,8 +7,7 @@ import addToPbxNativeTargetSection from "./addToPbxNativeTargetSection";
 import addTargetDependency from "./addTargetDependency";
 import addToPbxProjectSection from "./addToPbxProjectSection";
 import addBuildPhases from "./addBuildPhases";
-import { addPbxGroup } from "./addPbxGroup";
-import addSourceFiles from "./addSourceFiles";
+import addPbxGroup from "./addPbxGroup";
 
 export async function addAppClipXcodeTarget(
   proj: XcodeProject,
@@ -55,9 +54,6 @@ export async function addAppClipXcodeTarget(
 
   // Add PBXGroup
   addPbxGroup(proj, { appClipName });
-
-  // Add source files
-  // addSourceFiles(proj);
 
   return true;
 }

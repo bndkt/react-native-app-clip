@@ -49,4 +49,16 @@ export default function addBuildPhases(
       buildPath
     );
   console.log(`Added PBXResourcesBuildPhase ${resourcesBuildPhaseUuid}`);
+
+  // Sources build phase
+  const { uuid: sourcesBuildPhaseUuid, buildPhase: sourcesBuildPhase } =
+    proj.addBuildPhase(
+      ["AppDelegate.h", "AppDelegate.mm", "main.m"],
+      "PBXSourcesBuildPhase",
+      groupName,
+      targetUuid,
+      "watch2_app",
+      buildPath
+    );
+  console.log(`Added PBXSourcesBuildPhase ${sourcesBuildPhaseUuid}`);
 }

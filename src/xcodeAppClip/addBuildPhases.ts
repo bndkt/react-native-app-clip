@@ -34,4 +34,21 @@ export default function addBuildPhases(
       buildPath
     );
   console.log(`Added PBXResourcesBuildPhase ${resourcesBuildPhaseUuid}`);
+
+  // Add shell script build phase
+  const { uuid: shellScriptBuildPhaseUuid, buildPhase: shellScriptBuildPhase } =
+    proj.addBuildPhase(
+      [],
+      "PBXShellScriptBuildPhase",
+      "Bundle React Native code and images",
+      targetUuid,
+      {
+        shellPath: "/bin/sh",
+        shellScript: quoted(
+          "export NODE_BINARY=node\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\n`node --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n"
+        ),
+      },
+      buildPath
+    );
+  console.log(`Added PBXShellScriptBuildPhase ${shellScriptBuildPhaseUuid}`);
 }

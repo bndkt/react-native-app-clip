@@ -49,7 +49,7 @@ export async function addAppClipXcodeTarget(
   addTargetDependency(proj, target);
 
   // Add build phases
-  addBuildPhases(proj, { groupName, productFile });
+  addBuildPhases(proj, { groupName, productFile, targetUuid });
 
   return true;
 }

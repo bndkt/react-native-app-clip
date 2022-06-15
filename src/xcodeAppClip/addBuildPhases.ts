@@ -3,7 +3,11 @@ import { longComment, PBXFile, quoted } from "./util";
 
 export default function addBuildPhases(
   proj: XcodeProject,
-  { groupName, productFile }: { groupName: string; productFile: PBXFile }
+  {
+    groupName,
+    productFile,
+    targetUuid,
+  }: { groupName: string; productFile: PBXFile; targetUuid: string }
 ) {
   const buildPath = quoted("$(CONTENTS_FOLDER_PATH)/AppClips");
 
@@ -18,4 +22,16 @@ export default function addBuildPhases(
       buildPath
     );
   console.log(`Added PBXCopyFilesBuildPhase ${copyFilesBuildPhaseUuid}`);
+
+  // Resources build phase
+  const { uuid: resourcesBuildPhaseUuid, buildPhase: resourcesBuildPhase } =
+    proj.addBuildPhase(
+      [],
+      "PBXResourcesBuildPhase",
+      groupName,
+      targetUuid,
+      "watch2_app",
+      buildPath
+    );
+  console.log(`Added PBXResourcesBuildPhase ${resourcesBuildPhaseUuid}`);
 }

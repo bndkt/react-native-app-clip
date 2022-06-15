@@ -6,6 +6,7 @@ import addProductFile from "./addProductFile";
 import addToPbxNativeTargetSection from "./addToPbxNativeTargetSection";
 import addTargetDependency from "./addTargetDependency";
 import addToPbxProjectSection from "./addToPbxProjectSection";
+import addBuildPhases from "./addBuildPhases";
 
 export async function addAppClipXcodeTarget(
   proj: XcodeProject,
@@ -46,6 +47,9 @@ export async function addAppClipXcodeTarget(
 
   // Add target dependency
   addTargetDependency(proj, target);
+
+  // Add build phases
+  addBuildPhases(proj, { groupName, productFile });
 
   return true;
 }

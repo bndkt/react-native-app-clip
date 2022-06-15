@@ -1,26 +1,30 @@
 # expo-config-plugin-ios-appclip
 
-Put a description of your Unimodule here
+Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 
-# API documentation
+## Installation
 
-- [Documentation for the master branch](https://github.com/expo/expo/blob/master/docs/pages/versions/unversioned/sdk/config-plugin-ios-appclip.md)
-- [Documentation for the latest stable release](https://docs.expo.io/versions/latest/sdk/config-plugin-ios-appclip/)
-
-# Installation in managed Expo projects
-
-For managed [managed](https://docs.expo.io/versions/latest/introduction/managed-vs-bare/) Expo projects, please follow the installation instructions in the [API documentation for the latest stable release](#api-documentation). If you follow the link and there is no documentation available then this library is not yet usable within managed projects &mdash; it is likely to be included in an upcoming Expo SDK release.
-
-# Installation in bare React Native projects
-
-For bare React Native projects, you must ensure that you have [installed and configured the `react-native-unimodules` package](https://github.com/expo/expo/tree/master/packages/react-native-unimodules) before continuing.
-
-### Add the package to your npm dependencies
+Install it in your project:
 
 ```
-npm install expo-config-plugin-ios-appclip
+expo install expo-config-plugin-ios-appclip
 ```
 
-# Contributing
+In your app's Expo config (app.json, or app.config.js), add expo-config-plugin-ios-appclip to the list of plugins:
 
-Contributions are very welcome! Please refer to guidelines described in the [contributing guide](https://github.com/expo/expo#contributing).
+```app.json
+"name": "my app",
+"plugins": [
+    ["expo-config-plugin-ios-appclip", {
+        "entryPoint": "index.appclip"
+    }]
+]
+```
+
+## Configuration
+
+Specifying the entryPoint parameter is optional, it defaults to "index.appclip". This means that the App Clip expects a file called index.appclip.ts (or index.appclip.js) in the project's root directory. You can change this value to "index" in order to reuse the existing entrypoint of the Expo app which basically means the App Clip experience will be exactly the same as the full app experience. In most cases however it will make sense to have a separate entrypoint which only renders a subset of the app's capabilities as the App Cip experience.
+
+## Before building for the App Store
+
+Please note that you need to add App Clip as a capability in your Apple Developer profile. Under "Certificates, Identifiers & Profiles", select the identifier of your app, check the box that says "On Demand Install Capable for App Clip Extensions" and save.

@@ -2,6 +2,7 @@ import * as path from "path";
 import { ConfigPlugin, withXcodeProject } from "@expo/config-plugins";
 
 import { addAppClipXcodeTarget } from "./xcodeAppClip/xcodeAppClip";
+import { getAppClipBundleIdentifier, getAppClipName } from "./withIosAppClip";
 
 export const withAppClipXcodeTarget: ConfigPlugin = (config) => {
   return withXcodeProject(config, (config) => {
@@ -23,11 +24,3 @@ export const withAppClipXcodeTarget: ConfigPlugin = (config) => {
     return config;
   });
 };
-
-export function getAppClipName(projectName: string) {
-  return `${projectName}Clip`;
-}
-
-export function getAppClipBundleIdentifier(bundleIdentifier: string) {
-  return `${bundleIdentifier}.Clip`;
-}

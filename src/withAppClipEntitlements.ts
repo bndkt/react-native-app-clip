@@ -7,7 +7,7 @@ import {
   withDangerousMod,
 } from "@expo/config-plugins";
 
-import { getAppClipName } from "./withAppClipXcodeTarget";
+import { getAppClipName } from "./withIosAppClip";
 
 export const withAppClipEntitlements: ConfigPlugin = (config) => {
   return withDangerousMod(config, [

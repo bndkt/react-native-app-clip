@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 
-import { getAppClipName } from "./withAppClipXcodeTarget";
+import { getAppClipName } from "./withIosAppClip";
 
 export type WithAppClipAppDelegateConfigPluginProps = { entryPoint?: string };
 

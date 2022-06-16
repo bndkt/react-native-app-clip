@@ -1,5 +1,5 @@
 import { XcodeProject } from "@expo/config-plugins";
-import { longComment, PBXFile, quoted } from "./util";
+import { PBXFile, quoted } from "./util";
 
 export default function addBuildPhases(
   proj: XcodeProject,

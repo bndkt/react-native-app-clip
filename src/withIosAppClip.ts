@@ -22,3 +22,11 @@ const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
 };
 
 export default withIosAppClip;
+
+export function getAppClipName(projectName: string) {
+  return `${projectName}Clip`;
+}
+
+export function getAppClipBundleIdentifier(bundleIdentifier: string) {
+  return `${bundleIdentifier}.Clip`;
+}

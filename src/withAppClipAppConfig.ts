@@ -27,10 +27,12 @@ export const withAppClipEntitlements: ConfigPlugin = (config) => {
                 appExtensions: [
                   {
                     targetName: appClipName,
-                    bundleIdentifier: appBundleIdentifier,
+                    bundleIdentifier: `$(AppIdentifierPrefix)${appClipBundleIdentifier}`,
                     entitlements: {
-                      "com.apple.developer.associated-appclip-app-identifiers":
-                        appClipBundleIdentifier,
+                      "com.apple.developer.parent-application-identifiers": [
+                        `$(AppIdentifierPrefix)${appBundleIdentifier}`,
+                      ],
+                      "com.apple.developer.on-demand-install-capable": true,
                     },
                   },
                 ],

@@ -38,7 +38,7 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
       };
       appClipPlist.CFBundleIdentifier = bundleIdentifier;
       appClipPlist.CFBundleShortVersionString = "1.0.0";
-      console.log(appClipPlist);
+      appClipPlist.CFBundleIconName = "AppIcon";
 
       /* const appClipPlist: InfoPlist = {
         NSAppClip: {

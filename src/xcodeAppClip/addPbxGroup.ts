@@ -2,7 +2,7 @@ import { XcodeProject } from "@expo/config-plugins";
 
 export default function addPbxGroup(
   proj: XcodeProject,
-  { appClipName }: { appClipName: string }
+  { appName, appClipName }: { appName: string; appClipName: string }
 ) {
   // Add PBX group
   const { uuid: pbxGroupUuid, pbxGroup } = proj.addPbxGroup(
@@ -11,6 +11,7 @@ export default function addPbxGroup(
       "AppDelegate.mm",
       "main.m",
       "Info.plist",
+      `../${appName}/Assets.xcassets`,
       `${appClipName}.entitlements`,
     ],
     appClipName,

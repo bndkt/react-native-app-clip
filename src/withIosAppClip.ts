@@ -1,10 +1,10 @@
 import { ConfigPlugin } from "@expo/config-plugins";
 
 import { withAppClipAppDelegate } from "./withAppClipAppDelegate";
-import { withAppClipPlist } from "./withAppClipPlist";
 import { withAppClipEntitlements } from "./withAppClipEntitlements";
-import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
+import { withAppClipPlist } from "./withAppClipPlist";
 import { withAppClipPodfile } from "./withAppClipPodfile";
+import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
 import { withAppEntitlements } from "./withAppEntitlements";
 
 export type WithIosAppClipConfigPluginProps = { entryPoint?: string };

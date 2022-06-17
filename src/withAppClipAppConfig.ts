@@ -1,11 +1,4 @@
-import * as fs from "fs";
-import * as path from "path";
-import plist from "@expo/plist";
-import {
-  ConfigPlugin,
-  InfoPlist,
-  withDangerousMod,
-} from "@expo/config-plugins";
+import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 
 import { getAppClipBundleIdentifier, getAppClipName } from "./withIosAppClip";
 

@@ -1,4 +1,5 @@
 import { XcodeProject } from "@expo/config-plugins";
+
 import { PBXFile, quoted } from "./util";
 
 export default function addBuildPhases(
@@ -45,7 +46,7 @@ export default function addBuildPhases(
   // Resources build phase
   const { uuid: resourcesBuildPhaseUuid, buildPhase: resourcesBuildPhase } =
     proj.addBuildPhase(
-      [],
+      ["Images.xcassets", "SplashScreen.storyboard", "Supporting/Expo.plist"],
       "PBXResourcesBuildPhase",
       groupName,
       targetUuid,

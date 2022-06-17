@@ -15,12 +15,14 @@ export const withAppClipXcodeTarget: ConfigPlugin = (config) => {
       config.modRequest.platformProjectRoot,
       appClipName
     );
+    const platformProjectRoot = config.modRequest.platformProjectRoot;
 
     addAppClipXcodeTarget(config.modResults, {
       appName,
       appClipName,
       appClipBundleIdentifier,
       appClipRootPath,
+      platformProjectRoot,
     });
 
     return config;

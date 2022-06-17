@@ -30,19 +30,14 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
         config.ios!.bundleIdentifier!
       );
 
-      const fileContent = fs.readFileSync(appFilePath).toString();
+      /* const fileContent = fs.readFileSync(appFilePath).toString();
       const appClipPlist: InfoPlist = plist.parse(fileContent);
       appClipPlist.NSAppClip = {
         NSAppClipRequestEphemeralUserNotification: false,
         NSAppClipRequestLocationConfirmation: false,
-      };
-      appClipPlist.CFBundleIdentifier = bundleIdentifier;
-      appClipPlist.CFBundleShortVersionString = "1.0.0";
-      appClipPlist.CFBundleIconName = "AppIcon";
-      appClipPlist.UIRequiresFullScreen = true; // To avoid error about missing "UIInterfaceOrientationPortraitUpsideDown"
-      appClipPlist.MinimumOSVersion = "14.0.0"; // To avoid error about wrong MinimumOSVersion
+      }; */
 
-      /* const appClipPlist: InfoPlist = {
+      const appClipPlist: InfoPlist = {
         NSAppClip: {
           NSAppClipRequestEphemeralUserNotification: false,
           NSAppClipRequestLocationConfirmation: false,
@@ -53,11 +48,16 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
             localhost: { NSExceptionAllowsInsecureHTTPLoads: true },
           },
         },
-        UIViewControllerBasedStatusBarAppearance: false,
-        CFBundleVersion: "1",
-        CFBundleShortVersionString: "1.0.0",
-        CFBundleIdentifier: bundleIdentifier,
-      }; */
+      };
+
+      appClipPlist.CFBundleName = "$(PRODUCT_NAME)";
+      appClipPlist.CFBundleIdentifier = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+      appClipPlist.CFBundleVersion = "$(CURRENT_PROJECT_VERSION)";
+      appClipPlist.CFBundleExecutable = "$(EXECUTABLE_NAME)";
+      appClipPlist.CFBundlePackageType = "$(PRODUCT_BUNDLE_PACKAGE_TYPE)";
+      appClipPlist.CFBundleShortVersionString = "$(MARKETING_VERSION)";
+      appClipPlist.UIViewControllerBasedStatusBarAppearance = "NO";
+      appClipPlist.UILaunchStoryboardName = "SplashScreen";
 
       await fs.promises.mkdir(path.dirname(appClipFilePath), {
         recursive: true,

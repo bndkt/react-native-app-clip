@@ -39,6 +39,8 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
       appClipPlist.CFBundleIdentifier = bundleIdentifier;
       appClipPlist.CFBundleShortVersionString = "1.0.0";
       appClipPlist.CFBundleIconName = "AppIcon";
+      appClipPlist.UIRequiresFullScreen = true; // To avoid error about missing "UIInterfaceOrientationPortraitUpsideDown"
+      appClipPlist.MinimumOSVersion = "14.0.0"; // To avoid error about wrong MinimumOSVersion
 
       /* const appClipPlist: InfoPlist = {
         NSAppClip: {

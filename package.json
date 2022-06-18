@@ -1,5 +1,5 @@
 {
-  "name": "expo-config-plugin-ios-appclip",
+  "name": "react-native-appclip",
   "version": "1.0.0",
   "description": "",
   "main": "build/withIosAppClip.js",
@@ -14,20 +14,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bndkt/expo-config-plugin-ios-appclip.git"
+    "url": "git+https://github.com/bndkt/react-native-appclip.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bndkt/expo-config-plugin-ios-appclip/issues"
+    "url": "https://github.com/bndkt/react-native-appclip/issues"
   },
-  "homepage": "https://github.com/bndkt/expo-config-plugin-ios-appclip#readme",
+  "homepage": "https://github.com/bndkt/react-native-appclip#readme",
   "devDependencies": {
     "@types/node": "^17.0.42",
     "expo-module-scripts": "^2.0.0"
   },
   "sideEffects": false,
   "dependencies": {
+    "@expo/config-plugins": "^4.1.5",
     "xcode": "^3.0.1"
   }
 }

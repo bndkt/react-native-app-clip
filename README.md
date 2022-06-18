@@ -1,4 +1,4 @@
-# expo-config-plugin-ios-appclip
+# react-native-appclip
 
 Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 

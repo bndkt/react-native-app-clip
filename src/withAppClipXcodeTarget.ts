@@ -4,7 +4,11 @@ import * as path from "path";
 import { getAppClipBundleIdentifier, getAppClipName } from "./withIosAppClip";
 import { addAppClipXcodeTarget } from "./xcodeAppClip/xcodeAppClip";
 
-export const withAppClipXcodeTarget: ConfigPlugin = (config) => {
+export type WithAppClipXcodeTargetConfigPluginProps = { entryPoint?: string };
+
+export const withAppClipXcodeTarget: ConfigPlugin<
+  WithAppClipXcodeTargetConfigPluginProps
+> = (config, { entryPoint = "index.appclip" }) => {
   return withXcodeProject(config, (config) => {
     const appName = config.modRequest.projectName!;
     const appClipName = getAppClipName(config.modRequest.projectName!);
@@ -27,6 +31,7 @@ export const withAppClipXcodeTarget: ConfigPlugin = (config) => {
       platformProjectRoot,
       currentProjectVersion,
       marketingVersion,
+      entryPoint,
     });
 
     return config;

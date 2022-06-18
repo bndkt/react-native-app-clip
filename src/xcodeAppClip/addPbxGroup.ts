@@ -56,7 +56,7 @@ export default function addPbxGroup(
     appClipName,
     appClipName
   );
-  console.log(`Added PBXGroup ${pbxGroupUuid}`, pbxGroup);
+  console.log(`Added PBXGroup ${pbxGroupUuid}`);
 
   /* let pbxGroupUuid: string | undefined = undefined;
 

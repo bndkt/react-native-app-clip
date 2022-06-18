@@ -18,6 +18,7 @@ export async function addAppClipXcodeTarget(
     platformProjectRoot,
     currentProjectVersion,
     marketingVersion,
+    entryPoint,
   }: {
     appName: string;
     appClipName: string;
@@ -26,6 +27,7 @@ export async function addAppClipXcodeTarget(
     platformProjectRoot: string;
     currentProjectVersion: string;
     marketingVersion: string;
+    entryPoint: string;
   }
 ) {
   const targetUuid = proj.generateUuid();
@@ -57,7 +59,7 @@ export async function addAppClipXcodeTarget(
   addTargetDependency(proj, target);
 
   // Add build phases
-  addBuildPhases(proj, { groupName, productFile, targetUuid });
+  addBuildPhases(proj, { groupName, productFile, targetUuid, entryPoint });
 
   // Add PBXGroup
   addPbxGroup(proj, { appName, appClipName, platformProjectRoot });

@@ -7,18 +7,18 @@ import plist from "@expo/plist";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipBundleIdentifier, getAppClipName } from "./withIosAppClip";
+import { getAppClipName } from "./withIosAppClip";
 
 export const withAppClipPlist: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      const appFolder = config.modRequest.projectName!;
+      /* const appFolder = config.modRequest.projectName!;
       const appRootPath = path.join(
         config.modRequest.platformProjectRoot,
         appFolder
       );
-      // const appFilePath = path.join(appRootPath, "Info.plist");
+      const appFilePath = path.join(appRootPath, "Info.plist"); */
 
       const appClipFolderName = getAppClipName(config.modRequest.projectName!);
       const appClipRootPath = path.join(

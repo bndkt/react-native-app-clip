@@ -12,6 +12,7 @@ export const withAppGymfile: ConfigPlugin = (config) => {
       );
 
       const scheme = config.modRequest.projectName;
+      const appBundleIdentifier = config.ios!.bundleIdentifier!;
 
       const gymfileContent = `
 suppress_xcode_output(true)
@@ -23,7 +24,7 @@ configuration("Release")
 
 export_options({
     method: "app-store",
-    distributionBundleIdentifier: "com.bndkt.pepper"
+    distributionBundleIdentifier: "${appBundleIdentifier}"
 })
 
 disable_xcpretty(true)

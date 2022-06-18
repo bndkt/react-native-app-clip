@@ -39,6 +39,10 @@ export const withAppClipAppDelegate: ConfigPlugin<
               regexp: `jsBundleURLForBundleRoot:@"index"`,
               newSubstr: `jsBundleURLForBundleRoot:@"${entryPoint}"`,
             },
+            {
+              regexp: `URLForResource:@"main"`,
+              newSubstr: `URLForResource:@"${entryPoint}"`,
+            },
           ],
         },
         { name: "main.m" },

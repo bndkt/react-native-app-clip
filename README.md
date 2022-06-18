@@ -17,7 +17,7 @@ In your app's Expo config (app.json, or app.config.js), add react-native-app-cli
 ```app.json
 "name": "my app",
 "plugins": [
-    ["react-native-app-clip", { "entryPoint": "index.appclip.js", name: "RN App Clip" }]
+    ["react-native-app-clip", { "entryPoint": "index.appclip.js", "name": "RN App Clip" }]
 ]
 ```
 

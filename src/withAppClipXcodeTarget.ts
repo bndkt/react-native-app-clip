@@ -15,7 +15,7 @@ export type WithAppClipXcodeTargetConfigPluginProps = {
 
 export const withAppClipXcodeTarget: ConfigPlugin<
   WithAppClipXcodeTargetConfigPluginProps
-> = (config, { entryPoint = "index.appclip", name }) => {
+> = (config, { entryPoint = "index.appclip.js", name }) => {
   return withXcodeProject(config, (config) => {
     const appName = config.modRequest.projectName!;
     const appClipName = name || getAppClipName(config.modRequest.projectName!);

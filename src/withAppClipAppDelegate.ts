@@ -32,6 +32,8 @@ export const withAppClipAppDelegate: ConfigPlugin<
 
       await fs.promises.mkdir(appClipRootPath, { recursive: true });
 
+      const entryPointBasename = path.basename(entryPoint, ".js");
+
       const filesToCopy: FilesToCopy = [
         { name: "AppDelegate.h" },
         {
@@ -39,11 +41,11 @@ export const withAppClipAppDelegate: ConfigPlugin<
           replacements: [
             {
               regexp: `jsBundleURLForBundleRoot:@"index"`,
-              newSubstr: `jsBundleURLForBundleRoot:@"${entryPoint}"`,
+              newSubstr: `jsBundleURLForBundleRoot:@"${entryPointBasename}"`,
             },
             {
               regexp: `URLForResource:@"main"`,
-              newSubstr: `URLForResource:@"${entryPoint}"`,
+              newSubstr: `URLForResource:@"${entryPointBasename}"`,
             },
           ],
         },

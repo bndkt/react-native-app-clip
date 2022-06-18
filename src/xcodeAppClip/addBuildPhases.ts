@@ -84,7 +84,7 @@ export default function addBuildPhases(
     targetUuid,
     {
       shellPath: "/bin/sh",
-      shellScript: `export NODE_BINARY=node\\nexport ENTRY_FILE=${entryPoint}.js\\n\\n# The project root by default is one level up from the ios directory\\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\\n\\n\`node --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"\`\\n`,
+      shellScript: `export NODE_BINARY=node\\nexport ENTRY_FILE=${entryPoint}\\n\\n# The project root by default is one level up from the ios directory\\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\\n\\n\`node --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"\`\\n`,
     },
     buildPath
   );

@@ -2,7 +2,7 @@
 
 Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 
-> :warning: **Work in progress**: This plugin is work in progress and doesn't work yet. I only made the repository public to gather feedback and ask for help. Don't use this plugin yet!
+> **warning** **Work in progress**: This plugin is work in progress and doesn't work yet. I only made the repository public to gather feedback and ask for help. Don't use this plugin yet!
 
 ## Installation
 

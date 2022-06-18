@@ -9,15 +9,15 @@ Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 Install it in your project:
 
 ```
-expo install react-native-appclip
+expo install react-native-app-clip
 ```
 
-In your app's Expo config (app.json, or app.config.js), add react-native-appclip to the list of plugins:
+In your app's Expo config (app.json, or app.config.js), add react-native-app-clip to the list of plugins:
 
 ```app.json
 "name": "my app",
 "plugins": [
-    ["react-native-appclip", { "entryPoint": "index.appclip" }]
+    ["react-native-app-clip", { "entryPoint": "index.appclip" }]
 ]
 ```
 

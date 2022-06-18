@@ -3,13 +3,15 @@ import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipName } from "./withIosAppClip";
+import { getAppClipFolder } from "./withIosAppClip";
 
 export const withAppClipPodfile: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      const appClipFolderName = getAppClipName(config.modRequest.projectName!);
+      const appClipFolderName = getAppClipFolder(
+        config.modRequest.projectName!
+      );
 
       const podFilePath = path.join(
         config.modRequest.platformProjectRoot,

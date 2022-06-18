@@ -5,12 +5,12 @@ import { PBXFile, quoted } from "./util";
 export default function addToPbxNativeTargetSection(
   proj: XcodeProject,
   {
-    appClipName,
+    appClipFolder,
     targetUuid,
     productFile,
     xCConfigurationList,
   }: {
-    appClipName: string;
+    appClipFolder: string;
     targetUuid: string;
     productFile: PBXFile;
     xCConfigurationList: any;
@@ -20,8 +20,8 @@ export default function addToPbxNativeTargetSection(
     uuid: targetUuid,
     pbxNativeTarget: {
       isa: "PBXNativeTarget",
-      name: appClipName,
-      productName: appClipName,
+      name: appClipFolder,
+      productName: appClipFolder,
       productReference: productFile.fileRef,
       productType: quoted(
         "com.apple.product-type.application.on-demand-install-capable"

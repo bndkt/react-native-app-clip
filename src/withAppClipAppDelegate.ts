@@ -2,7 +2,7 @@ import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipName } from "./withIosAppClip";
+import { getAppClipFolder } from "./withIosAppClip";
 
 export type WithAppClipAppDelegateConfigPluginProps = { entryPoint?: string };
 
@@ -22,7 +22,9 @@ export const withAppClipAppDelegate: ConfigPlugin<
         config.modRequest.platformProjectRoot,
         appFolder
       );
-      const appClipFolderName = getAppClipName(config.modRequest.projectName!);
+      const appClipFolderName = getAppClipFolder(
+        config.modRequest.projectName!
+      );
       const appClipRootPath = path.join(
         config.modRequest.platformProjectRoot,
         appClipFolderName

@@ -1,13 +1,13 @@
 import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 
-import { getAppClipBundleIdentifier, getAppClipName } from "./withIosAppClip";
+import { getAppClipBundleIdentifier, getAppClipFolder } from "./withIosAppClip";
 
 export const withAppClipEntitlements: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
       const appBundleIdentifier = config.ios!.bundleIdentifier!;
-      const appClipName = getAppClipName(config.modRequest.projectName!);
+      const appClipName = getAppClipFolder(config.modRequest.projectName!);
       const appClipBundleIdentifier = getAppClipBundleIdentifier(
         config.modRequest.projectName!
       );

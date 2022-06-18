@@ -6,12 +6,12 @@ export default function addPbxGroup(
   proj: XcodeProject,
   {
     appName,
-    appClipName,
+    appClipFolder,
     platformProjectRoot,
-  }: { appName: string; appClipName: string; platformProjectRoot: string }
+  }: { appName: string; appClipFolder: string; platformProjectRoot: string }
 ) {
   // App Clip folder
-  const appClipPath = path.join(platformProjectRoot, appClipName);
+  const appClipPath = path.join(platformProjectRoot, appClipFolder);
 
   // Copy Expo.plist
   const supportingPath = path.join(appClipPath, "Supporting");
@@ -51,10 +51,10 @@ export default function addPbxGroup(
       "Images.xcassets",
       "SplashScreen.storyboard",
       "Supporting/Expo.plist",
-      `${appClipName}.entitlements`,
+      `${appClipFolder}.entitlements`,
     ],
-    appClipName,
-    appClipName
+    appClipFolder,
+    appClipFolder
   );
   console.log(`Added PBXGroup ${pbxGroupUuid}`);
 
@@ -62,8 +62,8 @@ export default function addPbxGroup(
 
   // Find PBXGroup
   Object.keys(groups).forEach(function (key) {
-    console.log("GROUP", groups[key].name, appClipName);
-    if (groups[key].name === appClipName) {
+    console.log("GROUP", groups[key].name, appClipFolder);
+    if (groups[key].name === appClipFolder) {
       pbxGroupUuid = key;
       console.log(`Found root PBXGroup: ${key}`);
     }

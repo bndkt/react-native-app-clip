@@ -8,16 +8,19 @@ import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
 import { withAppEntitlements } from "./withAppEntitlements";
 import { withAppGymfile } from "./withAppGymfile";
 
-export type WithIosAppClipConfigPluginProps = { entryPoint?: string };
+export type WithIosAppClipConfigPluginProps = {
+  entryPoint?: string;
+  name?: string;
+};
 
 const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config,
-  { entryPoint }
+  { entryPoint, name }
 ) => {
   config = withAppClipAppDelegate(config, { entryPoint });
   config = withAppClipPlist(config);
   config = withAppClipEntitlements(config);
-  config = withAppClipXcodeTarget(config, { entryPoint });
+  config = withAppClipXcodeTarget(config, { entryPoint, name });
   config = withAppClipPodfile(config);
   config = withAppEntitlements(config);
   config = withAppGymfile(config);
@@ -28,6 +31,10 @@ const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
 export default withIosAppClip;
 
 export function getAppClipName(projectName: string) {
+  return `${projectName} Clip`;
+}
+
+export function getAppClipFolder(projectName: string) {
   return `${projectName}Clip`;
 }
 

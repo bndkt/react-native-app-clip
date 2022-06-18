@@ -13,6 +13,7 @@ export async function addAppClipXcodeTarget(
   {
     appName,
     appClipName,
+    appClipFolder,
     appClipBundleIdentifier,
     appClipRootPath,
     platformProjectRoot,
@@ -22,6 +23,7 @@ export async function addAppClipXcodeTarget(
   }: {
     appName: string;
     appClipName: string;
+    appClipFolder: string;
     appClipBundleIdentifier: string;
     appClipRootPath: string;
     platformProjectRoot: string;
@@ -35,18 +37,24 @@ export async function addAppClipXcodeTarget(
 
   // Add XCConfigurationList
   const xCConfigurationList = addXCConfigurationList(proj, {
-    appClipName,
+    appClipFolder,
     appClipBundleIdentifier,
     currentProjectVersion,
     marketingVersion,
+    appClipName,
   });
 
   // Add product file
-  const productFile = addProductFile(proj, appClipName, targetUuid, groupName);
+  const productFile = addProductFile(
+    proj,
+    appClipFolder,
+    targetUuid,
+    groupName
+  );
 
   // Add target
   const target = addToPbxNativeTargetSection(proj, {
-    appClipName,
+    appClipFolder,
     targetUuid,
     productFile,
     xCConfigurationList,
@@ -62,7 +70,7 @@ export async function addAppClipXcodeTarget(
   addBuildPhases(proj, { groupName, productFile, targetUuid, entryPoint });
 
   // Add PBXGroup
-  addPbxGroup(proj, { appName, appClipName, platformProjectRoot });
+  addPbxGroup(proj, { appName, appClipFolder, platformProjectRoot });
 
   return true;
 }

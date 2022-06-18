@@ -2,12 +2,12 @@ import { XcodeProject } from "@expo/config-plugins";
 
 export default function addProductFile(
   proj: XcodeProject,
-  appClipName: string,
+  appClipFolder: string,
   targetUuid: string,
   groupName: string
 ) {
   // const productFileUuid = proj.generateUuid();
-  /* const productFile = proj.addProductFile(appClipName, {
+  /* const productFile = proj.addProductFile(appClipFolder, {
     target: targetUuid,
     group: groupName,
     explicitFileType: "wrapper.application",
@@ -17,7 +17,7 @@ export default function addProductFile(
   productFile.settings.ATTRIBUTES = ["RemoveHeadersOnCopy"];
   */
   const productFile = {
-    basename: `${appClipName}.app`,
+    basename: `${appClipFolder}.app`,
     fileRef: proj.generateUuid(),
     uuid: proj.generateUuid(),
     group: groupName,
@@ -27,7 +27,7 @@ export default function addProductFile(
       ATTRIBUTES: ["RemoveHeadersOnCopy"],
     },
     includeInIndex: 0,
-    path: `${appClipName}.app`,
+    path: `${appClipFolder}.app`,
     sourceTree: "BUILT_PRODUCTS_DIR",
   };
 

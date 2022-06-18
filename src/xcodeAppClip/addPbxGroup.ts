@@ -58,22 +58,11 @@ export default function addPbxGroup(
   );
   console.log(`Added PBXGroup ${pbxGroupUuid}`);
 
-  /* let pbxGroupUuid: string | undefined = undefined;
-
-  // Find PBXGroup
-  Object.keys(groups).forEach(function (key) {
-    console.log("GROUP", groups[key].name, appClipFolder);
-    if (groups[key].name === appClipFolder) {
-      pbxGroupUuid = key;
-      console.log(`Found root PBXGroup: ${key}`);
-    }
-  }); */
-
   // Add PBXGroup to top level group
   const groups = proj.hash.project.objects["PBXGroup"];
   if (pbxGroupUuid) {
     Object.keys(groups).forEach(function (key) {
-      if (groups[key].name === undefined) {
+      if (groups[key].name === undefined && groups[key].path === undefined) {
         proj.addToPbxGroup(pbxGroupUuid, key);
         console.log(
           `Added PBXGroup ${pbxGroupUuid} root PBXGroup group ${key}`

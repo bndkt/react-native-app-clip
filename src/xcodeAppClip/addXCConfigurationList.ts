@@ -4,18 +4,27 @@ import { quoted } from "./util";
 
 export default function (
   proj: XcodeProject,
-  appClipName: string,
-  appClipBundleIdentifier: string
+  {
+    appClipName,
+    appClipBundleIdentifier,
+    currentProjectVersion,
+    marketingVersion,
+  }: {
+    appClipName: string;
+    appClipBundleIdentifier: string;
+    currentProjectVersion: string;
+    marketingVersion: string;
+  }
 ) {
   const commonBuildSettings = {
     ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon",
     ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: "AccentColor",
     CODE_SIGN_ENTITLEMENTS: `${appClipName}/${appClipName}.entitlements`,
     CODE_SIGN_STYLE: "Automatic",
-    CURRENT_PROJECT_VERSION: 1,
+    CURRENT_PROJECT_VERSION: quoted(currentProjectVersion),
     INFOPLIST_FILE: `${appClipName}/Info.plist`,
     // LD_RUNPATH_SEARCH_PATHS: `("$(inherited)","@executable_path/Frameworks",)`,
-    MARKETING_VERSION: "1.0",
+    MARKETING_VERSION: quoted(marketingVersion),
     PRODUCT_BUNDLE_IDENTIFIER: appClipBundleIdentifier,
     PRODUCT_NAME: quoted("$(TARGET_NAME)"),
     SWIFT_EMIT_LOC_STRINGS: "YES",

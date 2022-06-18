@@ -18,7 +18,7 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
         config.modRequest.platformProjectRoot,
         appFolder
       );
-      const appFilePath = path.join(appRootPath, "Info.plist");
+      // const appFilePath = path.join(appRootPath, "Info.plist");
 
       const appClipFolderName = getAppClipName(config.modRequest.projectName!);
       const appClipRootPath = path.join(
@@ -26,9 +26,9 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
         appClipFolderName
       );
       const appClipFilePath = path.join(appClipRootPath, "Info.plist");
-      const bundleIdentifier = getAppClipBundleIdentifier(
+      /* const bundleIdentifier = getAppClipBundleIdentifier(
         config.ios!.bundleIdentifier!
-      );
+      ); */
 
       /* const fileContent = fs.readFileSync(appFilePath).toString();
       const appClipPlist: InfoPlist = plist.parse(fileContent);
@@ -58,6 +58,7 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
       appClipPlist.CFBundleShortVersionString = "$(MARKETING_VERSION)";
       appClipPlist.UIViewControllerBasedStatusBarAppearance = "NO";
       appClipPlist.UILaunchStoryboardName = "SplashScreen";
+      appClipPlist.UIRequiresFullScreen = true;
 
       await fs.promises.mkdir(path.dirname(appClipFilePath), {
         recursive: true,

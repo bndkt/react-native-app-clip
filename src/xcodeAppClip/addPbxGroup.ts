@@ -84,13 +84,10 @@ export default function addPbxGroup(
 }
 
 function copyFileSync(source: any, target: any) {
-  console.log("copyFileSync", { source, target });
   let targetFile = target;
 
   if (fs.existsSync(target)) {
-    console.log("exists", target);
     if (fs.lstatSync(target).isDirectory()) {
-      console.log("isDir", target);
       targetFile = path.join(target, path.basename(source));
     }
   }

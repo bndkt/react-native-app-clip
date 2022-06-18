@@ -16,6 +16,8 @@ export const withAppClipXcodeTarget: ConfigPlugin = (config) => {
       appClipName
     );
     const platformProjectRoot = config.modRequest.platformProjectRoot;
+    const currentProjectVersion = config.ios!.buildNumber || "1";
+    const marketingVersion = config.version!;
 
     addAppClipXcodeTarget(config.modResults, {
       appName,
@@ -23,6 +25,8 @@ export const withAppClipXcodeTarget: ConfigPlugin = (config) => {
       appClipBundleIdentifier,
       appClipRootPath,
       platformProjectRoot,
+      currentProjectVersion,
+      marketingVersion,
     });
 
     return config;

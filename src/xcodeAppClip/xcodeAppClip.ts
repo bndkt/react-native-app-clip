@@ -16,23 +16,28 @@ export async function addAppClipXcodeTarget(
     appClipBundleIdentifier,
     appClipRootPath,
     platformProjectRoot,
+    currentProjectVersion,
+    marketingVersion,
   }: {
     appName: string;
     appClipName: string;
     appClipBundleIdentifier: string;
     appClipRootPath: string;
     platformProjectRoot: string;
+    currentProjectVersion: string;
+    marketingVersion: string;
   }
 ) {
   const targetUuid = proj.generateUuid();
   const groupName = "Embed App Clips";
 
   // Add XCConfigurationList
-  const xCConfigurationList = addXCConfigurationList(
-    proj,
+  const xCConfigurationList = addXCConfigurationList(proj, {
     appClipName,
-    appClipBundleIdentifier
-  );
+    appClipBundleIdentifier,
+    currentProjectVersion,
+    marketingVersion,
+  });
 
   // Add product file
   const productFile = addProductFile(proj, appClipName, targetUuid, groupName);

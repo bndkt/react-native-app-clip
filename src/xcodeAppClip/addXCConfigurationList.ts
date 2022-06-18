@@ -22,7 +22,8 @@ export default function (
     TARGETED_DEVICE_FAMILY: quoted("1,2"),
     ENABLE_PREVIEWS: "YES",
     CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER: "YES", // Added because of warning
-    SWIFT_VERSION: 5.0, // Added because of warning
+    SWIFT_VERSION: 5.0, // Added because of warning,
+    IPHONEOS_DEPLOYMENT_TARGET: "15",
   };
 
   const buildConfigurationsList = [

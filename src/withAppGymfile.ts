@@ -11,11 +11,13 @@ export const withAppGymfile: ConfigPlugin = (config) => {
         "Gymfile"
       );
 
+      const scheme = config.modRequest.projectName;
+
       const gymfileContent = `
 suppress_xcode_output(true)
 clean(false)
 
-scheme("pepper")
+scheme("${scheme}")
 
 configuration("Release")
 

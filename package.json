@@ -1,6 +1,6 @@
 {
   "name": "react-native-app-clip",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.4",
   "description": "Config plugin to add an App Clip to a React Native iOS app",
   "main": "build/withIosAppClip.js",
   "types": "build/withIosAppClip.d.ts",
@@ -32,6 +32,12 @@
     "preset": "expo-module-scripts"
   },
   "homepage": "https://github.com/bndkt/react-native-app-clip#readme",
+  "keywords": [
+    "react-native",
+    "expo",
+    "app-clip",
+    "expo-config-plugin"
+  ],
   "devDependencies": {
     "@types/node": "^17.0.42",
     "expo-module-scripts": "^2.0.0"

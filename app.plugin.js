@@ -1,1 +1,1 @@
-module.exports = require("./build/withIosAppClip.js");
+module.exports = require("./build/plugin/withIosAppClip.js");

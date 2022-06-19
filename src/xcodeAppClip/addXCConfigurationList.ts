@@ -32,6 +32,7 @@ export default function (
     SWIFT_EMIT_LOC_STRINGS: "YES",
     TARGETED_DEVICE_FAMILY: quoted("1,2"),
     ENABLE_PREVIEWS: "YES",
+    SWIFT_VERSION: 5.0,
   };
 
   const buildConfigurationsList = [

@@ -2,7 +2,7 @@ import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 
 import { getAppClipBundleIdentifier, getAppClipFolder } from "./withIosAppClip";
 
-export const withAppClipEntitlements: ConfigPlugin = (config) => {
+export const withAppClipAppConfig: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
@@ -13,11 +13,18 @@ export const withAppClipEntitlements: ConfigPlugin = (config) => {
       );
 
       config.extra = {
+        ...config.extra,
         eas: {
+          ...config.extra?.eas,
           build: {
+            ...config.extra?.eas?.build,
             experimental: {
+              ...config.extra?.eas?.build?.experimental,
               ios: {
+                ...config.extra?.eas?.build?.experimental?.ios,
                 appExtensions: [
+                  ...(config.extra?.eas?.build?.experimental?.ios
+                    ?.appExtensions ?? []),
                   {
                     targetName: appClipName,
                     bundleIdentifier: `$(AppIdentifierPrefix)${appClipBundleIdentifier}`,

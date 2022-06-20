@@ -14,9 +14,12 @@ export const withAppGymfile: ConfigPlugin = (config) => {
       const appBundleIdentifier = config.ios!.bundleIdentifier!;
 
       const gymfileContent = `
+suppress_xcode_output(true)
+clean(true)
 export_options({
     distributionBundleIdentifier: "${appBundleIdentifier}"
 })
+disable_xcpretty(true)
 output_directory("./build")
       `;
 

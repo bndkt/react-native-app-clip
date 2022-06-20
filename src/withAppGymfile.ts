@@ -11,7 +11,6 @@ export const withAppGymfile: ConfigPlugin = (config) => {
         "Gymfile"
       );
 
-      // const scheme = config.modRequest.projectName;
       const appBundleIdentifier = config.ios!.bundleIdentifier!;
 
       const gymfileContent = `

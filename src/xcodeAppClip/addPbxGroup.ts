@@ -42,7 +42,7 @@ export default function addPbxGroup(
   copyFolderRecursiveSync(imagesXcassetsSource, appClipPath);
 
   // Add PBX group
-  const { uuid: pbxGroupUuid, pbxGroup } = proj.addPbxGroup(
+  const { uuid: pbxGroupUuid } = proj.addPbxGroup(
     [
       "AppDelegate.h",
       "AppDelegate.mm",

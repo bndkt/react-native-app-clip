@@ -13,13 +13,6 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      /* const appFolder = config.modRequest.projectName!;
-      const appRootPath = path.join(
-        config.modRequest.platformProjectRoot,
-        appFolder
-      );
-      const appFilePath = path.join(appRootPath, "Info.plist"); */
-
       const appClipFolderName = getAppClipFolder(
         config.modRequest.projectName!
       );
@@ -28,16 +21,6 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
         appClipFolderName
       );
       const appClipFilePath = path.join(appClipRootPath, "Info.plist");
-      /* const bundleIdentifier = getAppClipBundleIdentifier(
-        config.ios!.bundleIdentifier!
-      ); */
-
-      /* const fileContent = fs.readFileSync(appFilePath).toString();
-      const appClipPlist: InfoPlist = plist.parse(fileContent);
-      appClipPlist.NSAppClip = {
-        NSAppClipRequestEphemeralUserNotification: false,
-        NSAppClipRequestLocationConfirmation: false,
-      }; */
 
       const appClipPlist: InfoPlist = {
         NSAppClip: {

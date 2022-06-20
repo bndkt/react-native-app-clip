@@ -19,10 +19,7 @@ export default function addBuildPhases(
   const buildPath = quoted("$(CONTENTS_FOLDER_PATH)/AppClips");
 
   // Add shell script build phase "Start Packager"
-  const {
-    uuid: startPackagerShellScriptBuildPhaseUuid,
-    buildPhase: startPackagerShellScriptBuildPhase,
-  } = proj.addBuildPhase(
+  const { uuid: startPackagerShellScriptBuildPhaseUuid } = proj.addBuildPhase(
     [],
     "PBXShellScriptBuildPhase",
     "Start Packager",
@@ -38,46 +35,40 @@ export default function addBuildPhases(
   );
 
   // Copy files build phase
-  const { uuid: copyFilesBuildPhaseUuid, buildPhase: copyFilesBuildPhase } =
-    proj.addBuildPhase(
-      [productFile.path],
-      "PBXCopyFilesBuildPhase",
-      groupName,
-      proj.getFirstTarget().uuid,
-      "watch2_app", // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet,
-      buildPath
-    );
+  const { uuid: copyFilesBuildPhaseUuid } = proj.addBuildPhase(
+    [productFile.path],
+    "PBXCopyFilesBuildPhase",
+    groupName,
+    proj.getFirstTarget().uuid,
+    "watch2_app", // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet,
+    buildPath
+  );
   console.log(`Added PBXCopyFilesBuildPhase ${copyFilesBuildPhaseUuid}`);
 
   // Resources build phase
-  const { uuid: resourcesBuildPhaseUuid, buildPhase: resourcesBuildPhase } =
-    proj.addBuildPhase(
-      ["Images.xcassets", "SplashScreen.storyboard", "Supporting/Expo.plist"],
-      "PBXResourcesBuildPhase",
-      groupName,
-      targetUuid,
-      "watch2_app",
-      buildPath
-    );
+  const { uuid: resourcesBuildPhaseUuid } = proj.addBuildPhase(
+    ["Images.xcassets", "SplashScreen.storyboard", "Supporting/Expo.plist"],
+    "PBXResourcesBuildPhase",
+    groupName,
+    targetUuid,
+    "watch2_app",
+    buildPath
+  );
   console.log(`Added PBXResourcesBuildPhase ${resourcesBuildPhaseUuid}`);
 
   // Sources build phase
-  const { uuid: sourcesBuildPhaseUuid, buildPhase: sourcesBuildPhase } =
-    proj.addBuildPhase(
-      ["AppDelegate.h", "AppDelegate.mm", "main.m"],
-      "PBXSourcesBuildPhase",
-      groupName,
-      targetUuid,
-      "watch2_app",
-      buildPath
-    );
+  const { uuid: sourcesBuildPhaseUuid } = proj.addBuildPhase(
+    ["AppDelegate.h", "AppDelegate.mm", "main.m"],
+    "PBXSourcesBuildPhase",
+    groupName,
+    targetUuid,
+    "watch2_app",
+    buildPath
+  );
   console.log(`Added PBXSourcesBuildPhase ${sourcesBuildPhaseUuid}`);
 
   // Add shell script build phase
-  const {
-    uuid: bundleShellScriptBuildPhaseUuid,
-    buildPhase: bundleShellScriptBuildPhase,
-  } = proj.addBuildPhase(
+  const { uuid: bundleShellScriptBuildPhaseUuid } = proj.addBuildPhase(
     [],
     "PBXShellScriptBuildPhase",
     "Bundle React Native code and images",

@@ -15,10 +15,12 @@ expo install react-native-app-clip
 In your app's Expo config (app.json, or app.config.js), add react-native-app-clip to the list of plugins:
 
 ```app.json
-"name": "my app",
-"plugins": [
-    ["react-native-app-clip", { "entryPoint": "index.appclip.js", "name": "RN App Clip" }]
-]
+"expo": {
+    "name": "my app",
+    "plugins": [
+        ["react-native-app-clip", { "entryPoint": "index.appclip.js", "name": "RN App Clip" }]
+    ]
+}
 ```
 
 ## Configuration

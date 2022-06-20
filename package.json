@@ -1,6 +1,6 @@
 {
   "name": "react-native-app-clip",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Config plugin to add an App Clip to a React Native iOS app",
   "main": "build/withIosAppClip.js",
   "types": "build/withIosAppClip.d.ts",

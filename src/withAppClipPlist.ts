@@ -61,6 +61,7 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
       appClipPlist.UIViewControllerBasedStatusBarAppearance = "NO";
       appClipPlist.UILaunchStoryboardName = "SplashScreen";
       appClipPlist.UIRequiresFullScreen = true;
+      appClipPlist.MinimumOSVersion = "14.0.0";
 
       await fs.promises.mkdir(path.dirname(appClipFilePath), {
         recursive: true,

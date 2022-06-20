@@ -18,10 +18,30 @@ In your app's Expo config (app.json, or app.config.js), add react-native-app-cli
 
 ```app.json
 "expo": {
-    "name": "my app",
+    "name": "my-app",
     "plugins": [
         ["react-native-app-clip", { "entryPoint": "index.appclip.js", "name": "RN App Clip" }]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "my-app",
+                  "bundleIdentifier": "com.example.my-app.Clip",
+                  "entitlements": {
+                    "com.apple.developer.parent-application-identifiers": "com.example.my-app",
+                    "com.apple.developer.on-demand-install-capable": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
 }
 ```
 

@@ -1,5 +1,7 @@
 # react-native-app-clip
 
+![Build & Test](https://github.com/bndkt/react-native-app-clip/actions/workflows/node.js.yml/badge.svg)
+
 Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 
 > **Warning** This plugin is work in progress and doesn't work reliably yet. I only made the repository public to gather feedback and ask for help. Don't use this plugin in production yet!

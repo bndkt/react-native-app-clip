@@ -8,7 +8,7 @@ Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 
 Install it in your project:
 
-```
+```sh
 expo install react-native-app-clip
 ```
 

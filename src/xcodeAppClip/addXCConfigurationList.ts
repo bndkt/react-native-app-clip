@@ -22,16 +22,14 @@ export default function (
     ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon",
     CLANG_ENABLE_MODULES: "YES",
     CODE_SIGN_ENTITLEMENTS: `${appClipFolder}/${appClipFolder}.entitlements`,
-    /* CODE_SIGN_STYLE: "Automatic", */
     CURRENT_PROJECT_VERSION: quoted(currentProjectVersion),
     INFOPLIST_FILE: `${appClipFolder}/Info.plist`,
-    // LD_RUNPATH_SEARCH_PATHS: `("$(inherited)","@executable_path/Frameworks",)`,
-    /* MARKETING_VERSION: quoted(marketingVersion), */
+    // LD_RUNPATH_SEARCH_PATHS: quoted("$(inherited) @executable_path/Frameworks"),
+    // OTHER_LDFLAGS: `("$(inherited)", "-ObjC", "-lc++")`,
+    MARKETING_VERSION: quoted(marketingVersion),
     PRODUCT_BUNDLE_IDENTIFIER: appClipBundleIdentifier,
     PRODUCT_NAME: quoted(appClipName),
-    /* SWIFT_EMIT_LOC_STRINGS: "YES", */
     TARGETED_DEVICE_FAMILY: quoted("1,2"),
-    /* ENABLE_PREVIEWS: "YES", */
     SWIFT_VERSION: "5.0",
     IPHONEOS_DEPLOYMENT_TARGET: "14.0",
     VERSIONING_SYSTEM: "apple-generic",

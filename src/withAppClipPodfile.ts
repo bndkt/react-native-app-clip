@@ -22,7 +22,7 @@ export const withAppClipPodfile: ConfigPlugin = (config) => {
       const modifiedPodfile = mergeContents({
         tag: "withAppClipPodfile",
         src: podFileContent,
-        newSrc: `  target '${appClipFolderName}' do\n    inherit! :complete\n  end`,
+        newSrc: `  target '${appClipFolderName}' do\n    inherit! :complete\n    use_modular_headers!\n  end`,
         anchor: /post_install/,
         offset: 0,
         comment: "#",

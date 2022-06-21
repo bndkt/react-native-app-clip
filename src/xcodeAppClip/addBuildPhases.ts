@@ -34,6 +34,17 @@ export default function addBuildPhases(
     `Added PBXShellScriptBuildPhase ${startPackagerShellScriptBuildPhaseUuid}`
   );
 
+  // Sources build phase
+  const { uuid: sourcesBuildPhaseUuid } = proj.addBuildPhase(
+    ["AppDelegate.h", "AppDelegate.mm", "main.m"],
+    "PBXSourcesBuildPhase",
+    groupName,
+    targetUuid,
+    "watch2_app",
+    buildPath
+  );
+  console.log(`Added PBXSourcesBuildPhase ${sourcesBuildPhaseUuid}`);
+
   // Copy files build phase
   const { uuid: copyFilesBuildPhaseUuid } = proj.addBuildPhase(
     [productFile.path],
@@ -45,6 +56,17 @@ export default function addBuildPhases(
   );
   console.log(`Added PBXCopyFilesBuildPhase ${copyFilesBuildPhaseUuid}`);
 
+  // Frameworks build phase
+  const { uuid: frameworksBuildPhaseUuid } = proj.addBuildPhase(
+    [],
+    "PBXFrameworksBuildPhase",
+    groupName,
+    targetUuid,
+    "watch2_app",
+    buildPath
+  );
+  console.log(`Added PBXResourcesBuildPhase ${frameworksBuildPhaseUuid}`);
+
   // Resources build phase
   const { uuid: resourcesBuildPhaseUuid } = proj.addBuildPhase(
     ["Images.xcassets", "SplashScreen.storyboard", "Supporting/Expo.plist"],
@@ -55,17 +77,6 @@ export default function addBuildPhases(
     buildPath
   );
   console.log(`Added PBXResourcesBuildPhase ${resourcesBuildPhaseUuid}`);
-
-  // Sources build phase
-  const { uuid: sourcesBuildPhaseUuid } = proj.addBuildPhase(
-    ["AppDelegate.h", "AppDelegate.mm", "main.m"],
-    "PBXSourcesBuildPhase",
-    groupName,
-    targetUuid,
-    "watch2_app",
-    buildPath
-  );
-  console.log(`Added PBXSourcesBuildPhase ${sourcesBuildPhaseUuid}`);
 
   // Add shell script build phase
   const { uuid: bundleShellScriptBuildPhaseUuid } = proj.addBuildPhase(

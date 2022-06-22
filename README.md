@@ -1,10 +1,8 @@
 # react-native-app-clip
 
-![Build & Test](https://github.com/bndkt/react-native-app-clip/actions/workflows/node.js.yml/badge.svg)
-
 Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 
-> **Warning** This plugin is work in progress and doesn't work reliably yet. I only made the repository public to gather feedback and ask for help. Don't use this plugin in production yet!
+> **Warning** This plugin is work in progress and isn't properly tested in the wild yet. I made the repository public to gather feedback and ask for help. Don't use this plugin in production just yet!
 
 ## Installation
 
@@ -18,30 +16,30 @@ In your app's Expo config (app.json, or app.config.js), add react-native-app-cli
 
 ```app.json
 "expo": {
-    "name": "my-app",
-    "plugins": [
-        ["react-native-app-clip", { "entryPoint": "index.appclip.js", "name": "RN App Clip" }]
-    ],
-    "extra": {
-      "eas": {
-        "build": {
-          "experimental": {
-            "ios": {
-              "appExtensions": [
-                {
-                  "targetName": "my-app",
-                  "bundleIdentifier": "com.example.my-app.Clip",
-                  "entitlements": {
-                    "com.apple.developer.parent-application-identifiers": "com.example.my-app",
-                    "com.apple.developer.on-demand-install-capable": true
-                  }
+  "name": "my-app",
+  "plugins": [
+      ["react-native-app-clip", { "entryPoint": "index.appclip.js", "name": "My App Clip" }]
+  ],
+  "extra": {
+    "eas": {
+      "build": {
+        "experimental": {
+          "ios": {
+            "appExtensions": [
+              {
+                "targetName": "my-app",
+                "bundleIdentifier": "com.example.my-app.Clip",
+                "entitlements": {
+                  "com.apple.developer.parent-application-identifiers": "com.example.my-app",
+                  "com.apple.developer.on-demand-install-capable": true
                 }
-              ]
-            }
+              }
+            ]
           }
         }
       }
     }
+  }
 }
 ```
 

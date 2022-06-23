@@ -55,6 +55,18 @@ Please note that you must register a new App ID for the App Clip in your Apple D
 
 App Clips can not be tested with Expo Go or expo-dev-client. The best two ways to test the App Clip seem to be the following:
 
+### Run in Simulator
+
+Run `expo run:ios --scheme` and select the App Clip scheme ("...Clip") to open the App Clip in Simulator. You could also add an extra script to your project's package.json:
+
+```package.json
+"scripts": {
+  "clip": "expo run:ios --scheme my-appClip"
+}
+```
+
+Now you can simply type "npm run clip" in your terminal to open the App Clip in Simulator.
+
 ### Build App Clip with Xcode and open on a connected device
 
 Run `expo prebuild -p ios` (see https://docs.expo.dev/workflow/expo-cli/#expo-prebuild) in your Expo project folder to generate the ios folder with all native sources. Then open the file `ios/my-app.xcworkspace` (with my-app being your app’s name) in Xcode. In your project, you should find two targets, one named like your app (e.g. "my-app") and one with a "Clip" suffix (e.g. "my-appClip"). For both targets, select a team in the "Signing & Capabilities" tab and make sure a signing certificate is selected by Xcode. Then, using the menu bar, select "Product", followed by "Scheme", where you should see two themes listed at the bottom of the menu, named after the two targets. Select the scheme that ends with "Clip". Now you can build and run the App Clip (using the menu bar via "Product" followed by "Run" or using the shortcut ⌘R).

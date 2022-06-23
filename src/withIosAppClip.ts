@@ -16,9 +16,9 @@ export type WithIosAppClipConfigPluginProps = {
 
 const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config,
-  { entryPoint, name }
+  props
 ) => {
-  if (entryPoint) {
+  if (props && props.entryPoint) {
     console.warn(
       "DEPRECATED: Please note that the use of the entryPoint parameter has been deprecated."
     );
@@ -28,7 +28,7 @@ const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config = withAppClipAppDelegate(config);
   config = withAppClipPlist(config);
   config = withAppClipEntitlements(config);
-  config = withAppClipXcodeTarget(config, { name });
+  config = withAppClipXcodeTarget(config, { name: props && props.name });
   config = withAppClipPodfile(config);
   config = withAppEntitlements(config);
   config = withAppGymfile(config);

@@ -57,7 +57,7 @@ App Clips can not be tested with Expo Go or expo-dev-client. The best two ways t
 
 ### Run in Simulator
 
-Run `expo run:ios --scheme` and select the App Clip scheme ("...Clip") to open the App Clip in Simulator. You could also add an extra script to your project's package.json:
+Build the development client first using `eas build --profile development --platform ios`. Then run `expo run:ios --scheme` and select the App Clip scheme ("...Clip") to open the App Clip in Simulator. You could also add an extra script to your project's package.json:
 
 ```package.json
 "scripts": {

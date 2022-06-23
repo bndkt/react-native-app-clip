@@ -39,7 +39,7 @@
     "expo-config-plugin"
   ],
   "devDependencies": {
-    "@types/node": "^17.0.42",
+    "@types/node": "^18.0.0",
     "expo-module-scripts": "^2.0.0"
   },
   "sideEffects": false,

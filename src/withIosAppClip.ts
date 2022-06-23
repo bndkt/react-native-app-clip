@@ -18,11 +18,17 @@ const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config,
   { entryPoint, name }
 ) => {
+  if (entryPoint) {
+    console.warn(
+      "DEPRECATED: Please note that the use of the entryPoint parameter has been deprecated."
+    );
+  }
+
   config = withAppClipAppConfig(config);
-  config = withAppClipAppDelegate(config, { entryPoint });
+  config = withAppClipAppDelegate(config);
   config = withAppClipPlist(config);
   config = withAppClipEntitlements(config);
-  config = withAppClipXcodeTarget(config, { entryPoint, name });
+  config = withAppClipXcodeTarget(config, { name });
   config = withAppClipPodfile(config);
   config = withAppEntitlements(config);
   config = withAppGymfile(config);

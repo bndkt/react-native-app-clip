@@ -1,19 +1,16 @@
 import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
+import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 
 import { getAppClipFolder } from "./withIosAppClip";
-
-export type WithAppClipAppDelegateConfigPluginProps = { entryPoint?: string };
 
 type FilesToCopy = {
   name: string;
   replacements?: { regexp: string; newSubstr: string }[];
 }[];
 
-export const withAppClipAppDelegate: ConfigPlugin<
-  WithAppClipAppDelegateConfigPluginProps
-> = (config, { entryPoint = "index.appclip" }) => {
+export const withAppClipAppDelegate: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
@@ -32,20 +29,14 @@ export const withAppClipAppDelegate: ConfigPlugin<
 
       await fs.promises.mkdir(appClipRootPath, { recursive: true });
 
-      const entryPointBasename = path.basename(entryPoint, ".js");
-
       const filesToCopy: FilesToCopy = [
         { name: "AppDelegate.h" },
         {
           name: "AppDelegate.mm",
           replacements: [
             {
-              regexp: `jsBundleURLForBundleRoot:@"index"`,
-              newSubstr: `jsBundleURLForBundleRoot:@"${entryPointBasename}"`,
-            },
-            {
-              regexp: `URLForResource:@"main"`,
-              newSubstr: `URLForResource:@"${entryPointBasename}"`,
+              regexp: `initialProperties:nil`,
+              newSubstr: `initialProperties:@{@"isClip" : @true}`,
             },
           ],
         },

@@ -9,13 +9,12 @@ import {
 import { addAppClipXcodeTarget } from "./xcodeAppClip/xcodeAppClip";
 
 export type WithAppClipXcodeTargetConfigPluginProps = {
-  entryPoint?: string;
   name?: string;
 };
 
 export const withAppClipXcodeTarget: ConfigPlugin<
   WithAppClipXcodeTargetConfigPluginProps
-> = (config, { entryPoint = "index.appclip.js", name }) => {
+> = (config, { name }) => {
   return withXcodeProject(config, (config) => {
     const appName = config.modRequest.projectName!;
     const appClipName = name || getAppClipName(config.modRequest.projectName!);
@@ -40,7 +39,6 @@ export const withAppClipXcodeTarget: ConfigPlugin<
       platformProjectRoot,
       currentProjectVersion,
       marketingVersion,
-      entryPoint,
     });
 
     return config;

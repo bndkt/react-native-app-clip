@@ -5,7 +5,6 @@ import withIosAppClip, {
 const exp = { name: "foo", slug: "bar" };
 
 const props: WithIosAppClipConfigPluginProps = {
-  entryPoint: "index.appclip.js",
   name: "RN App Clip",
 };
 

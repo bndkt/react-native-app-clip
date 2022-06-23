@@ -18,7 +18,7 @@ In your app’s Expo config (app.json, or app.config.js), add react-native-app-c
 "expo": {
   "name": "my-app",
   "plugins": [
-      ["react-native-app-clip", { "entryPoint": "index.appclip.js", "name": "My App Clip" }]
+      ["react-native-app-clip", { "name": "My App Clip" }]
   ],
   "extra": {
     "eas": {
@@ -43,9 +43,22 @@ In your app’s Expo config (app.json, or app.config.js), add react-native-app-c
 }
 ```
 
-## Configuration
+## Determining what the App Clip renders
 
-Specifying the entryPoint parameter is optional; it defaults to "index.appclip.js". This means that the App Clip expects a file called index.appclip.js in the project’s root directory. You can change this value to "index.js" to reuse the Expo app’s existing entry point, which means the App Clip experience will be the same as the full app experience. In most cases, however, it will make sense to have a separate entry point that only renders a subset of the app’s capabilities as the App Clip experience.
+The App Clip will render the same root component as the full app ("App.tsx" by default). The root component will receive a boolean prop named "isClip" that is true for the App Clip. Using this prop, you can make different rendering decisions within the app. For example:
+
+```App.tsx
+export default function App({ isClip }: { isClip: boolean }) {
+  console.log("isClip", isClip);
+
+  return (
+    <SafeAreaProvider>
+      {isClip ? <AppClip /> : <Navigation />}
+      <StatusBar />
+    </SafeAreaProvider>
+  );
+}
+```
 
 ## Before building for the App Store
 
@@ -57,7 +70,7 @@ App Clips can not be tested with Expo Go or expo-dev-client. The best two ways t
 
 ### Run in Simulator
 
-Build the development client first using `eas build --profile development --platform ios`. Then run `expo run:ios --scheme` and select the App Clip scheme ("...Clip") to open the App Clip in Simulator. You could also add an extra script to your project's package.json:
+Build the development client first by running `expo run:ios` and opening the app in Simulator. After doing this once, you can run `expo run:ios --scheme` and select the App Clip scheme ("...Clip") to open the App Clip. You could also add an extra script to your project's package.json:
 
 ```package.json
 "scripts": {
@@ -65,7 +78,7 @@ Build the development client first using `eas build --profile development --plat
 }
 ```
 
-Now you can simply type "npm run clip" in your terminal to open the App Clip in Simulator.
+Now you can simply type "npm run clip" in your terminal to open the App Clip.
 
 ### Build App Clip with Xcode and open on a connected device
 

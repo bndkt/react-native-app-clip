@@ -32,10 +32,10 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
                   ?.appExtensions ?? []),
                 {
                   targetName: appClipName,
-                  bundleIdentifier: `$(AppIdentifierPrefix)${appClipBundleIdentifier}`,
+                  bundleIdentifier: `${appClipBundleIdentifier}`,
                   entitlements: {
                     "com.apple.developer.parent-application-identifiers": [
-                      `$(AppIdentifierPrefix)${appBundleIdentifier}`,
+                      `${appBundleIdentifier}`,
                     ],
                     "com.apple.developer.on-demand-install-capable": true,
                   },

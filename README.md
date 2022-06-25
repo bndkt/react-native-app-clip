@@ -12,34 +12,14 @@ Install it in your project:
 expo install react-native-app-clip
 ```
 
-In your app’s Expo config (app.json, or app.config.js), add react-native-app-clip to the list of plugins. You also need to specify the target name and bundle identifier of the App Clip, as well as the bundle identifier of the parent application (your main app). Please note that the target name needs to be the name of your app with "Clip" as the suffix and the bundle identifier has the suffix ".Clip". So if your app’s name is "my-app" with "com.example.my-app" as the bundle identifier, the App Clip’s target name needs to be "my-appClip”, and its bundle identifier will be "com.example.my-app.Clip".
+In your app’s Expo config (app.json, or app.config.js), make sure that react-native-app-clip has been added to the list of plugins. You may optionally provide a name option, which will determine the display name of your App Clip in iOS. If you do not provide a value here, it will be your app’s name appended with " Clip".
 
 ```app.json
 "expo": {
   "name": "my-app",
   "plugins": [
       ["react-native-app-clip", { "name": "My App Clip" }]
-  ],
-  "extra": {
-    "eas": {
-      "build": {
-        "experimental": {
-          "ios": {
-            "appExtensions": [
-              {
-                "targetName": "my-appClip",
-                "bundleIdentifier": "com.example.my-app.Clip",
-                "entitlements": {
-                  "com.apple.developer.parent-application-identifiers": "com.example.my-app",
-                  "com.apple.developer.on-demand-install-capable": true
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  }
+  ]
 }
 ```
 
@@ -70,7 +50,7 @@ App Clips can not be tested with Expo Go or expo-dev-client. The best two ways t
 
 ### Run in Simulator
 
-Build the development client first by running `expo run:ios` and opening the app in Simulator. After doing this once, you can run `expo run:ios --scheme` and select the App Clip scheme ("...Clip") to open the App Clip. You could also add an extra script to your project's package.json:
+Build the development client first by running `expo run:ios` and opening the app in Simulator. After doing this once, you can run `expo run:ios --scheme` and select the App Clip scheme ("...Clip") to open the App Clip. You could also add an extra script to your project’s package.json:
 
 ```package.json
 "scripts": {

@@ -2,7 +2,11 @@ import withIosAppClip, {
   WithIosAppClipConfigPluginProps,
 } from "../src/withIosAppClip";
 
-const exp = { name: "foo", slug: "bar" };
+const exp = {
+  name: "foo",
+  slug: "bar",
+  ios: { bundleIdentifiert: "com.example.app" },
+};
 
 const props: WithIosAppClipConfigPluginProps = {
   name: "RN App Clip",

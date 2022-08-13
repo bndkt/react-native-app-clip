@@ -5,9 +5,17 @@ import * as path from "path";
 
 import { getAppClipFolder } from "./withIosAppClip";
 
+type MergeInstruction = {
+  tag: string;
+  newSrc: string;
+  anchor: string | RegExp;
+  offset: number;
+};
+
 type FilesToCopy = {
   name: string;
   replacements?: { regexp: string; newSubstr: string }[];
+  merges?: MergeInstruction[];
 }[];
 
 export const withAppClipAppDelegate: ConfigPlugin = (config) => {
@@ -34,9 +42,20 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
         {
           name: "AppDelegate.mm",
           replacements: [
+            // Expo < 46
             {
               regexp: `initialProperties:nil`,
               newSubstr: `initialProperties:@{@"isClip" : @true}`,
+            },
+          ],
+          merges: [
+            // Expo >= 46
+            {
+              tag: "withAppClipDelegate-1",
+              newSrc: 'initProps[@"isClip"] = @true;',
+              anchor:
+                /NSMutableDictionary \*initProps = \[NSMutableDictionary new\]/,
+              offset: 1,
             },
           ],
         },
@@ -51,6 +70,17 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
             replacement.regexp,
             replacement.newSubstr
           );
+        });
+        file.merges?.forEach((merge) => {
+          const mergeResult = mergeContents({
+            tag: merge.tag,
+            src: fileContent,
+            newSrc: merge.newSrc,
+            anchor: merge.anchor,
+            offset: merge.offset,
+            comment: "//",
+          });
+          fileContent = mergeResult.contents;
         });
         const destinationFilePath = path.join(appClipRootPath, file.name);
         await fs.promises.writeFile(destinationFilePath, fileContent);

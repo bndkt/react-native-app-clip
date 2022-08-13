@@ -10,7 +10,6 @@
   ],
   "scripts": {
     "build": "expo-module build",
-    "dev": "tsc --watch",
     "clean": "expo-module clean",
     "test": "expo-module test",
     "prepare": "expo-module prepare",

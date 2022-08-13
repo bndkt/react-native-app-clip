@@ -6,16 +6,6 @@ export default function addProductFile(
   targetUuid: string,
   groupName: string
 ) {
-  // const productFileUuid = proj.generateUuid();
-  /* const productFile = proj.addProductFile(appClipFolder, {
-    target: targetUuid,
-    group: groupName,
-    explicitFileType: "wrapper.application",
-    defaultEncoding: 4,
-  });
-  productFile.settings = productFile.settings || {};
-  productFile.settings.ATTRIBUTES = ["RemoveHeadersOnCopy"];
-  */
   const productFile = {
     basename: `${appClipFolder}.app`,
     fileRef: proj.generateUuid(),

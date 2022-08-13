@@ -5,7 +5,7 @@ import withIosAppClip, {
 const exp = {
   name: "foo",
   slug: "bar",
-  ios: { bundleIdentifiert: "com.example.app" },
+  ios: { bundleIdentifier: "com.example.app" },
 };
 
 const props: WithIosAppClipConfigPluginProps = {

@@ -30,4 +30,4 @@ jobs:
       - run: yarn install
       - run: yarn npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          YARN_NPM_AUTH_TOKEN: ${{secrets.npm_token}}

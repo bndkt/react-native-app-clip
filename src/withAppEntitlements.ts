@@ -29,8 +29,6 @@ export const withAppEntitlements: ConfigPlugin = (config) => {
 
     const appClipPlist: InfoPlist = config.modResults;
 
-    console.log("appclipent", config.ios?.entitlements);
-
     fs.promises.mkdir(path.dirname(filePath), { recursive: true });
     fs.promises.writeFile(filePath, plist.build(appClipPlist));
 

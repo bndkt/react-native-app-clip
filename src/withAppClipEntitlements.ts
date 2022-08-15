@@ -23,7 +23,9 @@ export const withAppClipEntitlements: ConfigPlugin = (config) => {
       `${appClipFolderName}.entitlements`
     );
 
-    const appClipPlist: InfoPlist = config.modResults;
+    console.log("config.modResults", config.modResults);
+
+    const appClipPlist: InfoPlist = Object.assign({}, config.modResults);
     appClipPlist[
       "com.apple.developer.parent-application-identifiers"
     ] = `$(AppIdentifierPrefix)${bundleIdentifier}`;

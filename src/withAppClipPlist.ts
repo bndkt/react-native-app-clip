@@ -22,16 +22,16 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
       );
       const appClipFilePath = path.join(appClipRootPath, "Info.plist");
 
-      const appClipPlist: InfoPlist = {
-        NSAppClip: {
-          NSAppClipRequestEphemeralUserNotification: false,
-          NSAppClipRequestLocationConfirmation: false,
-        },
-        NSAppTransportSecurity: {
-          NSAllowsArbitraryLoads: true,
-          NSExceptionDomains: {
-            localhost: { NSExceptionAllowsInsecureHTTPLoads: true },
-          },
+      const appClipPlist: InfoPlist = config.ios?.infoPlist ?? {};
+
+      appClipPlist.NSAppClip = {
+        NSAppClipRequestEphemeralUserNotification: false,
+        NSAppClipRequestLocationConfirmation: false,
+      };
+      appClipPlist.NSAppTransportSecurity = {
+        NSAllowsArbitraryLoads: true,
+        NSExceptionDomains: {
+          localhost: { NSExceptionAllowsInsecureHTTPLoads: true },
         },
       };
 

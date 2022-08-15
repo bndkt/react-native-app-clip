@@ -6,6 +6,7 @@ import { withAppClipPlist } from "./withAppClipPlist";
 import { withAppClipPodfile } from "./withAppClipPodfile";
 import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
 import { withAppEntitlements } from "./withAppEntitlements";
+import { withAppClipEntitlements } from "./withAppClipEntitlements";
 
 export type WithIosAppClipConfigPluginProps = {
   entryPoint?: string;
@@ -25,10 +26,10 @@ const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config = withAppClipAppConfig(config);
   config = withAppClipAppDelegate(config);
   config = withAppClipPlist(config);
-  // config = withAppClipEntitlements(config);
-  config = withAppClipXcodeTarget(config, { name: props && props.name });
   config = withAppClipPodfile(config);
   config = withAppEntitlements(config);
+  config = withAppClipEntitlements(config);
+  config = withAppClipXcodeTarget(config, { name: props && props.name });
 
   return config;
 };

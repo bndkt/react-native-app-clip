@@ -86,7 +86,5 @@ export default function addBuildPhases(
     },
     buildPath
   );
-  // console.log(
-    `Added PBXShellScriptBuildPhase ${bundleShellScriptBuildPhaseUuid}`
-  );
+  // console.log(`Added PBXShellScriptBuildPhase ${bundleShellScriptBuildPhaseUuid}`);
 }

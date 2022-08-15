@@ -56,7 +56,7 @@ export default function addPbxGroup(
     appClipFolder,
     appClipFolder
   );
-  console.log(`Added PBXGroup ${pbxGroupUuid}`);
+  // console.log(`Added PBXGroup ${pbxGroupUuid}`);
 
   // Add PBXGroup to top level group
   const groups = proj.hash.project.objects["PBXGroup"];
@@ -64,9 +64,7 @@ export default function addPbxGroup(
     Object.keys(groups).forEach(function (key) {
       if (groups[key].name === undefined && groups[key].path === undefined) {
         proj.addToPbxGroup(pbxGroupUuid, key);
-        console.log(
-          `Added PBXGroup ${pbxGroupUuid} root PBXGroup group ${key}`
-        );
+        // console.log(`Added PBXGroup ${pbxGroupUuid} root PBXGroup group ${key}`);
       }
     });
   }

@@ -58,7 +58,7 @@ export default function (
     `Build configuration list for PBXNativeTarget ${quoted(appClipFolder)} `
   );
 
-  console.log(`Added XCConfigurationList ${xCConfigurationList.uuid}`);
+  // console.log(`Added XCConfigurationList ${xCConfigurationList.uuid}`);
 
   return xCConfigurationList;
 }

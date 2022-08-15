@@ -28,9 +28,7 @@ export default function addBuildPhases(
     },
     buildPath
   );
-  console.log(
-    `Added PBXShellScriptBuildPhase ${startPackagerShellScriptBuildPhaseUuid}`
-  );
+  // console.log(`Added PBXShellScriptBuildPhase ${startPackagerShellScriptBuildPhaseUuid}`);
 
   // Sources build phase
   const { uuid: sourcesBuildPhaseUuid } = proj.addBuildPhase(
@@ -41,7 +39,7 @@ export default function addBuildPhases(
     "watch2_app",
     buildPath
   );
-  console.log(`Added PBXSourcesBuildPhase ${sourcesBuildPhaseUuid}`);
+  // console.log(`Added PBXSourcesBuildPhase ${sourcesBuildPhaseUuid}`);
 
   // Copy files build phase
   const { uuid: copyFilesBuildPhaseUuid } = proj.addBuildPhase(
@@ -52,7 +50,7 @@ export default function addBuildPhases(
     "watch2_app", // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet,
     buildPath
   );
-  console.log(`Added PBXCopyFilesBuildPhase ${copyFilesBuildPhaseUuid}`);
+  // console.log(`Added PBXCopyFilesBuildPhase ${copyFilesBuildPhaseUuid}`);
 
   // Frameworks build phase
   const { uuid: frameworksBuildPhaseUuid } = proj.addBuildPhase(
@@ -63,7 +61,7 @@ export default function addBuildPhases(
     "watch2_app",
     buildPath
   );
-  console.log(`Added PBXResourcesBuildPhase ${frameworksBuildPhaseUuid}`);
+  // console.log(`Added PBXResourcesBuildPhase ${frameworksBuildPhaseUuid}`);
 
   // Resources build phase
   const { uuid: resourcesBuildPhaseUuid } = proj.addBuildPhase(
@@ -74,7 +72,7 @@ export default function addBuildPhases(
     "watch2_app",
     buildPath
   );
-  console.log(`Added PBXResourcesBuildPhase ${resourcesBuildPhaseUuid}`);
+  // console.log(`Added PBXResourcesBuildPhase ${resourcesBuildPhaseUuid}`);
 
   // Add shell script build phase
   const { uuid: bundleShellScriptBuildPhaseUuid } = proj.addBuildPhase(
@@ -88,7 +86,7 @@ export default function addBuildPhases(
     },
     buildPath
   );
-  console.log(
+  // console.log(
     `Added PBXShellScriptBuildPhase ${bundleShellScriptBuildPhaseUuid}`
   );
 }

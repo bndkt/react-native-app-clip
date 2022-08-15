@@ -10,5 +10,5 @@ export default function addTargetDependency(proj: XcodeProject, target: any) {
 
   proj.addTargetDependency(proj.getFirstTarget().uuid, [target.uuid]);
 
-  console.log(`Added target dependecy for target ${target.uuid}`);
+  // console.log(`Added target dependecy for target ${target.uuid}`);
 }

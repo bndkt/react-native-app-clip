@@ -6,7 +6,7 @@ export default function addToPbxProjectSection(
 ) {
   proj.addToPbxProjectSection(target);
 
-  console.log(`Added target to pbx project section ${target.uuid}`);
+  // console.log(`Added target to pbx project section ${target.uuid}`);
 
   // Add target attributes to project section
   if (

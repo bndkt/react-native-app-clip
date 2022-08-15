@@ -2,7 +2,6 @@ import { ConfigPlugin } from "@expo/config-plugins";
 
 import { withAppClipAppConfig } from "./withAppClipAppConfig";
 import { withAppClipAppDelegate } from "./withAppClipAppDelegate";
-import { withAppClipEntitlements } from "./withAppClipEntitlements";
 import { withAppClipPlist } from "./withAppClipPlist";
 import { withAppClipPodfile } from "./withAppClipPodfile";
 import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
@@ -26,7 +25,7 @@ const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config = withAppClipAppConfig(config);
   config = withAppClipAppDelegate(config);
   config = withAppClipPlist(config);
-  config = withAppClipEntitlements(config);
+  // config = withAppClipEntitlements(config);
   config = withAppClipXcodeTarget(config, { name: props && props.name });
   config = withAppClipPodfile(config);
   config = withAppEntitlements(config);

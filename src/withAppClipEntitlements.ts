@@ -1,7 +1,6 @@
 import {
   ConfigPlugin,
   InfoPlist,
-  withDangerousMod,
   withEntitlementsPlist,
 } from "@expo/config-plugins";
 import plist from "@expo/plist";

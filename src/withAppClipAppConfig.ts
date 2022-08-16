@@ -1,4 +1,4 @@
-import { ConfigPlugin } from "@expo/config-plugins";
+import { ConfigPlugin, InfoPlist } from "@expo/config-plugins";
 
 import { getAppClipBundleIdentifier, getAppClipFolder } from "./withIosAppClip";
 
@@ -15,6 +15,20 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
       ext.targetName === appClipName && (appClipConfigExists = true);
     }
   );
+
+  const entitlements: InfoPlist = {
+    "com.apple.developer.parent-application-identifiers": [
+      `${appBundleIdentifier}`,
+    ],
+    "com.apple.developer.on-demand-install-capable": true,
+  };
+
+  config.ios!.usesAppleSignIn &&
+    (entitlements["com.apple.developer.applesignin"] = ["Default"]);
+
+  config.ios!.associatedDomains &&
+    (entitlements["com.apple.developer.associated-domains"] =
+      config.ios!.associatedDomains);
 
   !appClipConfigExists &&
     (config.extra = {
@@ -33,12 +47,7 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
                 {
                   targetName: appClipName,
                   bundleIdentifier: `${appClipBundleIdentifier}`,
-                  entitlements: {
-                    "com.apple.developer.parent-application-identifiers": [
-                      `${appBundleIdentifier}`,
-                    ],
-                    "com.apple.developer.on-demand-install-capable": true,
-                  },
+                  entitlements,
                 },
               ],
             },

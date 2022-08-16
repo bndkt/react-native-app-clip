@@ -26,10 +26,10 @@ const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
   config = withAppClipAppConfig(config);
   config = withAppClipAppDelegate(config);
   config = withAppClipPlist(config);
-  config = withAppClipPodfile(config);
-  config = withAppEntitlements(config);
   config = withAppClipEntitlements(config);
   config = withAppClipXcodeTarget(config, { name: props && props.name });
+  config = withAppClipPodfile(config);
+  config = withAppEntitlements(config);
 
   return config;
 };

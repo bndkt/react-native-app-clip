@@ -9,14 +9,14 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
     config.ios!.bundleIdentifier!
   );
 
-  let appClipConfigExists = false;
+  let appClipConfigIndex = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
-    (ext: any) => {
-      ext.targetName === appClipName && (appClipConfigExists = true);
+    (ext: any, index: number) => {
+      ext.targetName === appClipName && (appClipConfigIndex = index);
     }
   );
 
-  const entitlements: InfoPlist = {
+  const newEntitlements: InfoPlist = {
     "com.apple.developer.parent-application-identifiers": [
       `${appBundleIdentifier}`,
     ],
@@ -24,14 +24,14 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
   };
 
   config.ios!.usesAppleSignIn &&
-    (entitlements["com.apple.developer.applesignin"] = ["Default"]);
+    (newEntitlements["com.apple.developer.applesignin"] = ["Default"]);
 
   config.ios!.associatedDomains &&
-    (entitlements["com.apple.developer.associated-domains"] =
+    (newEntitlements["com.apple.developer.associated-domains"] =
       config.ios!.associatedDomains);
 
-  !appClipConfigExists &&
-    (config.extra = {
+  if (!appClipConfigIndex) {
+    config.extra = {
       ...config.extra,
       eas: {
         ...config.extra?.eas,
@@ -47,14 +47,25 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
                 {
                   targetName: appClipName,
                   bundleIdentifier: `${appClipBundleIdentifier}`,
-                  entitlements,
                 },
               ],
             },
           },
         },
       },
-    });
+    };
+    appClipConfigIndex = 0;
+  }
+
+  if (appClipConfigIndex != null && config.extra) {
+    const appClipConfig =
+      config.extra.eas.build.experimental.ios.appExtensions[appClipConfigIndex];
+
+    appClipConfig.entitlements = {
+      ...appClipConfig.entitlements,
+      ...newEntitlements,
+    };
+  }
 
   return config;
 };

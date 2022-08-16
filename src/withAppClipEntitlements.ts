@@ -1,7 +1,7 @@
 import {
   ConfigPlugin,
   InfoPlist,
-  withEntitlementsPlist,
+  withDangerousMod,
 } from "@expo/config-plugins";
 import plist from "@expo/plist";
 import * as fs from "fs";
@@ -10,27 +10,32 @@ import * as path from "path";
 import { getAppClipFolder } from "./withIosAppClip";
 
 export const withAppClipEntitlements: ConfigPlugin = (config) => {
-  return withEntitlementsPlist(config, (config) => {
-    const bundleIdentifier = config.ios!.bundleIdentifier!;
-    const appClipFolderName = getAppClipFolder(config.modRequest.projectName!);
-    const appClipRootPath = path.join(
-      config.modRequest.platformProjectRoot,
-      appClipFolderName
-    );
-    const filePath = path.join(
-      appClipRootPath,
-      `${appClipFolderName}.entitlements`
-    );
+  return withDangerousMod(config, [
+    "ios",
+    async (config) => {
+      const bundleIdentifier = config.ios!.bundleIdentifier!;
+      const appClipFolderName = getAppClipFolder(
+        config.modRequest.projectName!
+      );
+      const appClipRootPath = path.join(
+        config.modRequest.platformProjectRoot,
+        appClipFolderName
+      );
+      const filePath = path.join(
+        appClipRootPath,
+        `${appClipFolderName}.entitlements`
+      );
 
-    const appClipPlist: InfoPlist = Object.assign({}, config.modResults);
+      const appClipPlist: InfoPlist = {
+        "com.apple.developer.parent-application-identifiers": [
+          `$(AppIdentifierPrefix)${bundleIdentifier}`,
+        ],
+      };
 
-    appClipPlist[
-      "com.apple.developer.parent-application-identifiers"
-    ] = `$(AppIdentifierPrefix)${bundleIdentifier}`;
+      await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+      await fs.promises.writeFile(filePath, plist.build(appClipPlist));
 
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, plist.build(appClipPlist));
-
-    return config;
-  });
+      return config;
+    },
+  ]);
 };

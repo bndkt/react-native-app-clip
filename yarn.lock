@@ -2351,10 +2351,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.7.4":
-  version: 18.7.4
-  resolution: "@types/node@npm:18.7.4"
-  checksum: 051d2147e4d8129fceb63ee9384259b2f224dbc4e4b0c46d96a6b61cbaad4e3fe4060950e7f4fc3d5692b1e6ea47e68ad03b61155754bfa169593747cfe3f8f4
+"@types/node@npm:^18.7.5":
+  version: 18.7.5
+  resolution: "@types/node@npm:18.7.5"
+  checksum: f74426f2c9e81ab00e35ddca8db84efb6eb6c77e6d120bbe84d462073c371fa46e4744bd87773d9f7cf9074cf575df573bb89c3335f38f4ecbef2f03b407f35f
   languageName: node
   linkType: hard
 
@@ -8779,7 +8779,7 @@ __metadata:
   resolution: "react-native-app-clip@workspace:."
   dependencies:
     "@expo/config-plugins": ^5.0.1
-    "@types/node": ^18.7.4
+    "@types/node": ^18.7.5
     "@types/react-native": ^0.69.5
     expo-module-scripts: ^2.1.0
     react-native: ^0.69.4

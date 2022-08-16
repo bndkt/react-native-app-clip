@@ -1,11 +1,8 @@
-import {
-  ConfigPlugin,
-  InfoPlist,
-  withDangerousMod,
-} from "@expo/config-plugins";
+import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 import plist from "@expo/plist";
 import * as fs from "fs";
 import * as path from "path";
+import { getAppClipEntitlements } from "./withAppClipAppConfig";
 
 import { getAppClipFolder } from "./withIosAppClip";
 
@@ -13,7 +10,6 @@ export const withAppClipEntitlements: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      const bundleIdentifier = config.ios!.bundleIdentifier!;
       const appClipFolderName = getAppClipFolder(
         config.modRequest.projectName!
       );
@@ -26,14 +22,10 @@ export const withAppClipEntitlements: ConfigPlugin = (config) => {
         `${appClipFolderName}.entitlements`
       );
 
-      const appClipPlist: InfoPlist = {
-        "com.apple.developer.parent-application-identifiers": [
-          `$(AppIdentifierPrefix)${bundleIdentifier}`,
-        ],
-      };
+      const appClipEntitlements = getAppClipEntitlements(config.ios);
 
       await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
-      await fs.promises.writeFile(filePath, plist.build(appClipPlist));
+      await fs.promises.writeFile(filePath, plist.build(appClipEntitlements));
 
       return config;
     },

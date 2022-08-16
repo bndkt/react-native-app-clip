@@ -1,9 +1,28 @@
 import { ConfigPlugin, InfoPlist } from "@expo/config-plugins";
+import { ExpoConfig } from "@expo/config-types";
 
 import { getAppClipBundleIdentifier, getAppClipFolder } from "./withIosAppClip";
 
+export const getAppClipEntitlements = (iosConfig: ExpoConfig["ios"]) => {
+  const appBundleIdentifier = iosConfig!.bundleIdentifier!;
+  const entitlements: InfoPlist = {
+    "com.apple.developer.parent-application-identifiers": [
+      `$(AppIdentifierPrefix)${appBundleIdentifier}`,
+    ],
+    "com.apple.developer.on-demand-install-capable": true,
+  };
+
+  iosConfig?.usesAppleSignIn &&
+    (entitlements["com.apple.developer.applesignin"] = ["Default"]);
+
+  iosConfig?.associatedDomains &&
+    (entitlements["com.apple.developer.associated-domains"] =
+      iosConfig.associatedDomains);
+
+  return entitlements;
+};
+
 export const withAppClipAppConfig: ConfigPlugin = (config) => {
-  const appBundleIdentifier = config.ios!.bundleIdentifier!;
   const appClipName = getAppClipFolder(config.name);
   const appClipBundleIdentifier = getAppClipBundleIdentifier(
     config.ios!.bundleIdentifier!
@@ -15,20 +34,6 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
       ext.targetName === appClipName && (appClipConfigIndex = index);
     }
   );
-
-  const newEntitlements: InfoPlist = {
-    "com.apple.developer.parent-application-identifiers": [
-      `${appBundleIdentifier}`,
-    ],
-    "com.apple.developer.on-demand-install-capable": true,
-  };
-
-  config.ios!.usesAppleSignIn &&
-    (newEntitlements["com.apple.developer.applesignin"] = ["Default"]);
-
-  config.ios!.associatedDomains &&
-    (newEntitlements["com.apple.developer.associated-domains"] =
-      config.ios!.associatedDomains);
 
   if (!appClipConfigIndex) {
     config.extra = {
@@ -63,7 +68,7 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
 
     appClipConfig.entitlements = {
       ...appClipConfig.entitlements,
-      ...newEntitlements,
+      ...getAppClipEntitlements(config.ios),
     };
   }
 

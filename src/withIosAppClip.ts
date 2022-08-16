@@ -1,4 +1,4 @@
-import { ConfigPlugin } from "@expo/config-plugins";
+import { ConfigPlugin, IOSConfig } from "@expo/config-plugins";
 
 import { withAppClipAppConfig } from "./withAppClipAppConfig";
 import { withAppClipAppDelegate } from "./withAppClipAppDelegate";
@@ -41,7 +41,9 @@ export function getAppClipName(projectName: string) {
 }
 
 export function getAppClipFolder(projectName: string) {
-  return `${projectName}Clip`;
+  const sanizizedName = IOSConfig.XcodeUtils.sanitizedName(projectName);
+
+  return `${sanizizedName}Clip`;
 }
 
 export function getAppClipBundleIdentifier(bundleIdentifier: string) {

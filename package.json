@@ -39,15 +39,15 @@
     "expo-config-plugin"
   ],
   "devDependencies": {
-    "@types/node": "^18.7.5",
-    "@types/react-native": "^0.69.5",
-    "expo-module-scripts": "^2.1.0",
+    "@types/node": "^18.8.3",
+    "@types/react-native": "^0.69.13",
+    "expo-module-scripts": "^2.1.1",
     "react-native-test-app": "^2.0.0"
   },
   "sideEffects": false,
   "dependencies": {
     "@expo/config-plugins": "^5.0.1",
-    "react-native": "^0.69.4",
+    "react-native": "^0.69.6",
     "xcode": "^3.0.1"
   }
 }

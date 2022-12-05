@@ -1,7 +1,7 @@
 # react-native-app-clip
 
 > **Warning**
-> From version 0.0.27, react-native-app-clip requires **Expo SDK 47**.
+> From version 0.0.28, react-native-app-clip requires **Expo SDK 47**.
 
 Config plugin to add an App Clip to a React Native iOS app
 

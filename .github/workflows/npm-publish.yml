@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: 🏗 Setup pnpm
         uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:

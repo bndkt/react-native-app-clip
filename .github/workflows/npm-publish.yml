@@ -15,8 +15,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: yarn install
-      # - run: yarn test
+      - run: pnpm install
+      # - run: pnpm test
 
   publish-npm:
     needs: build
@@ -27,8 +27,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: yarn install
-      - run: yarn run prepare
-      - run: yarn npm publish
+      - run: pnpm install
+      - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
         env:
-          YARN_NPM_AUTH_TOKEN: ${{secrets.npm_token}}
+          NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

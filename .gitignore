@@ -1,3 +1,2 @@
-node_modules/
-build/
-*.tgz
+plugin/build/
+node_modules

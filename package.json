@@ -1,26 +1,48 @@
 {
-  "private": true,
-  "packageManager": "yarn@3.2.2",
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "apps/*"
-    ]
-  },
+  "name": "react-native-app-clip",
+  "version": "0.0.26",
+  "description": "Config plugin to add an App Clip to a React Native iOS app",
+  "main": "app.plugin.js",
+  "files": [
+    "app.plugin.js",
+    "plugin/build",
+    "README.md"
+  ],
   "scripts": {
-    "clear": "rm -rf .turbo node_modules apps/app/node_modules apps/app/.expo apps/backend/node_modules apps/docs/node_modules apps/web/node_modules packages/ui-components/node_modules package-lock.json yarn.lock && yarn install",
-    "pipeline": "turbo run lint build test",
-    "lint": "turbo run lint",
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "synth": "turbo run synth"
+    "dev": "tsc --watch",
+    "lint": "eslint plugin/src",
+    "build": "tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bndkt/react-native-app-clip.git"
+  },
+  "author": {
+    "name": "Benedikt Müller",
+    "url": "https://bndkt.com/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bndkt/react-native-app-clip/issues"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "app-clip",
+    "expo-config-plugin"
+  ],
   "devDependencies": {
-    "esbuild": "^0.15.10",
-    "turbo": "^1.5.5"
+    "@types/node": "^18.11.10",
+    "@types/react-native": "^0.70.7",
+    "expo-module-scripts": "^3.0.4",
+    "typescript": "^4.9.3"
   },
-  "resolutions": {
-    "metro": "0.73.1"
+  "sideEffects": false,
+  "dependencies": {
+    "@expo/config-plugins": "^5.0.1",
+    "@expo/config-types": "^47.0.0",
+    "@expo/plist": "^0.0.19",
+    "react-native": "^0.70.6",
+    "xcode": "^3.0.1"
   }
 }

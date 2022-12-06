@@ -9,7 +9,6 @@ on:
 
 jobs:
   publish-npm:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: 🏗 Setup pnpm
@@ -22,6 +21,8 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: pnpm install
+      - run: pnpm build
       - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - run: pnpm publish

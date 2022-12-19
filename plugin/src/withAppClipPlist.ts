@@ -44,7 +44,7 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
       appClipInfoPlist.UIViewControllerBasedStatusBarAppearance = "NO";
       appClipInfoPlist.UILaunchStoryboardName = "SplashScreen";
       appClipInfoPlist.UIRequiresFullScreen = true;
-      appClipInfoPlist.MinimumOSVersion = "14.0.0";
+      appClipInfoPlist.MinimumOSVersion = "16.0.0";
 
       config.ios?.infoPlist &&
         Object.keys(config.ios?.infoPlist).forEach((key: string) => {

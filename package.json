@@ -1,6 +1,6 @@
 {
   "name": "react-native-app-clip",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "Config plugin to add an App Clip to a React Native iOS app",
   "main": "app.plugin.js",
   "files": [
@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "tsc --watch",
     "lint": "eslint plugin/src",
-    "build": "tsc"
+    "build": "tsc",
+    "update": "pnpm update -i -r -L"
   },
   "repository": {
     "type": "git",
@@ -32,10 +33,10 @@
     "expo-config-plugin"
   ],
   "devDependencies": {
-    "@types/node": "^18.11.10",
-    "@types/react-native": "^0.70.7",
+    "@types/node": "^18.11.17",
+    "@types/react-native": "^0.70.8",
     "expo-module-scripts": "^3.0.4",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.4"
   },
   "sideEffects": false,
   "dependencies": {

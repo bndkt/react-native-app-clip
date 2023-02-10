@@ -14,7 +14,7 @@ type MergeInstruction = {
 
 type FilesToCopy = {
   name: string;
-  replacements?: { regexp: string; newSubstr: string }[];
+  replacements?: { searchValue: string; replaceValue: string }[];
   merges?: MergeInstruction[];
 }[];
 
@@ -41,13 +41,18 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
         { name: "AppDelegate.h" },
         {
           name: "AppDelegate.mm",
-          merges: [
+          /* merges: [
             {
               tag: "withAppClipDelegate-1",
-              newSrc: 'initProps[@"isClip"] = @true;',
-              anchor:
-                /NSMutableDictionary \*initProps = \[NSMutableDictionary new\];/,
+              newSrc: 'self.initialProps = @{@"isClip": @true};',
+              anchor: /self.initialProps = @{};/, // \
               offset: 1,
+            },
+          ], */
+          replacements: [
+            {
+              searchValue: `self.initialProps = @{};`,
+              replaceValue: `self.initialProps = @{@"isClip": @true};`,
             },
           ],
         },
@@ -58,15 +63,17 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
         const sourceFilePath = path.join(appRootPath, file.name);
         let fileContent = fs.readFileSync(sourceFilePath).toString();
         file.merges?.forEach((merge) => {
-          const mergeResult = mergeContents({
+          fileContent = mergeContents({
             tag: merge.tag,
             src: fileContent,
             newSrc: merge.newSrc,
             anchor: merge.anchor,
             offset: merge.offset,
             comment: "//",
-          });
-          fileContent = mergeResult.contents;
+          }).contents;
+        });
+        file.replacements?.forEach(({ searchValue, replaceValue }) => {
+          fileContent = fileContent.replace(searchValue, replaceValue);
         });
         const destinationFilePath = path.join(appClipRootPath, file.name);
         await fs.promises.writeFile(destinationFilePath, fileContent);

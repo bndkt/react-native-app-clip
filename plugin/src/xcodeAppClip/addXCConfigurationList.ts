@@ -23,7 +23,7 @@ export default function (
     CLANG_ENABLE_MODULES: "YES",
     CURRENT_PROJECT_VERSION: quoted(currentProjectVersion),
     INFOPLIST_FILE: `${appClipFolder}/Info.plist`,
-    IPHONEOS_DEPLOYMENT_TARGET: "14.0",
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0",
     // LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks",
     // OTHER_LDFLAGS: `("$(inherited)","-ObjC","-lc++",)`,
     PRODUCT_BUNDLE_IDENTIFIER: quoted(appClipBundleIdentifier),

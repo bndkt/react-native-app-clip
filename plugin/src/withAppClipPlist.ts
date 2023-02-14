@@ -65,7 +65,7 @@ export const withAppClipPlist: ConfigPlugin = (config) => {
         "Supporting/Expo.plist"
       );
       const appClipExpoPlist: InfoPlist = {};
-      appClipExpoPlist.EXUpdatesRuntimeVersion = "exposdk:47.0.0";
+      appClipExpoPlist.EXUpdatesRuntimeVersion = "exposdk:48.0.0";
       /* appClipExpoPlist.EXUpdatesURL =
         "https://u.expo.dev/0697085b-3043-46d0-a3ad-1677246578ec"; // TODO */
       appClipExpoPlist.EXUpdatesEnabled = false;

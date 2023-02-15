@@ -1,16 +1,12 @@
-import { ConfigPlugin, withEntitlementsPlist } from "@expo/config-plugins";
+import { ConfigPlugin, withEntitlementsPlist } from "expo/config-plugins";
 
-import { getAppClipBundleIdentifier } from ".";
-
-export const withAppEntitlements: ConfigPlugin = (config) => {
+export const withAppEntitlements: ConfigPlugin<{
+  appClipBundleIdentifier: string;
+}> = (config, { appClipBundleIdentifier }) => {
   return withEntitlementsPlist(config, (config) => {
-    const bundleIdentifier = getAppClipBundleIdentifier(
-      config.ios!.bundleIdentifier!
-    );
-
     config.modResults[
       "com.apple.developer.associated-appclip-app-identifiers"
-    ] = [`$(AppIdentifierPrefix)${bundleIdentifier}`];
+    ] = [`$(AppIdentifierPrefix)${appClipBundleIdentifier}`];
     return config;
   });
 };

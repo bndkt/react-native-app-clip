@@ -1,9 +1,7 @@
-import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
+import { ConfigPlugin, withDangerousMod } from "expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
-
-import { getAppClipFolder } from ".";
 
 type MergeInstruction = {
   tag: string;
@@ -18,7 +16,10 @@ type FilesToCopy = {
   merges?: MergeInstruction[];
 }[];
 
-export const withAppClipAppDelegate: ConfigPlugin = (config) => {
+export const withAppClipAppDelegate: ConfigPlugin<{ appClipFolder: string }> = (
+  config,
+  { appClipFolder }
+) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
@@ -27,12 +28,9 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
         config.modRequest.platformProjectRoot,
         appFolder
       );
-      const appClipFolderName = getAppClipFolder(
-        config.modRequest.projectName!
-      );
       const appClipRootPath = path.join(
         config.modRequest.platformProjectRoot,
-        appClipFolderName
+        appClipFolder
       );
 
       await fs.promises.mkdir(appClipRootPath, { recursive: true });
@@ -49,12 +47,12 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
               offset: 1,
             },
           ], */
-          replacements: [
+          /* replacements: [
             {
               searchValue: `self.initialProps = @{};`,
               replaceValue: `self.initialProps = @{@"isClip": @true};`,
             },
-          ],
+          ], */
         },
         { name: "main.m" },
       ];

@@ -1,27 +1,18 @@
-import { ConfigPlugin, withXcodeProject } from "@expo/config-plugins";
+import { ConfigPlugin, withXcodeProject } from "expo/config-plugins";
 
-import {
-  getAppClipBundleIdentifier,
-  getAppClipFolder,
-  getAppClipName,
-} from ".";
-import { addAppClipXcodeTarget } from "./xcodeAppClip/xcodeAppClip";
+import { addAppClipXcodeTarget } from "./xcodeAppClip";
 
-export type WithAppClipXcodeTargetConfigPluginProps = {
-  name?: string;
+export const withAppClipXcodeTarget: ConfigPlugin<{
+  appClipName: string;
+  appClipBundleIdentifier: string;
+  appClipFolder: string;
   clipRootFolder?: string;
-};
-
-export const withAppClipXcodeTarget: ConfigPlugin<
-  WithAppClipXcodeTargetConfigPluginProps
-> = (config, { name, clipRootFolder }) => {
+}> = (
+  config,
+  { clipRootFolder, appClipBundleIdentifier, appClipFolder, appClipName }
+) => {
   return withXcodeProject(config, (config) => {
     const appName = config.modRequest.projectName!;
-    const appClipName = name || getAppClipName(config.modRequest.projectName!);
-    const appClipFolder = getAppClipFolder(config.modRequest.projectName!);
-    const appClipBundleIdentifier = getAppClipBundleIdentifier(
-      config.ios!.bundleIdentifier!
-    );
     const platformProjectRoot = config.modRequest.platformProjectRoot;
     const currentProjectVersion = config.ios!.buildNumber || "1";
     const marketingVersion = config.version!;

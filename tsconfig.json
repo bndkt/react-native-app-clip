@@ -1,9 +1,4 @@
 {
-  "extends": "expo-module-scripts/tsconfig.plugin",
-  "compilerOptions": {
-    "outDir": "plugin/build",
-    "rootDir": "plugin/src"
-  },
-  "include": ["./plugin/src"],
-  "exclude": ["**/__mocks__/*", "**/__tests__/*"]
+  "files": [],
+  "references": [{ "path": "./plugin" }]
 }

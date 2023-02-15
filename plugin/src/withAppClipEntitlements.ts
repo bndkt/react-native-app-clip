@@ -1,25 +1,23 @@
-import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 import plist from "@expo/plist";
+import { ConfigPlugin, withDangerousMod } from "expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipFolder } from ".";
 import { getAppClipEntitlements } from "./withAppClipAppConfig";
 
-export const withAppClipEntitlements: ConfigPlugin = (config) => {
+export const withAppClipEntitlements: ConfigPlugin<{
+  appClipFolder: string;
+}> = (config, { appClipFolder }) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      const appClipFolderName = getAppClipFolder(
-        config.modRequest.projectName!
-      );
       const appClipRootPath = path.join(
         config.modRequest.platformProjectRoot,
-        appClipFolderName
+        appClipFolder
       );
       const filePath = path.join(
         appClipRootPath,
-        `${appClipFolderName}.entitlements`
+        `${appClipFolder}.entitlements`
       );
 
       const appClipEntitlements = getAppClipEntitlements(config.ios);

@@ -1,7 +1,5 @@
-import { ConfigPlugin, InfoPlist } from "@expo/config-plugins";
-import { ExpoConfig } from "@expo/config-types";
-
-import { getAppClipBundleIdentifier, getAppClipFolder } from ".";
+import { ExpoConfig } from "expo/config";
+import { ConfigPlugin, InfoPlist } from "expo/config-plugins";
 
 export const getAppClipEntitlements = (iosConfig: ExpoConfig["ios"]) => {
   const appBundleIdentifier = iosConfig!.bundleIdentifier!;
@@ -22,16 +20,14 @@ export const getAppClipEntitlements = (iosConfig: ExpoConfig["ios"]) => {
   return entitlements;
 };
 
-export const withAppClipAppConfig: ConfigPlugin = (config) => {
-  const appClipName = getAppClipFolder(config.name);
-  const appClipBundleIdentifier = getAppClipBundleIdentifier(
-    config.ios!.bundleIdentifier!
-  );
-
+export const withAppClipAppConfig: ConfigPlugin<{
+  appClipFolder: string;
+  appClipBundleIdentifier: string;
+}> = (config, { appClipFolder, appClipBundleIdentifier }) => {
   let appClipConfigIndex: null | number = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
     (ext: any, index: number) => {
-      ext.targetName === appClipName && (appClipConfigIndex = index);
+      ext.targetName === appClipFolder && (appClipConfigIndex = index);
     }
   );
 
@@ -50,8 +46,8 @@ export const withAppClipAppConfig: ConfigPlugin = (config) => {
                 ...(config.extra?.eas?.build?.experimental?.ios
                   ?.appExtensions ?? []),
                 {
-                  targetName: appClipName,
-                  bundleIdentifier: `${appClipBundleIdentifier}`,
+                  targetName: appClipFolder,
+                  bundleIdentifier: appClipBundleIdentifier,
                 },
               ],
             },

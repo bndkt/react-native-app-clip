@@ -1,4 +1,4 @@
-import { ConfigPlugin, IOSConfig } from "@expo/config-plugins";
+import { ConfigPlugin, IOSConfig, withPlugins } from "expo/config-plugins";
 
 import { withAppClipAppConfig } from "./withAppClipAppConfig";
 import { withAppClipAppDelegate } from "./withAppClipAppDelegate";
@@ -8,41 +8,82 @@ import { withAppClipPodfile } from "./withAppClipPodfile";
 import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
 import { withAppEntitlements } from "./withAppEntitlements";
 
-export type WithIosAppClipConfigPluginProps = {
+const withIosAppClip: ConfigPlugin<{
   name?: string;
   root?: string;
-};
+}> = (config, props) => {
+  const appClipBundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
+  const appClipFolder = `${IOSConfig.XcodeUtils.sanitizedName(
+    config.name
+  )}Clip`;
+  const appClipName = props.name ?? `${config.name} Clip`;
+  const clipRootFolder = props?.root;
 
-const withIosAppClip: ConfigPlugin<WithIosAppClipConfigPluginProps> = (
-  config,
-  props
-) => {
-  config = withAppClipAppConfig(config);
-  config = withAppClipAppDelegate(config);
-  config = withAppClipPlist(config);
-  config = withAppClipEntitlements(config);
-  config = withAppClipXcodeTarget(config, {
-    name: props?.name,
-    clipRootFolder: props?.root,
-  });
-  config = withAppClipPodfile(config);
-  config = withAppEntitlements(config);
-
-  return config;
+  return withPlugins(config, [
+    [
+      withAppClipAppConfig,
+      {
+        appClipName,
+        appClipFolder,
+        appClipBundleIdentifier,
+        clipRootFolder,
+      },
+    ],
+    [
+      withAppClipAppDelegate,
+      {
+        appClipName,
+        appClipFolder,
+        appClipBundleIdentifier,
+        clipRootFolder,
+      },
+    ],
+    [
+      withAppClipPlist,
+      {
+        appClipName,
+        appClipFolder,
+        appClipBundleIdentifier,
+        clipRootFolder,
+      },
+    ],
+    [
+      withAppClipEntitlements,
+      {
+        appClipName,
+        appClipFolder,
+        appClipBundleIdentifier,
+        clipRootFolder,
+      },
+    ],
+    [
+      withAppClipXcodeTarget,
+      {
+        appClipName,
+        appClipFolder,
+        appClipBundleIdentifier,
+        clipRootFolder,
+      },
+    ],
+    [
+      withAppClipPodfile,
+      {
+        appClipName,
+        appClipFolder,
+        appClipBundleIdentifier,
+        clipRootFolder,
+      },
+    ],
+    [
+      withAppEntitlements,
+      {
+        appClipName,
+        appClipFolder,
+        appClipBundleIdentifier,
+        clipRootFolder,
+      },
+    ],
+  ]);
 };
 
 export default withIosAppClip;
-
-export function getAppClipName(projectName: string) {
-  return `${projectName} Clip`;
-}
-
-export function getAppClipFolder(projectName: string) {
-  const sanizizedName = IOSConfig.XcodeUtils.sanitizedName(projectName);
-
-  return `${sanizizedName}Clip`;
-}
-
-export function getAppClipBundleIdentifier(bundleIdentifier: string) {
-  return `${bundleIdentifier}.Clip`;
-}

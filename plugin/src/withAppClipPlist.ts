@@ -1,24 +1,18 @@
-import {
-  ConfigPlugin,
-  InfoPlist,
-  withDangerousMod,
-} from "@expo/config-plugins";
 import plist from "@expo/plist";
+import { ConfigPlugin, InfoPlist, withDangerousMod } from "expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipFolder } from ".";
-
-export const withAppClipPlist: ConfigPlugin = (config) => {
+export const withAppClipPlist: ConfigPlugin<{ appClipFolder: string }> = (
+  config,
+  { appClipFolder }
+) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      const appClipFolderName = getAppClipFolder(
-        config.modRequest.projectName!
-      );
       const appClipRootPath = path.join(
         config.modRequest.platformProjectRoot,
-        appClipFolderName
+        appClipFolder
       );
       const appClipInfoPlistFilePath = path.join(appClipRootPath, "Info.plist");
 

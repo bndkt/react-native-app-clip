@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "update": "pnpm update -i -r -L",
-    "build": "tsc --project plugin",
-    "lint": "eslint plugin/src"
+    "build": "tsc --project plugin"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-import { ConfigPlugin, IOSConfig, withPlugins } from "expo/config-plugins";
+import { ConfigPlugin, IOSConfig, withPlugins } from "@expo/config-plugins";
 
 import { withAppClipAppConfig } from "./withAppClipAppConfig";
 import { withAppClipAppDelegate } from "./withAppClipAppDelegate";

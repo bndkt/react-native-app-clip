@@ -1,5 +1,5 @@
 import { ExpoConfig } from "expo/config";
-import { ConfigPlugin, InfoPlist } from "expo/config-plugins";
+import { ConfigPlugin, InfoPlist } from "@expo/config-plugins";
 
 export const getAppClipEntitlements = (iosConfig: ExpoConfig["ios"]) => {
   const appBundleIdentifier = iosConfig!.bundleIdentifier!;

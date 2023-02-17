@@ -1,4 +1,4 @@
-import { ConfigPlugin, withEntitlementsPlist } from "expo/config-plugins";
+import { ConfigPlugin, withEntitlementsPlist } from "@expo/config-plugins";
 
 export const withAppEntitlements: ConfigPlugin<{
   appClipBundleIdentifier: string;

@@ -1,4 +1,4 @@
-import { XcodeProject } from "expo/config-plugins";
+import { XcodeProject } from "@expo/config-plugins";
 
 export default function addTargetDependency(proj: XcodeProject, target: any) {
   if (!proj.hash.project.objects["PBXTargetDependency"]) {

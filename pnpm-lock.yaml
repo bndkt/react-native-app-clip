@@ -1,5 +1,10 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  '@expo/config-plugins@6.0.0':
+    hash: 3nusjsech6a7do3nslaocrcfyy
+    path: patches/@expo__config-plugins@6.0.0.patch
+
 specifiers:
   '@expo/config-plugins': 6.0.0
   '@expo/plist': 0.0.20
@@ -9,7 +14,7 @@ specifiers:
   xcode: 3.0.1
 
 dependencies:
-  '@expo/config-plugins': 6.0.0
+  '@expo/config-plugins': 6.0.0_3nusjsech6a7do3nslaocrcfyy
   '@expo/plist': 0.0.20
   expo: 48.0.1
   xcode: 3.0.1
@@ -1697,7 +1702,7 @@ packages:
       '@babel/runtime': 7.20.13
       '@expo/code-signing-certificates': 0.0.5
       '@expo/config': 8.0.1
-      '@expo/config-plugins': 6.0.0
+      '@expo/config-plugins': 6.0.0_3nusjsech6a7do3nslaocrcfyy
       '@expo/dev-server': 0.2.2
       '@expo/devcert': 1.1.0
       '@expo/json-file': 8.2.37
@@ -1768,7 +1773,7 @@ packages:
       nullthrows: 1.1.1
     dev: false
 
-  /@expo/config-plugins/6.0.0:
+  /@expo/config-plugins/6.0.0_3nusjsech6a7do3nslaocrcfyy:
     resolution: {integrity: sha512-Hp9ZbAvonzPTJFcoBBfmxwLwxHFOQuj8YcbYzSW2UiXeco79Q0itsCEKenvfc16V+ZwMkcjpbahy5/8uVn6aiA==}
     dependencies:
       '@expo/config-types': 48.0.0
@@ -1789,6 +1794,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+    patched: true
 
   /@expo/config-types/48.0.0:
     resolution: {integrity: sha512-DwyV4jTy/+cLzXGAo1xftS6mVlSiLIWZjl9DjTCLPFVgNYQxnh7htPilRv4rBhiNs7KaznWqKU70+4zQoKVT9A==}
@@ -1798,7 +1804,7 @@ packages:
     resolution: {integrity: sha512-mwz2vmOnwbSJfLpAx3HaaQDtItnDuC3MNFsi1j8ld8y7yBFhipa73t8qkJ4g4FG5mqgC35+kv0ejwnh7v1gROQ==}
     dependencies:
       '@babel/code-frame': 7.10.4
-      '@expo/config-plugins': 6.0.0
+      '@expo/config-plugins': 6.0.0_3nusjsech6a7do3nslaocrcfyy
       '@expo/config-types': 48.0.0
       '@expo/json-file': 8.2.37
       getenv: 1.0.0
@@ -1934,7 +1940,7 @@ packages:
       expo-modules-autolinking: '>=0.8.1'
     dependencies:
       '@expo/config': 8.0.1
-      '@expo/config-plugins': 6.0.0
+      '@expo/config-plugins': 6.0.0_3nusjsech6a7do3nslaocrcfyy
       '@expo/config-types': 48.0.0
       '@expo/image-utils': 0.3.22
       '@expo/json-file': 8.2.37
@@ -2937,7 +2943,7 @@ packages:
       '@babel/runtime': 7.20.13
       '@expo/cli': 0.6.1_6weo4dzsrefthwodkc5gdxxcii
       '@expo/config': 8.0.1
-      '@expo/config-plugins': 6.0.0
+      '@expo/config-plugins': 6.0.0_3nusjsech6a7do3nslaocrcfyy
       '@expo/vector-icons': 13.0.0
       babel-preset-expo: 9.3.0
       cross-spawn: 6.0.5

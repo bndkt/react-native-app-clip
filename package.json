@@ -38,7 +38,6 @@
   "dependencies": {
     "@expo/config-plugins": "6.0.0",
     "@expo/plist": "0.0.20",
-    "expo": "48.0.1",
     "xcode": "3.0.1"
   },
   "pnpm": {

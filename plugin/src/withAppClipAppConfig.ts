@@ -1,7 +1,6 @@
-import { ExpoConfig } from "expo/config";
-import { ConfigPlugin, InfoPlist } from "@expo/config-plugins";
+import { ConfigPlugin, InfoPlist, ExportedConfig } from "@expo/config-plugins";
 
-export const getAppClipEntitlements = (iosConfig: ExpoConfig["ios"]) => {
+export const getAppClipEntitlements = (iosConfig: ExportedConfig["ios"]) => {
   const appBundleIdentifier = iosConfig!.bundleIdentifier!;
   const entitlements: InfoPlist = {
     "com.apple.developer.parent-application-identifiers": [

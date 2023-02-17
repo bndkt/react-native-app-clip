@@ -47,12 +47,12 @@ export const withAppClipAppDelegate: ConfigPlugin<{ appClipFolder: string }> = (
               offset: 1,
             },
           ], */
-          /* replacements: [
+          replacements: [
             {
               searchValue: `self.initialProps = @{};`,
               replaceValue: `self.initialProps = @{@"isClip": @true};`,
             },
-          ], */
+          ],
         },
         { name: "main.m" },
       ];

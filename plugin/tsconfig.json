@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "outDir": "build",
+    "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["./src"],

@@ -4,7 +4,7 @@
   "description": "Config plugin to add an App Clip to a React Native iOS app",
   "main": "app.plugin.js",
   "files": [
-    "plugin/build",
+    "plugin/dist",
     "app.plugin.js"
   ],
   "scripts": {

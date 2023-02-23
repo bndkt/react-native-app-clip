@@ -1,89 +1,68 @@
-import { ConfigPlugin, IOSConfig, withPlugins } from "@expo/config-plugins";
+import { ConfigPlugin, withPlugins, IOSConfig } from "expo/config-plugins";
 
-import { withAppClipAppConfig } from "./withAppClipAppConfig";
-import { withAppClipAppDelegate } from "./withAppClipAppDelegate";
+import { withConfig } from "./withConfig";
 import { withAppClipEntitlements } from "./withAppClipEntitlements";
+import { withPodfile } from "./withPodfile";
 import { withAppClipPlist } from "./withAppClipPlist";
-import { withAppClipPodfile } from "./withAppClipPodfile";
-import { withAppClipXcodeTarget } from "./withAppClipXcodeTarget";
-import { withAppEntitlements } from "./withAppEntitlements";
+import { withXcode } from "./withXcode";
 
-const withIosAppClip: ConfigPlugin<{
-  name?: string;
-  root?: string;
-}> = (config, props) => {
-  const appClipBundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
-  const appClipFolder = `${IOSConfig.XcodeUtils.sanitizedName(
-    config.name
-  )}Clip`;
-  const appClipName = props.name ?? `${config.name} Clip`;
-  const clipRootFolder = props?.root;
+const withAppClip: ConfigPlugin<{
+  name: string;
+  groupIdentifier?: string;
+  deploymentTarget?: string;
+  requestEphemeralUserNotification?: boolean;
+  requestLocationConfirmation?: boolean;
+  appleSignin?: boolean;
+  expoRouterAppRoot?: string;
+}> = (
+  config,
+  {
+    name,
+    groupIdentifier,
+    deploymentTarget = "14.0",
+    requestEphemeralUserNotification,
+    requestLocationConfirmation,
+    appleSignin = true,
+    expoRouterAppRoot,
+  }
+) => {
+  const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
+  const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}Clip`;
 
-  return withPlugins(config, [
+  config = withPlugins(config, [
     [
-      withAppClipAppConfig,
+      withConfig,
       {
-        appClipName,
-        appClipFolder,
-        appClipBundleIdentifier,
-        clipRootFolder,
+        bundleIdentifier,
+        targetName,
+        groupIdentifier,
+        appleSignin,
       },
     ],
-    [
-      withAppClipAppDelegate,
-      {
-        appClipName,
-        appClipFolder,
-        appClipBundleIdentifier,
-        clipRootFolder,
-      },
-    ],
+    [withAppClipEntitlements, { targetName, groupIdentifier, appleSignin }],
+    [withPodfile, { targetName }],
     [
       withAppClipPlist,
       {
-        appClipName,
-        appClipFolder,
-        appClipBundleIdentifier,
-        clipRootFolder,
+        targetName,
+        deploymentTarget,
+        requestEphemeralUserNotification,
+        requestLocationConfirmation,
       },
     ],
     [
-      withAppClipEntitlements,
+      withXcode,
       {
-        appClipName,
-        appClipFolder,
-        appClipBundleIdentifier,
-        clipRootFolder,
-      },
-    ],
-    [
-      withAppClipXcodeTarget,
-      {
-        appClipName,
-        appClipFolder,
-        appClipBundleIdentifier,
-        clipRootFolder,
-      },
-    ],
-    [
-      withAppClipPodfile,
-      {
-        appClipName,
-        appClipFolder,
-        appClipBundleIdentifier,
-        clipRootFolder,
-      },
-    ],
-    [
-      withAppEntitlements,
-      {
-        appClipName,
-        appClipFolder,
-        appClipBundleIdentifier,
-        clipRootFolder,
+        name,
+        targetName,
+        bundleIdentifier,
+        expoRouterAppRoot,
+        deploymentTarget,
       },
     ],
   ]);
+
+  return config;
 };
 
-export default withIosAppClip;
+export default withAppClip;

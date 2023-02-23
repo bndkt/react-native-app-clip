@@ -1,1 +1,1 @@
-module.exports = require("./plugin/dist");
+module.exports = require("./plugin/build");

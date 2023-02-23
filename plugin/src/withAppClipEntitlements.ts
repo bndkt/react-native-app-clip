@@ -1,31 +1,31 @@
 import plist from "@expo/plist";
-import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
+import { ConfigPlugin, withInfoPlist } from "expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipEntitlements } from "./withAppClipAppConfig";
+import { getAppClipEntitlements } from "./lib/getAppClipEntitlements";
 
 export const withAppClipEntitlements: ConfigPlugin<{
-  appClipFolder: string;
-}> = (config, { appClipFolder }) => {
-  return withDangerousMod(config, [
-    "ios",
-    async (config) => {
-      const appClipRootPath = path.join(
-        config.modRequest.platformProjectRoot,
-        appClipFolder
-      );
-      const filePath = path.join(
-        appClipRootPath,
-        `${appClipFolder}.entitlements`
-      );
+  targetName: string;
+  targetPath: string;
+  groupIdentifier: string;
+  appleSignin: boolean;
+}> = (config, { targetName, groupIdentifier, appleSignin }) => {
+  return withInfoPlist(config, (config) => {
+    const targetPath = path.join(
+      config.modRequest.platformProjectRoot,
+      targetName
+    );
+    const filePath = path.join(targetPath, `${targetName}.entitlements`);
 
-      const appClipEntitlements = getAppClipEntitlements(config.ios);
+    const appClipEntitlements = getAppClipEntitlements(config.ios, {
+      groupIdentifier,
+      appleSignin,
+    });
 
-      await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
-      await fs.promises.writeFile(filePath, plist.build(appClipEntitlements));
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, plist.build(appClipEntitlements));
 
-      return config;
-    },
-  ]);
+    return config;
+  });
 };

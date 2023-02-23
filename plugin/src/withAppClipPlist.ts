@@ -1,82 +1,79 @@
 import plist from "@expo/plist";
-import {
-  ConfigPlugin,
-  InfoPlist,
-  withDangerousMod,
-} from "@expo/config-plugins";
+import { ConfigPlugin, InfoPlist, withInfoPlist } from "expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
-export const withAppClipPlist: ConfigPlugin<{ appClipFolder: string }> = (
+export const withAppClipPlist: ConfigPlugin<{
+  targetName: string;
+  deploymentTarget: string;
+  requestEphemeralUserNotification?: boolean;
+  requestLocationConfirmation?: boolean;
+}> = (
   config,
-  { appClipFolder }
+  {
+    targetName,
+    deploymentTarget,
+    requestEphemeralUserNotification = false,
+    requestLocationConfirmation = false,
+  }
 ) => {
-  return withDangerousMod(config, [
-    "ios",
-    async (config) => {
-      const appClipRootPath = path.join(
-        config.modRequest.platformProjectRoot,
-        appClipFolder
-      );
-      const appClipInfoPlistFilePath = path.join(appClipRootPath, "Info.plist");
+  return withInfoPlist(config, (config) => {
+    const targetPath = path.join(
+      config.modRequest.platformProjectRoot,
+      targetName
+    );
 
-      const appClipInfoPlist: InfoPlist = {};
+    // Info.plist
+    const filePath = path.join(targetPath, "Info.plist");
 
-      appClipInfoPlist.NSAppClip = {
-        NSAppClipRequestEphemeralUserNotification: false,
-        NSAppClipRequestLocationConfirmation: false,
-      };
-      appClipInfoPlist.NSAppTransportSecurity = {
+    const infoPlist: InfoPlist = {
+      NSAppClip: {
+        NSAppClipRequestEphemeralUserNotification:
+          requestEphemeralUserNotification,
+        NSAppClipRequestLocationConfirmation: requestLocationConfirmation,
+      },
+      NSAppTransportSecurity: {
         NSAllowsArbitraryLoads: true,
         NSExceptionDomains: {
           localhost: { NSExceptionAllowsInsecureHTTPLoads: true },
+          "127.0.0.1": { NSExceptionAllowsInsecureHTTPLoads: true },
         },
-      };
+      },
+      CFBundleName: "$(PRODUCT_NAME)",
+      CFBundleIdentifier: "$(PRODUCT_BUNDLE_IDENTIFIER)",
+      CFBundleVersion: "$(CURRENT_PROJECT_VERSION)",
+      CFBundleExecutable: "$(EXECUTABLE_NAME)",
+      CFBundlePackageType: "$(PRODUCT_BUNDLE_PACKAGE_TYPE)",
+      CFBundleShortVersionString: config.version,
+      UIViewControllerBasedStatusBarAppearance: "NO",
+      UILaunchStoryboardName: "SplashScreen",
+      UIRequiresFullScreen: true,
+      MinimumOSVersion: deploymentTarget,
+    };
 
-      appClipInfoPlist.CFBundleName = "$(PRODUCT_NAME)";
-      appClipInfoPlist.CFBundleIdentifier = "$(PRODUCT_BUNDLE_IDENTIFIER)";
-      appClipInfoPlist.CFBundleVersion = "$(CURRENT_PROJECT_VERSION)";
-      appClipInfoPlist.CFBundleExecutable = "$(EXECUTABLE_NAME)";
-      appClipInfoPlist.CFBundlePackageType = "$(PRODUCT_BUNDLE_PACKAGE_TYPE)";
-      appClipInfoPlist.CFBundleShortVersionString = config.version;
-      appClipInfoPlist.UIViewControllerBasedStatusBarAppearance = "NO";
-      appClipInfoPlist.UILaunchStoryboardName = "SplashScreen";
-      appClipInfoPlist.UIRequiresFullScreen = true;
-      appClipInfoPlist.MinimumOSVersion = "16.0.0";
-
-      config.ios?.infoPlist &&
-        Object.keys(config.ios?.infoPlist).forEach((key: string) => {
-          config.ios?.infoPlist &&
-            (appClipInfoPlist[key] = config.ios.infoPlist[key]);
-        });
-
-      await fs.promises.mkdir(path.dirname(appClipInfoPlistFilePath), {
-        recursive: true,
+    config.ios?.infoPlist &&
+      Object.keys(config.ios?.infoPlist).forEach((key: string) => {
+        config.ios?.infoPlist && (infoPlist[key] = config.ios.infoPlist[key]);
       });
-      await fs.promises.writeFile(
-        appClipInfoPlistFilePath,
-        plist.build(appClipInfoPlist)
-      );
 
-      const appClipExpoPlistFilePath = path.join(
-        appClipRootPath,
-        "Supporting/Expo.plist"
-      );
-      const appClipExpoPlist: InfoPlist = {};
-      appClipExpoPlist.EXUpdatesRuntimeVersion = "exposdk:48.0.0";
-      /* appClipExpoPlist.EXUpdatesURL =
-        "https://u.expo.dev/0697085b-3043-46d0-a3ad-1677246578ec"; // TODO */
-      appClipExpoPlist.EXUpdatesEnabled = false;
+    fs.mkdirSync(path.dirname(filePath), {
+      recursive: true,
+    });
+    fs.writeFileSync(filePath, plist.build(infoPlist));
 
-      await fs.promises.mkdir(path.dirname(appClipExpoPlistFilePath), {
-        recursive: true,
-      });
-      await fs.promises.writeFile(
-        appClipExpoPlistFilePath,
-        plist.build(appClipExpoPlist)
-      );
+    // Expo.plist
+    const expoPlistFilePath = path.join(targetPath, "Supporting/Expo.plist");
+    const expoPlist: InfoPlist = {
+      EXUpdatesRuntimeVersion: "exposdk:48.0.0", // TODO
+      // EXUpdatesURL: "", // TODO
+      EXUpdatesEnabled: false,
+    };
 
-      return config;
-    },
-  ]);
+    fs.mkdirSync(path.dirname(expoPlistFilePath), {
+      recursive: true,
+    });
+    fs.writeFileSync(expoPlistFilePath, plist.build(expoPlist));
+
+    return config;
+  });
 };

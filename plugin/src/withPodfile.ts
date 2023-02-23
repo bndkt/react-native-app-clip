@@ -1,15 +1,15 @@
 import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
-import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
+import { ConfigPlugin, withDangerousMod } from "expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
-export const withAppClipPodfile: ConfigPlugin<{ appClipFolder: string }> = (
+export const withPodfile: ConfigPlugin<{ targetName: string }> = (
   config,
-  { appClipFolder }
+  { targetName }
 ) => {
   return withDangerousMod(config, [
     "ios",
-    async (config) => {
+    (config) => {
       const podFilePath = path.join(
         config.modRequest.platformProjectRoot,
         "Podfile"
@@ -19,13 +19,13 @@ export const withAppClipPodfile: ConfigPlugin<{ appClipFolder: string }> = (
       const modifiedPodfile = mergeContents({
         tag: "withAppClipPodfile",
         src: podFileContent,
-        newSrc: `  target '${appClipFolder}' do\n  end`,
+        newSrc: `  target '${targetName}' do\n  end`,
         anchor: /post_install/,
         offset: 0,
         comment: "#",
       });
 
-      await fs.promises.writeFile(podFilePath, modifiedPodfile.contents);
+      fs.writeFileSync(podFilePath, modifiedPodfile.contents);
 
       return config;
     },

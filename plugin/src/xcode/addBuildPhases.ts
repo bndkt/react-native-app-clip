@@ -1,25 +1,25 @@
-import { XcodeProject } from "@expo/config-plugins";
+import { XcodeProject } from "expo/config-plugins";
 
-import { PBXFile, quoted } from "./util";
-
-export default function addBuildPhases(
-  proj: XcodeProject,
+export function addBuildPhases(
+  xcodeProject: XcodeProject,
   {
-    groupName,
-    productFile,
     targetUuid,
-    clipRootFolder,
+    groupName,
+    targetName,
+    productFile,
+    expoRouterAppRoot,
   }: {
-    groupName: string;
-    productFile: PBXFile;
     targetUuid: string;
-    clipRootFolder?: string;
+    groupName: string;
+    targetName: string;
+    productFile: { path: string };
+    expoRouterAppRoot?: string;
   }
 ) {
-  const buildPath = quoted("$(CONTENTS_FOLDER_PATH)/AppClips");
+  const buildPath = `"$(CONTENTS_FOLDER_PATH)/AppClips"`;
 
   // Add shell script build phase "Start Packager"
-  proj.addBuildPhase(
+  xcodeProject.addBuildPhase(
     [],
     "PBXShellScriptBuildPhase",
     "Start Packager",
@@ -29,8 +29,8 @@ export default function addBuildPhases(
       shellScript:
         'if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then\\n  source "$PODS_ROOT/../.xcode.env"\\nfi\\nif [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then\\n  source "$PODS_ROOT/../.xcode.env.local"\\nfi\\n'
           .concat(
-            clipRootFolder
-              ? `\\nexport EXPO_APP_CLIP_ROOT="${clipRootFolder}"`
+            expoRouterAppRoot
+              ? `\\nexport EXPO_APP_CLIP_ROOT="${expoRouterAppRoot}"`
               : ""
           )
           .concat(
@@ -41,8 +41,10 @@ export default function addBuildPhases(
   );
 
   // Sources build phase
-  proj.addBuildPhase(
-    ["AppDelegate.mm", "main.m" /*, "noop-file.swift" */],
+  xcodeProject.addBuildPhase(
+    ["AppDelegate.mm", "main.m" /*, "noop-file.swift" */].map((file) => {
+      return `${targetName}/${file}`;
+    }),
     "PBXSourcesBuildPhase",
     groupName,
     targetUuid,
@@ -51,17 +53,17 @@ export default function addBuildPhases(
   );
 
   // Copy files build phase
-  proj.addBuildPhase(
+  xcodeProject.addBuildPhase(
     [productFile.path],
     "PBXCopyFilesBuildPhase",
     groupName,
-    proj.getFirstTarget().uuid,
+    xcodeProject.getFirstTarget().uuid,
     "watch2_app", // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet,
     buildPath
   );
 
   // Frameworks build phase
-  proj.addBuildPhase(
+  xcodeProject.addBuildPhase(
     [],
     "PBXFrameworksBuildPhase",
     groupName,
@@ -71,7 +73,7 @@ export default function addBuildPhases(
   );
 
   // Resources build phase
-  proj.addBuildPhase(
+  xcodeProject.addBuildPhase(
     ["Images.xcassets", "SplashScreen.storyboard", "Supporting/Expo.plist"],
     "PBXResourcesBuildPhase",
     groupName,
@@ -81,7 +83,7 @@ export default function addBuildPhases(
   );
 
   // Add shell script build phase
-  proj.addBuildPhase(
+  xcodeProject.addBuildPhase(
     [],
     "PBXShellScriptBuildPhase",
     "Bundle React Native code and images",
@@ -91,8 +93,8 @@ export default function addBuildPhases(
       shellScript:
         'if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then\\n  source "$PODS_ROOT/../.xcode.env"\\nfi\\nif [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then\\n  source "$PODS_ROOT/../.xcode.env.local"\\nfi\\n\\n# The project root by default is one level up from the ios directory\\nexport PROJECT_ROOT="$PROJECT_DIR"/..'
           .concat(
-            clipRootFolder
-              ? `\\nexport EXPO_APP_CLIP_ROOT="${clipRootFolder}"`
+            expoRouterAppRoot
+              ? `\\nexport EXPO_APP_CLIP_ROOT="${expoRouterAppRoot}"`
               : ""
           )
           .concat(

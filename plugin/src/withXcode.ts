@@ -49,18 +49,17 @@ export const withXcode: ConfigPlugin<{
 
     addTargetDependency(xcodeProject, target);
 
-    addBuildPhases(xcodeProject, {
-      targetUuid,
-      groupName,
-      targetName,
-      productFile,
-      expoRouterAppRoot,
-    });
-
     addPbxGroup(xcodeProject, {
       projectName: projectName as string,
       targetName,
       platformProjectRoot,
+    });
+
+    addBuildPhases(xcodeProject, {
+      targetUuid,
+      groupName,
+      productFile,
+      expoRouterAppRoot,
     });
 
     return config;

@@ -4,10 +4,10 @@ export function addProductFile(
   xcodeProject: XcodeProject,
   { targetName, groupName }: { targetName: string; groupName: string }
 ) {
-  const productFile = {
+  const options = {
     basename: `${targetName}.app`,
-    fileRef: xcodeProject.generateUuid(),
-    uuid: xcodeProject.generateUuid(),
+    // fileRef: xcodeProject.generateUuid(),
+    // uuid: xcodeProject.generateUuid(),
     group: groupName,
     explicitFileType: "wrapper.application",
     /* fileEncoding: 4, */
@@ -19,9 +19,7 @@ export function addProductFile(
     sourceTree: "BUILT_PRODUCTS_DIR",
   };
 
-  xcodeProject.addToPbxFileReferenceSection(productFile);
-
-  xcodeProject.addToPbxBuildFileSection(productFile);
+  const productFile = xcodeProject.addProductFile(targetName, options);
 
   return productFile;
 }

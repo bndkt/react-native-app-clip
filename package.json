@@ -27,13 +27,14 @@
   "license": "MIT",
   "homepage": "https://github.com/bndkt/react-native-app-clip#readme",
   "dependencies": {
-    "expo": "~48.0.1"
+    "@react-native-community/cli": "^10.2.0",
+    "expo": "~48.0.4"
   },
   "devDependencies": {
     "@types/react": "18.0.28",
     "@types/react-native": "0.71.3",
     "expo-module-scripts": "3.0.7",
-    "expo-modules-core": "1.2.2"
+    "expo-modules-core": "1.2.3"
   },
   "peerDependencies": {
     "expo": "*",

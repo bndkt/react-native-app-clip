@@ -55,7 +55,7 @@ public class ReactNativeAppClipModule: Module {
             let groupUserDefaults = UserDefaults(suiteName: groupIdentifier)
             let credential = groupUserDefaults?.string(forKey: "SavedUserID")
 
-            logger.info("credential is \(credential)")
+            // logger.info("credential is \(credential)")
 
             return credential            
         }

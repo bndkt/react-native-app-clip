@@ -13,6 +13,7 @@ const withAppClip: ConfigPlugin<{
   requestEphemeralUserNotification?: boolean;
   requestLocationConfirmation?: boolean;
   appleSignin?: boolean;
+  excludedPackages: string[];
   expoRouterAppRoot?: string;
 }> = (
   config,
@@ -23,6 +24,7 @@ const withAppClip: ConfigPlugin<{
     requestEphemeralUserNotification,
     requestLocationConfirmation,
     appleSignin = true,
+    excludedPackages,
     expoRouterAppRoot,
   }
 ) => {
@@ -40,7 +42,7 @@ const withAppClip: ConfigPlugin<{
       },
     ],
     [withAppClipEntitlements, { targetName, groupIdentifier, appleSignin }],
-    [withPodfile, { targetName }],
+    [withPodfile, { targetName, excludedPackages }],
     [
       withAppClipPlist,
       {

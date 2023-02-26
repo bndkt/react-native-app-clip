@@ -1,22 +1,29 @@
 import { XcodeProject } from "expo/config-plugins";
+import * as util from "util";
 
 export function addBuildPhases(
   xcodeProject: XcodeProject,
   {
     targetUuid,
     groupName,
-    targetName,
     productFile,
     expoRouterAppRoot,
   }: {
     targetUuid: string;
     groupName: string;
-    targetName: string;
-    productFile: { path: string };
+    productFile: {
+      uuid: string;
+      target: string;
+      basename: string;
+      group: string;
+    };
     expoRouterAppRoot?: string;
   }
 ) {
   const buildPath = `"$(CONTENTS_FOLDER_PATH)/AppClips"`;
+  const folderType = "watch2_app"; // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet
+
+  const buildPhaseFiles = ["AppDelegate.mm", "main.m"];
 
   // Add shell script build phase "Start Packager"
   xcodeProject.addBuildPhase(
@@ -42,25 +49,31 @@ export function addBuildPhases(
 
   // Sources build phase
   xcodeProject.addBuildPhase(
-    ["AppDelegate.mm", "main.m" /*, "noop-file.swift" */].map((file) => {
-      return `${targetName}/${file}`;
-    }),
+    buildPhaseFiles,
     "PBXSourcesBuildPhase",
     groupName,
     targetUuid,
-    "watch2_app",
+    folderType,
     buildPath
   );
 
   // Copy files build phase
   xcodeProject.addBuildPhase(
-    [productFile.path],
+    [],
     "PBXCopyFilesBuildPhase",
     groupName,
     xcodeProject.getFirstTarget().uuid,
-    "watch2_app", // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet,
+    folderType,
     buildPath
   );
+
+  xcodeProject
+    .buildPhaseObject("PBXCopyFilesBuildPhase", groupName, productFile.target)
+    .files.push({
+      value: productFile.uuid,
+      comment: util.format("%s in %s", productFile.basename, productFile.group), // longComment(file);
+    });
+  xcodeProject.addToPbxBuildFileSection(productFile);
 
   // Frameworks build phase
   xcodeProject.addBuildPhase(
@@ -68,7 +81,7 @@ export function addBuildPhases(
     "PBXFrameworksBuildPhase",
     groupName,
     targetUuid,
-    "watch2_app",
+    folderType,
     buildPath
   );
 
@@ -78,7 +91,7 @@ export function addBuildPhases(
     "PBXResourcesBuildPhase",
     groupName,
     targetUuid,
-    "watch2_app",
+    folderType,
     buildPath
   );
 

@@ -50,23 +50,6 @@ import {
 
 **setSharedCredential()** and **getSharedCredential()** allows sharing login data from the App Clip to the full app so that the user doesn't have to sign in again after downloading the full app (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/sharing_data_between_your_app_clip_and_your_full_app)).
 
-## Determining what the App Clip renders
-
-The App Clip will render the same root component as the full app ("App.tsx" by default). The root component will receive a boolean prop named "isClip" that is true for the App Clip. Using this prop, you can make different rendering decisions within the app. For example:
-
-```App.tsx
-export default function App({ isClip }: { isClip: boolean }) {
-  console.log("isClip", isClip);
-
-  return (
-    <SafeAreaProvider>
-      {isClip ? <AppClip /> : <Navigation />}
-      <StatusBar />
-    </SafeAreaProvider>
-  );
-}
-```
-
 ## Before building for the App Store
 
 Please note that you must register a new App ID for the App Clip in your Apple Developer profile. Under "Certificates, Identifiers & Profiles", go to “Identifiers”, click on the plus icon and select "App IDs" to create a new App ID. Select "App Clip" as the type and on the next screen, select your main app as the "Parent App ID" and enter Clip as the product name (it is crucial that the product name is "Clip" and nothing else. At the bottom of the page, Apple shows a preview of the App Clip Bundle ID. If your main app’s bundle ID is com.example.my-app, the App Clip Bundle ID should now be com.example.my-app.Clip.

@@ -5,7 +5,7 @@ import * as path from "path";
 
 export const withPodfile: ConfigPlugin<{
   targetName: string;
-  excludedPackages: string[];
+  excludedPackages?: string[];
 }> = (config, { targetName, excludedPackages }) => {
   return withDangerousMod(config, [
     "ios",
@@ -28,12 +28,15 @@ export const withPodfile: ConfigPlugin<{
       /* nativeModulesContent = `\n\n# >>> inserted by react-native-app-clip\n\n`
         .concat(nativeModulesContent)
         .concat(`\n\n# <<< inserted by react-native-app-clip`); */
-      nativeModulesContent = nativeModulesContent.replace(
-        `["node", cli_bin, "config"]`,
-        `["node", cli_bin, "app-clip", "--exclude", "${excludedPackages.join(
-          ","
-        )}"]`
-      );
+
+      if (excludedPackages && excludedPackages.length > 0) {
+        nativeModulesContent = nativeModulesContent.replace(
+          `["node", cli_bin, "config"]`,
+          `["node", cli_bin, "app-clip", "--exclude", "${excludedPackages.join(
+            ","
+          )}"]`
+        );
+      }
 
       podfileContent = mergeContents({
         tag: "react-native-app-clip-1",
@@ -44,10 +47,15 @@ export const withPodfile: ConfigPlugin<{
         comment: "#",
       }).contents;
 
+      const useExpoModules =
+        excludedPackages && excludedPackages.length > 0
+          ? `exclude = ["${excludedPackages.join(`", "`)}"]
+      use_expo_modules!(exclude: exclude)`
+          : `use_expo_modules!`;
+
       const podfileInsert = `
         target '${targetName}' do
-          exclude = ["${excludedPackages.join(`", "`)}"]
-          use_expo_modules!(exclude: exclude)
+          ${useExpoModules}
           config = use_native_modules_app_clip!
           
           use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']

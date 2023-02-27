@@ -4,6 +4,15 @@
   "description": "Config plugin to add an App Clip to a React Native iOS app",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "files": [
+    "ios",
+    "plugin/build",
+    "build",
+    "README.md",
+    "expo-module.config.json",
+    "app.plugin.js",
+    "react-native.config.js"
+  ],
   "scripts": {
     "build": "EXPO_NONINTERACTIVE=true expo-module build && EXPO_NONINTERACTIVE=true expo-module build plugin",
     "dev": "expo-module build",

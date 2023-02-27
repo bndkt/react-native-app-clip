@@ -24,6 +24,32 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 }
 ```
 
+## Additional parameters:
+
+- **groupIdentifier** (string): Configures an app group to share data between App Clip and full app (see [Apple Developer Docs](https://developer.apple.com/documentation/xcode/configuring-app-groups))
+- **deploymentTarget** (string): Sets the deployment target for the App Clip. If you set this to "16.0", your App Clip can be 15 MB instead of 10 MB.
+- **requestEphemeralUserNotification** (boolean): Enables notifications for the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/enabling_notifications_in_app_clips))
+- **requestLocationConfirmation** (boolean): Allow App Clip access to location data (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/confirming_the_user_s_physical_location))
+- **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
+- **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
+
+## Native capabilities
+
+```typescript
+import {
+  isClip,
+  displayOverlay,
+  setSharedCredential,
+  getSharedCredential,
+} from "react-native-app-clip";
+```
+
+**isClip()** allows determining whether the code is currently run within the App Clip and can be used to apply different content and behaviors for the full app and the App Clip.
+
+**displayOverlay()** shows the native iOS banner to promote the full app within the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/recommending_your_app_to_app_clip_users)).
+
+**setSharedCredential()** and **getSharedCredential()** allows sharing login data from the App Clip to the full app so that the user doesn't have to sign in again after downloading the full app (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/sharing_data_between_your_app_clip_and_your_full_app)).
+
 ## Determining what the App Clip renders
 
 The App Clip will render the same root component as the full app ("App.tsx" by default). The root component will receive a boolean prop named "isClip" that is true for the App Clip. Using this prop, you can make different rendering decisions within the app. For example:

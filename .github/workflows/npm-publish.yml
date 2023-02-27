@@ -11,18 +11,14 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - name: 🏗 Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: pnpm install
-      - run: pnpm build
-      - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
+      - run: yarn install
+      - run: yarn build
+      - run: yarn config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: pnpm publish --no-git-checks
+      - run: yarn publish --no-git-checks

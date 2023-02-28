@@ -33,11 +33,13 @@ export const withAppClipPlist: ConfigPlugin<{
         NSAppClipRequestLocationConfirmation: requestLocationConfirmation,
       },
       NSAppTransportSecurity: {
-        NSAllowsArbitraryLoads: true,
+        NSAllowsArbitraryLoads: config.developmentClient,
         NSExceptionDomains: {
-          localhost: { NSExceptionAllowsInsecureHTTPLoads: true },
-          "127.0.0.1": { NSExceptionAllowsInsecureHTTPLoads: true },
+          localhost: {
+            NSExceptionAllowsInsecureHTTPLoads: config.developmentClient,
+          },
         },
+        NSAllowsLocalNetworking: config.developmentClient,
       },
       CFBundleName: "$(PRODUCT_NAME)",
       CFBundleIdentifier: "$(PRODUCT_BUNDLE_IDENTIFIER)",

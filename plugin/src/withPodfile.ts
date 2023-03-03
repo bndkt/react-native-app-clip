@@ -53,8 +53,9 @@ export const withPodfile: ConfigPlugin<{
       use_expo_modules!(exclude: exclude)`
           : `use_expo_modules!`;
 
-      const podfileInsert = `
+      const appClipTarget = `
         target '${targetName}' do
+          inherit! :none
           ${useExpoModules}
           config = use_native_modules_app_clip!
           
@@ -76,10 +77,19 @@ export const withPodfile: ConfigPlugin<{
         end
       `;
 
-      podfileContent = podfileContent
+      /* podfileContent = podfileContent
         .concat(`\n\n# >>> Inserted by react-native-app-clip`)
         .concat(podfileInsert)
-        .concat(`\n\n# <<< Inserted by react-native-app-clip`);
+        .concat(`\n\n# <<< Inserted by react-native-app-clip`); */
+
+      podfileContent = mergeContents({
+        tag: "react-native-app-clip-2",
+        src: podfileContent,
+        newSrc: appClipTarget,
+        anchor: `post_install do`,
+        offset: -1,
+        comment: "#",
+      }).contents;
 
       fs.writeFileSync(podFilePath, podfileContent);
 

@@ -55,7 +55,6 @@ export const withPodfile: ConfigPlugin<{
 
       const appClipTarget = `
         target '${targetName}' do
-          inherit! :none
           ${useExpoModules}
           config = use_native_modules_app_clip!
           

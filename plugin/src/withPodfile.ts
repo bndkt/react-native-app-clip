@@ -54,7 +54,7 @@ export const withPodfile: ConfigPlugin<{
           : `use_expo_modules!`;
 
       const appClipTarget = `
-        target '${targetName}' do
+        target '${targetName}' do          
           ${useExpoModules}
           config = use_native_modules_app_clip!
           
@@ -85,8 +85,8 @@ export const withPodfile: ConfigPlugin<{
         tag: "react-native-app-clip-2",
         src: podfileContent,
         newSrc: appClipTarget,
-        anchor: `post_install do`,
-        offset: -1,
+        anchor: `Pod::UI.warn e`,
+        offset: 5,
         comment: "#",
       }).contents;
 

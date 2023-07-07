@@ -1,9 +1,16 @@
 {
-  "extends": "expo-module-scripts/tsconfig.plugin",
   "compilerOptions": {
     "outDir": "build",
-    "rootDir": "src"
+    "lib": ["ES2020"],
+    "module": "CommonJS",
+    "target": "ES2020",
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node"
   },
-  "include": ["./src"],
-  "exclude": ["**/__mocks__/*", "**/__tests__/*"]
+  "include": ["src"],
+  "exclude": ["**/__mocks__/*", "**/__tests__/*", "**/__stories__/*"]
 }

@@ -13,11 +13,7 @@ export const withXcode: ConfigPlugin<{
   targetName: string;
   bundleIdentifier: string;
   deploymentTarget: string;
-  expoRouterAppRoot?: string;
-}> = (
-  config,
-  { name, targetName, bundleIdentifier, deploymentTarget, expoRouterAppRoot }
-) => {
+}> = (config, { name, targetName, bundleIdentifier, deploymentTarget }) => {
   return withXcodeProject(config, (config) => {
     const xcodeProject = config.modResults;
 
@@ -59,7 +55,6 @@ export const withXcode: ConfigPlugin<{
       targetUuid,
       groupName,
       productFile,
-      expoRouterAppRoot,
     });
 
     return config;

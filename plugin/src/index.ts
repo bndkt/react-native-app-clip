@@ -14,7 +14,6 @@ const withAppClip: ConfigPlugin<{
   requestLocationConfirmation?: boolean;
   appleSignin?: boolean;
   excludedPackages: string[];
-  expoRouterAppRoot?: string;
 }> = (
   config,
   {
@@ -25,7 +24,6 @@ const withAppClip: ConfigPlugin<{
     requestLocationConfirmation,
     appleSignin = true,
     excludedPackages,
-    expoRouterAppRoot,
   }
 ) => {
   const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
@@ -58,7 +56,6 @@ const withAppClip: ConfigPlugin<{
         name,
         targetName,
         bundleIdentifier,
-        expoRouterAppRoot,
         deploymentTarget,
       },
     ],

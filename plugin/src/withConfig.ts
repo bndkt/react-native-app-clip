@@ -1,4 +1,5 @@
-import { ConfigPlugin } from "expo/config-plugins";
+import { ConfigPlugin } from "@expo/config-plugins";
+
 import {
   addApplicationGroupsEntitlement,
   getAppClipEntitlements,

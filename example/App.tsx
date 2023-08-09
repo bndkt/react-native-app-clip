@@ -5,7 +5,7 @@ import * as ReactNativeAppClip from 'react-native-app-clip';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>{ReactNativeAppClip.hello()}</Text>
+      <Text>{ReactNativeAppClip.isClip() ? "Clip" : "No Clip"}</Text>
     </View>
   );
 }

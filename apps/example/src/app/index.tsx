@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import * as ReactNativeAppClip from "react-native-app-clip";
 
-export default function App() {
+export default function Index() {
   return (
     <View style={styles.container}>
       <Text>{ReactNativeAppClip.isClip() ? "Clip" : "No Clip"}</Text>

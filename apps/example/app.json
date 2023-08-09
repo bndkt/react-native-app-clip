@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "react-native-app-clip-example",
-    "slug": "react-native-app-clip-example",
+    "name": "example",
+    "slug": "example",
+    "scheme": "example",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,16 +17,14 @@
       "supportsTablet": true,
       "bundleIdentifier": "expo.modules.appclip.example"
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "expo.modules.appclip.example"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [["react-native-app-clip", { "name": "Example Clip" }]]
+    "plugins": [
+      ["react-native-app-clip", { "name": "Example Clip" }],
+      [
+        "expo-router",
+        {
+          "asyncRoutes": "development"
+        }
+      ]
+    ]
   }
 }

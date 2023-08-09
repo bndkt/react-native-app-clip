@@ -22,7 +22,9 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: pnpm install
       - run: pnpm build
+        working-directory: packages/react-native-app-clip
       - run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: npm publish --no-git-checks
+      - run: npm publish --no-git-checks --dry-run
+        working-directory: packages/react-native-app-clip

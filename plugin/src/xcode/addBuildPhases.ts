@@ -1,5 +1,5 @@
-import { XcodeProject } from "expo/config-plugins";
-import * as util from "util";
+import { XcodeProject } from "@expo/config-plugins";
+import util from "util";
 
 export function addBuildPhases(
   xcodeProject: XcodeProject,
@@ -32,11 +32,7 @@ export function addBuildPhases(
     {
       shellPath: "/bin/sh",
       shellScript:
-        'if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then\\n  source "$PODS_ROOT/../.xcode.env"\\nfi\\nif [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then\\n  source "$PODS_ROOT/../.xcode.env.local"\\nfi\\n'
-          .concat(`\\nexport APP_CLIP=true`)
-          .concat(
-            '\\nexport RCT_METRO_PORT="${RCT_METRO_PORT:=8081}"\\necho "export RCT_METRO_PORT=${RCT_METRO_PORT}" > `$NODE_BINARY --print "require(\'path\').dirname(require.resolve(\'react-native/package.json\')) + \'/scripts/.packager.env\'"`\\nif [ -z "${RCT_NO_LAUNCH_PACKAGER+xxx}" ] ; then\\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\\n    if ! curl -s "http://localhost:${RCT_METRO_PORT}/status" | grep -q "packager-status:running" ; then\\n      echo "Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly"\\n      exit 2\\n    fi\\n  else\\n    open `$NODE_BINARY --print "require(\'path\').dirname(require.resolve(\'react-native/package.json\')) + \'/scripts/launchPackager.command\'"` || echo "Can\'t start packager automatically"\\n  fi\\nfi\\n'
-          ),
+        'if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then\n  source "$PODS_ROOT/../.xcode.env"\nfi\nif [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then\n  source "$PODS_ROOT/../.xcode.env.local"\nfi\n\nexport RCT_METRO_PORT="${RCT_METRO_PORT:=8081}"\necho "export RCT_METRO_PORT=${RCT_METRO_PORT}" > `$NODE_BINARY --print "require(\'path\').dirname(require.resolve(\'react-native/package.json\')) + \'/scripts/.packager.env\'"`\nif [ -z "${RCT_NO_LAUNCH_PACKAGER+xxx}" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s "http://localhost:${RCT_METRO_PORT}/status" | grep -q "packager-status:running" ; then\n      echo "Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly"\n      exit 2\n    fi\n  else\n    open `$NODE_BINARY --print "require(\'path\').dirname(require.resolve(\'expo/package.json\')) + \'/scripts/launchPackager.command\'"` || echo "Can\'t start packager automatically"\n  fi\nfi\n',
     },
     buildPath
   );
@@ -98,11 +94,7 @@ export function addBuildPhases(
     {
       shellPath: "/bin/sh",
       shellScript:
-        'if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then\\n  source "$PODS_ROOT/../.xcode.env"\\nfi\\nif [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then\\n  source "$PODS_ROOT/../.xcode.env.local"\\nfi\\n\\n# The project root by default is one level up from the ios directory\\nexport PROJECT_ROOT="$PROJECT_DIR"/..'
-          .concat(`\\nexport APP_CLIP=true`)
-          .concat(
-            '\\n\\nif [[ "$CONFIGURATION" = *Debug* ]]; then\\n  export SKIP_BUNDLING=1\\nfi\\nif [[ -z "$ENTRY_FILE" ]]; then\\n  # Set the entry JS file using the bundler\'s entry resolution.\\n  export ENTRY_FILE="$("$NODE_BINARY" -e "require(\'expo/scripts/resolveAppEntry\')" $PROJECT_ROOT ios relative | tail -n 1)"\\nfi\\n\\n`"$NODE_BINARY" --print "require(\'path\').dirname(require.resolve(\'react-native/package.json\')) + \'/scripts/react-native-xcode.sh\'"`\\n\\n'
-          ),
+        'if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then\n  source "$PODS_ROOT/../.xcode.env"\nfi\nif [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then\n  source "$PODS_ROOT/../.xcode.env.local"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT="$PROJECT_DIR"/..\n\nif [[ "$CONFIGURATION" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z "$ENTRY_FILE" ]]; then\n  # Set the entry JS file using the bundler\'s entry resolution.\n  export ENTRY_FILE="$("$NODE_BINARY" -e "require(\'expo/scripts/resolveAppEntry\')" "$PROJECT_ROOT" ios relative | tail -n 1)"\nfi\n\nif [[ -z "$CLI_PATH" ]]; then\n  # Use Expo CLI\n  export CLI_PATH="$("$NODE_BINARY" --print "require.resolve(\'@expo/cli\')")"\nfi\nif [[ -z "$BUNDLE_COMMAND" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND="export:embed"\nfi\n\n`"$NODE_BINARY" --print "require(\'path\').dirname(require.resolve(\'react-native/package.json\')) + \'/scripts/react-native-xcode.sh\'"`\n\n',
     },
     buildPath
   );

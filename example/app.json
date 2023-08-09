@@ -25,6 +25,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [["react-native-app-clip", { "name": "Example Clip" }]]
   }
 }

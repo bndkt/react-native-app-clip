@@ -26,5 +26,5 @@ jobs:
       - run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: npm publish --no-git-checks --dry-run
+      - run: npm publish --no-git-checks
         working-directory: packages/react-native-app-clip

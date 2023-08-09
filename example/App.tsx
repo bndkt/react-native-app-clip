@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-
 import * as ReactNativeAppClip from "react-native-app-clip";
 
 export default function App() {

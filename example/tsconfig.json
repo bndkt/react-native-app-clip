@@ -1,10 +1,6 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
-    "paths": {
-      "react-native-app-clip": ["../src/index"],
-      "react-native-app-clip/*": ["../src/*"]
-    }
+    "strict": true
   }
 }

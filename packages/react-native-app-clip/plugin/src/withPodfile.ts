@@ -1,7 +1,7 @@
 import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
-import { ConfigPlugin, withDangerousMod } from "expo/config-plugins";
-import * as fs from "fs";
-import * as path from "path";
+import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
+import fs from "fs";
+import path from "path";
 
 export const withPodfile: ConfigPlugin<{
   targetName: string;
@@ -16,37 +16,6 @@ export const withPodfile: ConfigPlugin<{
       );
       let podfileContent = fs.readFileSync(podFilePath).toString();
 
-      const nativeModulesPath = require.resolve(
-        "@react-native-community/cli-platform-ios/native_modules.rb"
-      );
-
-      let nativeModulesContent = fs.readFileSync(nativeModulesPath).toString();
-      nativeModulesContent = nativeModulesContent.replace(
-        "use_native_modules",
-        "use_native_modules_app_clip"
-      );
-      /* nativeModulesContent = `\n\n# >>> inserted by react-native-app-clip\n\n`
-        .concat(nativeModulesContent)
-        .concat(`\n\n# <<< inserted by react-native-app-clip`); */
-
-      if (excludedPackages && excludedPackages.length > 0) {
-        nativeModulesContent = nativeModulesContent.replace(
-          `["node", cli_bin, "config"]`,
-          `["node", cli_bin, "app-clip", "--exclude", "${excludedPackages.join(
-            ","
-          )}"]`
-        );
-      }
-
-      podfileContent = mergeContents({
-        tag: "react-native-app-clip-1",
-        src: podfileContent,
-        newSrc: nativeModulesContent,
-        anchor: `@react-native-community/cli-platform-ios/package.json`,
-        offset: 1,
-        comment: "#",
-      }).contents;
-
       const useExpoModules =
         excludedPackages && excludedPackages.length > 0
           ? `exclude = ["${excludedPackages.join(`", "`)}"]
@@ -56,7 +25,7 @@ export const withPodfile: ConfigPlugin<{
       const appClipTarget = `
         target '${targetName}' do          
           ${useExpoModules}
-          config = use_native_modules_app_clip!
+          config = use_native_modules!
           
           use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
           use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']

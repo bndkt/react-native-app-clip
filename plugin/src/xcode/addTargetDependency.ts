@@ -1,4 +1,4 @@
-import { XcodeProject } from "expo/config-plugins";
+import { XcodeProject } from "@expo/config-plugins";
 
 export function addTargetDependency(
   xcodeProject: XcodeProject,

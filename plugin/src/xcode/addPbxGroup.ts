@@ -1,6 +1,6 @@
-import { XcodeProject } from "expo/config-plugins";
-import * as fs from "fs";
-import * as path from "path";
+import { XcodeProject } from "@expo/config-plugins";
+import fs from "fs";
+import path from "path";
 
 export function addPbxGroup(
   xcodeProject: XcodeProject,

@@ -1,7 +1,7 @@
 import plist from "@expo/plist";
-import { ConfigPlugin, InfoPlist, withInfoPlist } from "expo/config-plugins";
-import * as fs from "fs";
-import * as path from "path";
+import { ConfigPlugin, InfoPlist, withInfoPlist } from "@expo/config-plugins";
+import fs from "fs";
+import path from "path";
 
 export const withAppClipPlist: ConfigPlugin<{
   targetName: string;

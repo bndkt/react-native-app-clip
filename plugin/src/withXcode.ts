@@ -1,4 +1,4 @@
-import { ConfigPlugin, withXcodeProject } from "expo/config-plugins";
+import { ConfigPlugin, withXcodeProject } from "@expo/config-plugins";
 
 import { addXCConfigurationList } from "./xcode/addXCConfigurationList";
 import { addProductFile } from "./xcode/addProductFile";

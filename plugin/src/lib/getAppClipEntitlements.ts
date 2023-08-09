@@ -1,4 +1,4 @@
-import { ExportedConfig, InfoPlist } from "expo/config-plugins";
+import { ExportedConfig, InfoPlist } from "@expo/config-plugins";
 
 export function getAppClipEntitlements(
   iosConfig: ExportedConfig["ios"],

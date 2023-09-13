@@ -40,7 +40,7 @@
     "expo": "~49.0.6",
     "expo-module-scripts": "^3.0.11",
     "expo-modules-core": "^1.5.9",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.3",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "typescript": "^5.1.6"

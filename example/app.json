@@ -26,6 +26,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["../app.plugin.js"]
+    "plugins": [["../app.plugin.js", { "name": "Example Clip" }]],
+    "extra": {
+      "eas": {
+        "projectId": "5aa321dd-d382-4fc5-add1-42a3ff1229f9"
+      }
+    }
   }
 }

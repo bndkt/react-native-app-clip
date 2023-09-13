@@ -1,5 +1,0 @@
-# Node (https://github.com/github/gitignore/blob/main/Node.gitignore)
-node_modules/
-
-# macOS
-.DS_Store

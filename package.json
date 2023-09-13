@@ -10,12 +10,11 @@
     "build",
     "README.md",
     "expo-module.config.json",
-    "app.plugin.js",
-    "react-native.config.js"
+    "app.plugin.js"
   ],
   "scripts": {
-    "build": "tsc --build ./ ./plugin",
-    "dev": "tsc --build ./ ./plugin --watch"
+    "build": "bun x tsc --build ./ ./plugin",
+    "dev": "bun x tsc --build ./ ./plugin --watch"
   },
   "keywords": [
     "react-native",

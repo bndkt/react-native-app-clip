@@ -1,11 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 import * as ReactNativeAppClip from "react-native-app-clip";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>{ReactNativeAppClip.isClip()}</Text>
+      <Text>{ReactNativeAppClip.isClip() ? "App Clip" : "Full App"}</Text>
+      <Button
+        title="Display overlay"
+        onPress={() => ReactNativeAppClip.displayOverlay()}
+      />
     </View>
   );
 }

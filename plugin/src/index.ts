@@ -17,7 +17,7 @@ const withAppClip: ConfigPlugin<{
 }> = (
   config,
   {
-    name,
+    name = "Clip",
     groupIdentifier,
     deploymentTarget = "14.0",
     requestEphemeralUserNotification,

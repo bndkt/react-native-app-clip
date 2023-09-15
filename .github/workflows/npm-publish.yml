@@ -11,20 +11,18 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: 🏗 Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+      - name: Install dependencies
+        run: bun install
+      - name: Build package
+        run: bun run build
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org/
-      - run: pnpm install
-      - run: pnpm build
-        working-directory: packages/react-native-app-clip
-      - run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm publish
         env:
-          NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: npm publish --no-git-checks
-        working-directory: packages/react-native-app-clip
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

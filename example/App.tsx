@@ -6,10 +6,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>{ReactNativeAppClip.isClip() ? "App Clip" : "Full App"}</Text>
-      <Button
-        title="Display overlay"
-        onPress={() => ReactNativeAppClip.displayOverlay()}
-      />
+      {ReactNativeAppClip.isClip() ? (
+        <Button
+          title="Display overlay"
+          onPress={() => ReactNativeAppClip.displayOverlay()}
+        />
+      ) : null}
     </View>
   );
 }

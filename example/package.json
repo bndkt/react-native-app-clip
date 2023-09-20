@@ -5,9 +5,8 @@
   "scripts": {
     "doc": "bun x expo-doctor@latest",
     "start": "expo start",
-    "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web",
+    "clip": "expo run:ios --scheme reactnativeappclipexampleClip",
     "prebuild": "expo prebuild --platform ios --clean",
     "eas-build-pre-install": "cd .. && bun install --yarn && bun run build",
     "build:simulator": "eas build --profile simulator --platform ios --local",

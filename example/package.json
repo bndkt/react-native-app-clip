@@ -10,7 +10,8 @@
     "prebuild": "expo prebuild --platform ios --clean",
     "eas-build-pre-install": "cd .. && bun install --yarn && bun run build",
     "build:simulator": "eas build --profile simulator --platform ios --local",
-    "build:development": "eas build --profile development --platform ios --local"
+    "build:development": "eas build --profile development --platform ios --local",
+    "build:production": "eas build --profile production --platform ios --local"
   },
   "dependencies": {
     "expo": "~49.0.10",

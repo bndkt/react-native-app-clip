@@ -5,9 +5,11 @@ export function getAppClipEntitlements(
   {
     groupIdentifier,
     appleSignin,
+    applePayMerchantIds,
   }: {
     groupIdentifier?: string;
     appleSignin: boolean;
+    applePayMerchantIds?: string[];
   }
 ) {
   const appBundleIdentifier = iosConfig?.bundleIdentifier;
@@ -27,6 +29,9 @@ export function getAppClipEntitlements(
   iosConfig?.associatedDomains &&
     (entitlements["com.apple.developer.associated-domains"] =
       iosConfig.associatedDomains);
+
+  applePayMerchantIds &&
+    (entitlements["com.apple.developer.in-app-payments"] = applePayMerchantIds);
 
   return entitlements;
 }

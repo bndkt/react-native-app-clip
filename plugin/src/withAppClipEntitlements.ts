@@ -10,7 +10,8 @@ export const withAppClipEntitlements: ConfigPlugin<{
   targetPath: string;
   groupIdentifier: string;
   appleSignin: boolean;
-}> = (config, { targetName, groupIdentifier, appleSignin }) => {
+  applePayMerchantIds?: string[];
+}> = (config, { targetName, groupIdentifier, appleSignin, applePayMerchantIds }) => {
   return withInfoPlist(config, (config) => {
     const targetPath = path.join(
       config.modRequest.platformProjectRoot,
@@ -21,6 +22,7 @@ export const withAppClipEntitlements: ConfigPlugin<{
     const appClipEntitlements = getAppClipEntitlements(config.ios, {
       groupIdentifier,
       appleSignin,
+      applePayMerchantIds,
     });
 
     fs.mkdirSync(path.dirname(filePath), { recursive: true });

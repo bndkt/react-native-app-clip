@@ -13,6 +13,7 @@ const withAppClip: ConfigPlugin<{
   requestEphemeralUserNotification?: boolean;
   requestLocationConfirmation?: boolean;
   appleSignin?: boolean;
+  applePayMerchantIds?: string[];
   excludedPackages: string[];
 }> = (
   config,
@@ -23,6 +24,7 @@ const withAppClip: ConfigPlugin<{
     requestEphemeralUserNotification,
     requestLocationConfirmation,
     appleSignin = true,
+    applePayMerchantIds,
     excludedPackages,
   }
 ) => {
@@ -39,7 +41,7 @@ const withAppClip: ConfigPlugin<{
         appleSignin,
       },
     ],
-    [withAppClipEntitlements, { targetName, groupIdentifier, appleSignin }],
+    [withAppClipEntitlements, { targetName, groupIdentifier, appleSignin, applePayMerchantIds }],
     [withPodfile, { targetName, excludedPackages }],
     [
       withAppClipPlist,

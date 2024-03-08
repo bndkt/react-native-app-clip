@@ -5,6 +5,7 @@ import { withAppClipEntitlements } from "./withAppClipEntitlements";
 import { withPodfile } from "./withPodfile";
 import { withAppClipPlist } from "./withAppClipPlist";
 import { withXcode } from "./withXcode";
+import { withDeviceFamily } from "@expo/config-plugins/build/ios/DeviceFamily";
 
 const withAppClip: ConfigPlugin<{
   name: string;
@@ -32,6 +33,9 @@ const withAppClip: ConfigPlugin<{
   const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}Clip`;
 
   config = withPlugins(config, [
+    [
+      withDeviceFamily, config
+    ],
     [
       withConfig,
       {

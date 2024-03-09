@@ -10,9 +10,10 @@ export const withConfig: ConfigPlugin<{
   targetName: string;
   groupIdentifier?: string;
   appleSignin: boolean;
+  applePayMerchantIds?: string[];
 }> = (
   config,
-  { bundleIdentifier, targetName, groupIdentifier, appleSignin }
+  { bundleIdentifier, targetName, groupIdentifier, appleSignin, applePayMerchantIds }
 ) => {
   let configIndex: null | number = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
@@ -58,6 +59,7 @@ export const withConfig: ConfigPlugin<{
       ...appClipConfig.entitlements,
       ...getAppClipEntitlements(config.ios, {
         appleSignin,
+        applePayMerchantIds,
         // groupIdentifier, // Throws an error in EAS
       }),
     };

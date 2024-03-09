@@ -14,8 +14,9 @@
   ],
   "scripts": {
     "ncu": "bun x npm-check-updates -p bun",
-    "build": "bun x tsc --build ./ ./plugin",
-    "dev": "bun x tsc --build ./ ./plugin --watch"
+    "build": "tsc --build ./ ./plugin",
+    "dev": "tsc --build ./ ./plugin --watch",
+    "prepare": "npm run build"
   },
   "keywords": [
     "react-native",

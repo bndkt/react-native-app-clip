@@ -26,7 +26,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [["../app.plugin.js", { "name": "Example Clip" }]],
+    "plugins": [["../app.plugin.js", { "name": "Example Clip", "applePayMerchantIds": ["merchant.example.com"] }]],
     "extra": {
       "eas": {
         "projectId": "5aa321dd-d382-4fc5-add1-42a3ff1229f9"

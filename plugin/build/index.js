@@ -6,7 +6,7 @@ const withAppClipEntitlements_1 = require("./withAppClipEntitlements");
 const withPodfile_1 = require("./withPodfile");
 const withAppClipPlist_1 = require("./withAppClipPlist");
 const withXcode_1 = require("./withXcode");
-const withAppClip = (config, { name = "Clip", groupIdentifier, deploymentTarget = "14.0", requestEphemeralUserNotification, requestLocationConfirmation, appleSignin = true, excludedPackages, }) => {
+const withAppClip = (config, { name = "Clip", groupIdentifier, deploymentTarget = "17.0", requestEphemeralUserNotification, requestLocationConfirmation, appleSignin = true, excludedPackages, }) => {
     const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
     const targetName = `${config_plugins_1.IOSConfig.XcodeUtils.sanitizedName(config.name)}Clip`;
     config = (0, config_plugins_1.withPlugins)(config, [

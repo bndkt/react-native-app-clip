@@ -19,7 +19,7 @@ const withAppClip: ConfigPlugin<{
   {
     name = "Clip",
     groupIdentifier,
-    deploymentTarget = "14.0",
+    deploymentTarget = "17.0",
     requestEphemeralUserNotification,
     requestLocationConfirmation,
     appleSignin = true,

@@ -17,17 +17,17 @@ const withAppClip: ConfigPlugin<{
 }> = (
   config,
   {
-    name = "Clip",
+    name = "AppClip",
     groupIdentifier,
     deploymentTarget = "14.0",
     requestEphemeralUserNotification,
     requestLocationConfirmation,
-    appleSignin = true,
+    appleSignin = false,
     excludedPackages,
   }
 ) => {
   const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
-  const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}Clip`;
+  const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}AppClip`;
 
   config = withPlugins(config, [
     [

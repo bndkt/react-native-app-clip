@@ -4,10 +4,12 @@ import util from "util";
 export function addBuildPhases(
   xcodeProject: XcodeProject,
   {
+    targetName,
     targetUuid,
     groupName,
     productFile,
   }: {
+    targetName: string;
     targetUuid: string;
     groupName: string;
     productFile: {
@@ -21,7 +23,7 @@ export function addBuildPhases(
   const buildPath = `"$(CONTENTS_FOLDER_PATH)/AppClips"`;
   const folderType = "watch2_app"; // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet
 
-  const buildPhaseFiles = ["AppDelegate.mm", "main.m"];
+  const buildPhaseFiles = [`${targetName}/AppDelegate.mm`, `${targetName}/main.m`];
 
   // Add shell script build phase "Start Packager"
   xcodeProject.addBuildPhase(
@@ -77,7 +79,11 @@ export function addBuildPhases(
 
   // Resources build phase
   xcodeProject.addBuildPhase(
-    ["Images.xcassets", "SplashScreen.storyboard", "Supporting/Expo.plist"],
+    [
+      `${targetName}/Images.xcassets`,
+      `${targetName}/SplashScreen.storyboard`,
+      `${targetName}/Supporting/Expo.plist`
+    ],
     "PBXResourcesBuildPhase",
     groupName,
     targetUuid,

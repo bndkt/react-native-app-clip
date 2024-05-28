@@ -52,6 +52,7 @@ export const withXcode: ConfigPlugin<{
     });
 
     addBuildPhases(xcodeProject, {
+      targetName,
       targetUuid,
       groupName,
       productFile,

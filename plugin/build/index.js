@@ -7,7 +7,7 @@ const withPodfile_1 = require("./withPodfile");
 const withAppClipPlist_1 = require("./withAppClipPlist");
 const withXcode_1 = require("./withXcode");
 const withAppClip = (config, { name = "AppClip", groupIdentifier, deploymentTarget = "14.0", requestEphemeralUserNotification, requestLocationConfirmation, appleSignin = false, excludedPackages, }) => {
-    const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
+    const bundleIdentifier = `${config.ios?.bundleIdentifier}.clip`;
     const targetName = `${config_plugins_1.IOSConfig.XcodeUtils.sanitizedName(config.name)}AppClip`;
     config = (0, config_plugins_1.withPlugins)(config, [
         [

@@ -26,7 +26,19 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "../app.plugin.js",
+      [
+        "../app.plugin.js",
+        {
+          "name": "Example Clip",
+          "groupIdentifier": "dev.example.app",
+          "deploymentTarget": "14.2",
+          "requestEphemeralUserNotification": true,
+          "requestLocationConfirmation": true,
+          "appleSignin": true,
+          "applePayMerchantIds": ["dev.example.app"],
+          "excludedPackages": ["@shopify/react-native-skia"]
+        }
+      ],
       [
         "expo-build-properties",
         {

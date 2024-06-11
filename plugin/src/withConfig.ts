@@ -1,9 +1,15 @@
 import type { ConfigPlugin } from "expo/config-plugins";
+import { getAppClipEntitlements } from "./lib/getAppClipEntitlements";
 
 export const withConfig: ConfigPlugin<{
   targetName: string;
   bundleIdentifier: string;
-}> = (config, { targetName, bundleIdentifier }) => {
+  appleSignin: boolean;
+  applePayMerchantIds: string[];
+}> = (
+  config,
+  { targetName, bundleIdentifier, appleSignin, applePayMerchantIds },
+) => {
   let configIndex: null | number = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
     (ext: { targetName: string }, index: number) => {
@@ -46,10 +52,11 @@ export const withConfig: ConfigPlugin<{
 
     appClipConfig.entitlements = {
       ...appClipConfig.entitlements,
-      // ...getAppClipEntitlements(config.ios, {
-      //   appleSignin,
-      //   // groupIdentifier, // Throws an error in EAS
-      // }),
+      ...getAppClipEntitlements(config.ios, {
+        appleSignin,
+        applePayMerchantIds,
+        // groupIdentifier, // Throws an error in EAS
+      }),
     };
   }
 

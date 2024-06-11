@@ -1,7 +1,7 @@
 # react-native-app-clip
 
 > **Warning**
-> Starting with version 0.0.35, react-native-app-clip requires **Expo SDK 48** and **React Native 0.71**.
+> Starting with version 0.3.0, react-native-app-clip requires **Expo SDK 51** and **React Native 0.74**.
 
 Expo Config Plugin that generates an App Clip for iOS apps built with Expo.
 

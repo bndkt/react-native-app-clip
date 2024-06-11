@@ -3,7 +3,7 @@ import {
   type InfoPlist,
   withInfoPlist,
   type ConfigPlugin,
-} from "expo/config-plugins";
+} from "@expo/config-plugins";
 import fs from "node:fs";
 import path from "node:path";
 

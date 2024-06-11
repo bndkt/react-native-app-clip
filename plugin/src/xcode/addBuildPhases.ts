@@ -1,4 +1,4 @@
-import type { XcodeProject } from "expo/config-plugins";
+import type { XcodeProject } from "@expo/config-plugins";
 import util from "node:util";
 
 export function addBuildPhases(

@@ -1,6 +1,6 @@
 {
   "name": "react-native-app-clip",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Config plugin to add an App Clip to a React Native iOS app",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -13,9 +13,16 @@
     "app.plugin.js"
   ],
   "scripts": {
-    "ncu": "bun x npm-check-updates -p bun",
-    "build": "bun x tsc --build ./ ./plugin",
-    "dev": "bun x tsc --build ./ ./plugin --watch"
+    "build": "expo-module build",
+    "build:plugin": "expo-module build plugin",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
   },
   "keywords": [
     "react-native",
@@ -27,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/bndkt/react-native-app-clip/issues"
   },
-  "author": "Benedikt Müller <91166910+bndkt@users.noreply.github.com> (https://bndkt.com)",
+  "author": "Benedikt Müller <91166910+bndkt@users.noreply.github.com> (https://github.com/bndkt)",
   "license": "MIT",
   "homepage": "https://github.com/bndkt/react-native-app-clip#readme",
   "dependencies": {
@@ -35,14 +42,9 @@
     "@expo/plist": "^0.0.20"
   },
   "devDependencies": {
-    "@types/react": "~18.2.21",
-    "@types/react-native": "0.72.2",
-    "expo-module-scripts": "^3.1.0",
-    "expo-modules-core": "^1.5.11",
-    "prettier": "^3.0.3",
-    "react": "18.2.0",
-    "react-native": "0.72.4",
-    "typescript": "^5.2.2"
+    "@types/react": "^18.0.25",
+    "expo-module-scripts": "^3.5.2",
+    "expo-modules-core": "^1.12.14"
   },
   "peerDependencies": {
     "expo": "*",

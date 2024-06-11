@@ -1,48 +1,48 @@
-import { ConfigPlugin, withPlugins, IOSConfig } from "@expo/config-plugins";
+import { IOSConfig, withPlugins, type ConfigPlugin } from "expo/config-plugins";
 
 import { withConfig } from "./withConfig";
-import { withAppClipEntitlements } from "./withAppClipEntitlements";
+import { withEntitlements } from "./withEntitlements";
+import { withPlist } from "./withPlist";
 import { withPodfile } from "./withPodfile";
-import { withAppClipPlist } from "./withAppClipPlist";
 import { withXcode } from "./withXcode";
 
 const withAppClip: ConfigPlugin<{
-  name: string;
+  name?: string;
   groupIdentifier?: string;
   deploymentTarget?: string;
   requestEphemeralUserNotification?: boolean;
   requestLocationConfirmation?: boolean;
   appleSignin?: boolean;
-  excludedPackages: string[];
+  excludedPackages?: string[];
 }> = (
   config,
   {
-    name = "Clip",
+    name,
     groupIdentifier,
-    deploymentTarget = "14.0",
+    deploymentTarget,
     requestEphemeralUserNotification,
     requestLocationConfirmation,
-    appleSignin = true,
+    appleSignin,
     excludedPackages,
-  }
+  } = {},
 ) => {
-  const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
+  name ??= "Clip";
+  deploymentTarget ??= "14.0";
+  appleSignin ??= false;
+
+  if (!config.ios?.bundleIdentifier) {
+    throw new Error("No bundle identifier specified in app config");
+  }
+
+  const bundleIdentifier = `${config.ios.bundleIdentifier}.Clip`;
   const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}Clip`;
 
-  config = withPlugins(config, [
-    [
-      withConfig,
-      {
-        bundleIdentifier,
-        targetName,
-        groupIdentifier,
-        appleSignin,
-      },
-    ],
-    [withAppClipEntitlements, { targetName, groupIdentifier, appleSignin }],
+  const modifiedConfig = withPlugins(config, [
+    [withConfig, { targetName, bundleIdentifier }],
+    [withEntitlements, { targetName, groupIdentifier, appleSignin }],
     [withPodfile, { targetName, excludedPackages }],
     [
-      withAppClipPlist,
+      withPlist,
       {
         targetName,
         deploymentTarget,
@@ -61,7 +61,7 @@ const withAppClip: ConfigPlugin<{
     ],
   ]);
 
-  return config;
+  return modifiedConfig;
 };
 
 export default withAppClip;

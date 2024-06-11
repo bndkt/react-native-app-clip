@@ -18,17 +18,14 @@ export function getBundleIdentifier(): string {
 }
 
 export function displayOverlay(): void {
-  return ReactNativeAppClipModule.displayOverlay();
+  ReactNativeAppClipModule.displayOverlay();
 }
 
 export function setSharedCredential(
   groupIdentifier: string,
-  credential: string
+  credential: string,
 ): void {
-  return ReactNativeAppClipModule.setSharedCredential(
-    groupIdentifier,
-    credential
-  );
+  ReactNativeAppClipModule.setSharedCredential(groupIdentifier, credential);
 }
 
 export function getSharedCredential(groupIdentifier: string): string {

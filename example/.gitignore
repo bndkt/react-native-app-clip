@@ -35,5 +35,3 @@ yarn-error.*
 *.tsbuildinfo
 
 ios/
-*.ipa
-*.tar.gz

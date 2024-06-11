@@ -1,26 +1,16 @@
-import { ConfigPlugin } from "@expo/config-plugins";
-
-import {
-  addApplicationGroupsEntitlement,
-  getAppClipEntitlements,
-} from "./lib/getAppClipEntitlements";
+import type { ConfigPlugin } from "expo/config-plugins";
 
 export const withConfig: ConfigPlugin<{
-  bundleIdentifier: string;
   targetName: string;
-  groupIdentifier?: string;
-  appleSignin: boolean;
-}> = (
-  config,
-  { bundleIdentifier, targetName, groupIdentifier, appleSignin }
-) => {
+  bundleIdentifier: string;
+}> = (config, { targetName, bundleIdentifier }) => {
   let configIndex: null | number = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
-    (ext: any, index: number) => {
+    (ext: { targetName: string }, index: number) => {
       if (ext.targetName === targetName) {
         configIndex = index;
       }
-    }
+    },
   );
 
   if (!configIndex) {
@@ -50,16 +40,16 @@ export const withConfig: ConfigPlugin<{
     configIndex = 0;
   }
 
-  if (configIndex != null && config.extra) {
+  if (configIndex !== null && config.extra) {
     const appClipConfig =
       config.extra.eas.build.experimental.ios.appExtensions[configIndex];
 
     appClipConfig.entitlements = {
       ...appClipConfig.entitlements,
-      ...getAppClipEntitlements(config.ios, {
-        appleSignin,
-        // groupIdentifier, // Throws an error in EAS
-      }),
+      // ...getAppClipEntitlements(config.ios, {
+      //   appleSignin,
+      //   // groupIdentifier, // Throws an error in EAS
+      // }),
     };
   }
 
@@ -67,10 +57,10 @@ export const withConfig: ConfigPlugin<{
   config.ios = {
     ...config.ios,
     entitlements: {
-      ...addApplicationGroupsEntitlement(
-        config.ios?.entitlements ?? {},
-        groupIdentifier
-      ),
+      // ...addApplicationGroupsEntitlement(
+      //   config.ios?.entitlements ?? {},
+      //   groupIdentifier,
+      // ),
       "com.apple.developer.associated-appclip-app-identifiers": [
         `$(AppIdentifierPrefix)${bundleIdentifier}`,
       ],

@@ -1,6 +1,9 @@
 {
-  "platforms": ["ios"],
+  "platforms": ["ios", "tvos", "android", "web"],
   "ios": {
     "modules": ["ReactNativeAppClipModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.appclip.ReactNativeAppClipModule"]
   }
 }

@@ -11,7 +11,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "expo.modules.appclip.example"
@@ -26,11 +25,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [["../app.plugin.js", { "name": "Example Clip" }]],
-    "extra": {
-      "eas": {
-        "projectId": "5aa321dd-d382-4fc5-add1-42a3ff1229f9"
-      }
-    }
+    "plugins": ["../app.plugin.js"]
   }
 }

@@ -13,16 +13,20 @@ import path from "node:path";
 export const withPlist: ConfigPlugin<{
   targetName: string;
   deploymentTarget: string;
-  requestEphemeralUserNotification: boolean;
-  requestLocationConfirmation: boolean;
+  requestEphemeralUserNotification?: boolean;
+  requestLocationConfirmation?: boolean;
+  expoRuntimeVersion?: string;
+  infoPlistAdditionnalEntries?: Record<string,string | number | boolean | undefined >;
 }> = (
   config,
   {
     targetName,
     deploymentTarget,
-    requestEphemeralUserNotification,
-    requestLocationConfirmation,
-  },
+    requestEphemeralUserNotification = false,
+    requestLocationConfirmation = false,
+    expoRuntimeVersion,
+    infoPlistAdditionnalEntries,
+  }
 ) => {
   return withInfoPlist(config, (config) => {
     const targetPath = path.join(
@@ -58,6 +62,7 @@ export const withPlist: ConfigPlugin<{
       UILaunchStoryboardName: "SplashScreen",
       UIRequiresFullScreen: true,
       MinimumOSVersion: deploymentTarget,
+      ...infoPlistAdditionnalEntries
     };
 
     if (config.ios?.infoPlist) {
@@ -75,10 +80,17 @@ export const withPlist: ConfigPlugin<{
 
     // Expo.plist
     const expoPlistFilePath = path.join(targetPath, "Supporting/Expo.plist");
+
+    const existingAppRuntimeVersion = config.runtimeVersion || config.ios?.infoPlist?.EXUpdatesRuntimeVersion
+    const expoUpdateConfig = config.updates
+
     const expoPlist: InfoPlist = {
-      EXUpdatesRuntimeVersion: "exposdk:51.0.0", // TODO
-      // EXUpdatesURL: "", // TODO
-      EXUpdatesEnabled: false,
+      EXUpdatesRuntimeVersion: expoRuntimeVersion ?? typeof existingAppRuntimeVersion === "string" ? existingAppRuntimeVersion : "exposdk:51.0.0",
+      EXUpdatesURL: expoUpdateConfig?.url,
+      EXUpdatesEnabled: expoUpdateConfig?.enabled ?? !!expoUpdateConfig?.url,
+      EXUpdatesCheckOnLaunch: expoUpdateConfig?.checkAutomatically ?? "ALWAYS",
+      EXUpdatesRequestHeaders: expoUpdateConfig?.requestHeaders,
+      EXUpdatesLaunchWaitMs: 0,
     };
 
     fs.mkdirSync(path.dirname(expoPlistFilePath), {

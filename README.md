@@ -33,6 +33,8 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 - **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
 - **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
 - **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
+- **expoRuntimeVersion** (string): The Expo runtime version to use for the App Clip. If not set, `expo.runtimeVersion` of `app.json` will be set if not in managed environement. As a last resort, the value will be `exposdk:51.0.0`.
+- **infoPlistAdditionnalEntries** (Record<string,string | number | boolean | undefined >): Add additional entries to the Info.plist of the App Clip.
 
 ## Native capabilities
 
@@ -50,6 +52,27 @@ import {
 **displayOverlay()** shows the native iOS banner to promote the full app within the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/recommending_your_app_to_app_clip_users)).
 
 **setSharedCredential()** and **getSharedCredential()** allows sharing login data from the App Clip to the full app so that the user doesn't have to sign in again after downloading the full app (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/sharing_data_between_your_app_clip_and_your_full_app)).
+
+## EAS Updates
+
+The AppClip is compatible with [Updates](https://docs.expo.dev/eas-update/introduction/). However, you have to set in app.json at least the following configuration:
+
+```json
+{
+  "expo": {
+    ... your existing configuration
+    "updates": {
+      ...
+      "url": "https://u.expo.dev/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "requestHeaders": {
+        "expo-channel-name": "your-channel-name"
+      }
+      ...
+    }
+    ...
+  }
+}
+```
 
 ## Before building for the App Store
 

@@ -8,6 +8,10 @@ import { addToPbxNativeTargetSection } from "./xcode/addToPbxNativeTargetSection
 import { addToPbxProjectSection } from "./xcode/addToPbxProjectSection";
 import { addXCConfigurationList } from "./xcode/addXCConfigurationList";
 
+/*
+  Update the XCode project with the App Clip target.
+*/
+
 export const withXcode: ConfigPlugin<{
   name: string;
   targetName: string;

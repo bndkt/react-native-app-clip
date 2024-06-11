@@ -7,6 +7,9 @@ import {
 import fs from "node:fs";
 import path from "node:path";
 
+/**
+  Add the App Clip Info.plist configuration and Expo.plist configuration.
+**/
 export const withPlist: ConfigPlugin<{
   targetName: string;
   deploymentTarget: string;

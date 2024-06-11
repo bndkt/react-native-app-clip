@@ -5,6 +5,9 @@ import path from "node:path";
 
 import { getAppClipEntitlements } from "./lib/getAppClipEntitlements";
 
+/*
+  Add the App Clip entitlements configuration.
+*/
 export const withEntitlements: ConfigPlugin<{
   targetName: string;
   groupIdentifier: string;

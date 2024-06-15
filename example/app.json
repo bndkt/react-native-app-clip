@@ -30,6 +30,8 @@
         "../app.plugin.js",
         {
           "name": "Example Clip",
+          "bundleIdSuffix": "AppClip",
+          "targetSuffix": "Clip",
           "groupIdentifier": "dev.example.app",
           "deploymentTarget": "14.2",
           "requestEphemeralUserNotification": true,

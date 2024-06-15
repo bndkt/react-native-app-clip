@@ -8,6 +8,8 @@ import { withXcode } from "./withXcode";
 
 const withAppClip: ConfigPlugin<{
   name?: string;
+  bundleIdSuffix?: string;
+  targetSuffix?: string;
   groupIdentifier?: string;
   deploymentTarget?: string;
   requestEphemeralUserNotification?: boolean;
@@ -19,6 +21,8 @@ const withAppClip: ConfigPlugin<{
   config,
   {
     name,
+    bundleIdSuffix,
+    targetSuffix,
     groupIdentifier,
     deploymentTarget,
     requestEphemeralUserNotification,
@@ -29,6 +33,8 @@ const withAppClip: ConfigPlugin<{
   } = {},
 ) => {
   name ??= "Clip";
+  bundleIdSuffix ??= "Clip";
+  targetSuffix ??= "Clip";
   deploymentTarget ??= "14.0";
   appleSignin ??= false;
 
@@ -36,8 +42,8 @@ const withAppClip: ConfigPlugin<{
     throw new Error("No bundle identifier specified in app config");
   }
 
-  const bundleIdentifier = `${config.ios.bundleIdentifier}.Clip`;
-  const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}Clip`;
+  const bundleIdentifier = `${config.ios.bundleIdentifier}.${bundleIdSuffix}`;
+  const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}${targetSuffix}`;
 
   const modifiedConfig = withPlugins(config, [
     [

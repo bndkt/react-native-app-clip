@@ -1,7 +1,7 @@
 import ReactNativeAppClipModule from "./ReactNativeAppClipModule";
 
 export function isClip(): boolean {
-  const bundleIdentifier = ReactNativeAppClipModule.getBundleIdentifier() as
+  const bundleIdentifier = ReactNativeAppClipModule?.getBundleIdentifier() as
     | string
     | undefined;
   const isClip =
@@ -9,25 +9,28 @@ export function isClip(): boolean {
   return isClip;
 }
 
-export function getContainerURL(groupIdentifier: string): string {
-  return ReactNativeAppClipModule.getContainerURL(groupIdentifier);
+export function getContainerURL(groupIdentifier: string): string | undefined {
+  return ReactNativeAppClipModule?.getContainerURL(groupIdentifier);
 }
 
-export function getBundleIdentifier(): string {
-  return ReactNativeAppClipModule.getBundleIdentifier();
+export function getBundleIdentifier(): string | undefined {
+  return ReactNativeAppClipModule?.getBundleIdentifier();
 }
 
 export function displayOverlay(): void {
-  ReactNativeAppClipModule.displayOverlay();
+  return ReactNativeAppClipModule?.displayOverlay();
 }
 
 export function setSharedCredential(
   groupIdentifier: string,
   credential: string,
 ): void {
-  ReactNativeAppClipModule.setSharedCredential(groupIdentifier, credential);
+  return ReactNativeAppClipModule?.setSharedCredential(
+    groupIdentifier,
+    credential
+  );
 }
 
-export function getSharedCredential(groupIdentifier: string): string {
-  return ReactNativeAppClipModule.getSharedCredential(groupIdentifier);
+export function getSharedCredential(groupIdentifier: string): string | undefined {
+  return ReactNativeAppClipModule?.getSharedCredential(groupIdentifier);
 }

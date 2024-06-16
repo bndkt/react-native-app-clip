@@ -1,4 +1,4 @@
-import type { XcodeProject } from "expo/config-plugins";
+import type { XcodeProject } from "@expo/config-plugins";
 import fs from "node:fs";
 import path from "node:path";
 

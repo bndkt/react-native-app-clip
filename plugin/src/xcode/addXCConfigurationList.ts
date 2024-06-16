@@ -1,4 +1,4 @@
-import type { XcodeProject } from "expo/config-plugins";
+import type { XcodeProject } from "@expo/config-plugins";
 
 export function addXCConfigurationList(
   xcodeProject: XcodeProject,
@@ -28,7 +28,7 @@ export function addXCConfigurationList(
     PRODUCT_NAME: `"${name}"`,
     SWIFT_VERSION: "5.0",
     VERSIONING_SYSTEM: `"apple-generic"`,
-    // TARGETED_DEVICE_FAMILY: `"1,2"`,
+    TARGETED_DEVICE_FAMILY: `"1,2"`, //TODO : Expose in settings
     CODE_SIGN_ENTITLEMENTS: `${targetName}/${targetName}.entitlements`,
   };
 

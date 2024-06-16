@@ -1,5 +1,9 @@
-import type { ConfigPlugin } from "expo/config-plugins";
+import type { ConfigPlugin } from "@expo/config-plugins";
 import { getAppClipEntitlements } from "./lib/getAppClipEntitlements";
+
+/**
+  Add to expo's app.config.json and app extension in eas.build.experimental.ios.appExtensions
+**/
 
 export const withConfig: ConfigPlugin<{
   targetName: string;

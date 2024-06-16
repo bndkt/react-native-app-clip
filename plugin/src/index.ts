@@ -1,4 +1,4 @@
-import { IOSConfig, withPlugins, type ConfigPlugin } from "expo/config-plugins";
+import { IOSConfig, withPlugins, type ConfigPlugin } from "@expo/config-plugins";
 
 import { withConfig } from "./withConfig";
 import { withEntitlements } from "./withEntitlements";
@@ -17,6 +17,8 @@ const withAppClip: ConfigPlugin<{
   appleSignin?: boolean;
   applePayMerchantIds?: string[];
   excludedPackages?: string[];
+  expoRuntimeVersion?: string;
+  infoPlistAdditionnalEntries?: Record<string,string | number | boolean | undefined >;
 }> = (
   config,
   {
@@ -27,9 +29,11 @@ const withAppClip: ConfigPlugin<{
     deploymentTarget,
     requestEphemeralUserNotification,
     requestLocationConfirmation,
-    appleSignin,
+    appleSignin = false,
     applePayMerchantIds,
     excludedPackages,
+    expoRuntimeVersion,
+    infoPlistAdditionnalEntries,
   } = {},
 ) => {
   name ??= "Clip";
@@ -62,6 +66,8 @@ const withAppClip: ConfigPlugin<{
         deploymentTarget,
         requestEphemeralUserNotification,
         requestLocationConfirmation,
+        expoRuntimeVersion,
+        infoPlistAdditionnalEntries
       },
     ],
     [

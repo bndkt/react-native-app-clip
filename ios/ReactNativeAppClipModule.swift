@@ -26,32 +26,32 @@ public class ReactNativeAppClipModule: Module {
         // Get containerURL to share data between App Clip and app
         // https://developer.apple.com/documentation/app_clips/sharing_data_between_your_app_clip_and_your_full_app
         Function("getContainerURL") { (groupIdentifier: String) -> String in
-            // let logger = Logger()
-            // logger.info("getContainerURL() called with groupIdentifier \(groupIdentifier)")
-
+            let logger = Logger(logHandlers: [createOSLogHandler(category: Logger.EXPO_LOG_CATEGORY)])
+            logger.info("getContainerURL() called with groupIdentifier \(groupIdentifier)")
+            
             let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
 
             if let unwrapped = containerURL {
-                // logger.info("containerURL is \(unwrapped)")
+                logger.info("containerURL is \(unwrapped)")
                 return unwrapped.absoluteString
             } else {
-                // logger.info("containerURL is nil")
+                logger.info("containerURL is nil")
                 return ""
             }
         }
 
         Function("setSharedCredential") { (groupIdentifier: String, credential: String) -> Void in
-            // let logger = Logger()
-            // logger.info("setSharedCredential() called with groupIdentifier \(groupIdentifier) and credential \(credential)")
-
+            let logger = Logger(logHandlers: [createOSLogHandler(category: Logger.EXPO_LOG_CATEGORY)])
+            logger.info("setSharedCredential() called with groupIdentifier \(groupIdentifier) and credential \(credential)")
+            
             let groupUserDefaults = UserDefaults(suiteName: groupIdentifier)
             groupUserDefaults?.set(credential, forKey: "SavedUserID")
         }
 
         Function("getSharedCredential") { (groupIdentifier: String) -> String? in
-            // let logger = Logger()
-            // logger.info("getSharedCredential() called with groupIdentifier \(groupIdentifier)")
-
+            let logger = Logger(logHandlers: [createOSLogHandler(category: Logger.EXPO_LOG_CATEGORY)])
+            logger.info("getSharedCredential() called with groupIdentifier \(groupIdentifier)")
+            
             let groupUserDefaults = UserDefaults(suiteName: groupIdentifier)
             let credential = groupUserDefaults?.string(forKey: "SavedUserID")
 

@@ -20,16 +20,17 @@ const getUseNativeModulesAppClip = (excludedPackages: string[] | undefined) => {
   );
 
   if (excludedPackages && excludedPackages.length > 0) {
-    const srcCommand = `["node", cli_bin, "config"]`;
+    const srcCommands = [`["node", cli_bin, "config"]`, `["node", cli_bin, "config", '--platform', 'ios']`];
     // Uses `cliPlugin.ts` to filter package.json
     const newSrcCommand = `["node", cli_bin, "app-clip", "--exclude", "${excludedPackages.join(
       ","
     )}"]`;
-    if(!nativeModulesContent.includes(srcCommand)) {
-        throw new Error(`Failed to find the command to replace in the native modules file. Expected to find "${srcCommand}"`);
+    const validSrcCommand = srcCommands.find((srcCommand) => nativeModulesContent.includes(srcCommand));
+    if(!validSrcCommand) {
+        throw new Error(`Failed to find the command to replace in the native modules file.`);
     }
     nativeModulesContent = nativeModulesContent.replace(
-      srcCommand,
+      validSrcCommand,
       newSrcCommand
     );
   }

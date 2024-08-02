@@ -5,6 +5,8 @@ import path from "node:path";
 
 /**
  * `use_native_modules` is mocked out for `use_native_modules_app_clip` which includes an exclusion of excludedPackages
+ * 
+ * WARNING: This is very likely to break in a future version of React Native. `use_native_modules` is being moved to the `react-native` package.
  */
 const getUseNativeModulesAppClip = (excludedPackages: string[] | undefined) => {
   const nativeModulesPath = require.resolve(
@@ -18,7 +20,7 @@ const getUseNativeModulesAppClip = (excludedPackages: string[] | undefined) => {
   );
 
   if (excludedPackages && excludedPackages.length > 0) {
-    const srcCommand = `["node", cli_bin, "config", '--platform', 'ios']`;
+    const srcCommand = `["node", cli_bin, "config"]`;
     // Uses `cliPlugin.ts` to filter package.json
     const newSrcCommand = `["node", cli_bin, "app-clip", "--exclude", "${excludedPackages.join(
       ","

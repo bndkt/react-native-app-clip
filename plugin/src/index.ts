@@ -1,48 +1,62 @@
-import { ConfigPlugin, withPlugins, IOSConfig } from "@expo/config-plugins";
+import { IOSConfig, withPlugins, type ConfigPlugin } from "expo/config-plugins";
 
 import { withConfig } from "./withConfig";
-import { withAppClipEntitlements } from "./withAppClipEntitlements";
+import { withEntitlements } from "./withEntitlements";
+import { withPlist } from "./withPlist";
 import { withPodfile } from "./withPodfile";
-import { withAppClipPlist } from "./withAppClipPlist";
 import { withXcode } from "./withXcode";
 
 const withAppClip: ConfigPlugin<{
-  name: string;
+  name?: string;
+  bundleIdSuffix?: string;
+  targetSuffix?: string;
   groupIdentifier?: string;
   deploymentTarget?: string;
   requestEphemeralUserNotification?: boolean;
   requestLocationConfirmation?: boolean;
   appleSignin?: boolean;
-  excludedPackages: string[];
+  applePayMerchantIds?: string[];
+  excludedPackages?: string[];
 }> = (
   config,
   {
-    name = "Clip",
+    name,
+    bundleIdSuffix,
+    targetSuffix,
     groupIdentifier,
-    deploymentTarget = "17.0",
+    deploymentTarget,
     requestEphemeralUserNotification,
     requestLocationConfirmation,
-    appleSignin = true,
+    appleSignin,
+    applePayMerchantIds,
     excludedPackages,
-  }
+  } = {},
 ) => {
-  const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
-  const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}Clip`;
+  name ??= "Clip";
+  bundleIdSuffix ??= "Clip";
+  targetSuffix ??= "Clip";
+  deploymentTarget ??= "17.0";
+  appleSignin ??= false;
 
-  config = withPlugins(config, [
+  if (!config.ios?.bundleIdentifier) {
+    throw new Error("No bundle identifier specified in app config");
+  }
+
+  const bundleIdentifier = `${config.ios.bundleIdentifier}.${bundleIdSuffix}`;
+  const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}${targetSuffix}`;
+
+  const modifiedConfig = withPlugins(config, [
     [
       withConfig,
-      {
-        bundleIdentifier,
-        targetName,
-        groupIdentifier,
-        appleSignin,
-      },
+      { targetName, bundleIdentifier, appleSignin, applePayMerchantIds },
     ],
-    [withAppClipEntitlements, { targetName, groupIdentifier, appleSignin }],
+    [
+      withEntitlements,
+      { targetName, groupIdentifier, appleSignin, applePayMerchantIds },
+    ],
     [withPodfile, { targetName, excludedPackages }],
     [
-      withAppClipPlist,
+      withPlist,
       {
         targetName,
         deploymentTarget,
@@ -61,7 +75,7 @@ const withAppClip: ConfigPlugin<{
     ],
   ]);
 
-  return config;
+  return modifiedConfig;
 };
 
 export default withAppClip;

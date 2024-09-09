@@ -1,12 +1,12 @@
-import { ConfigPlugin, withXcodeProject } from "@expo/config-plugins";
+import { type ConfigPlugin, withXcodeProject } from "expo/config-plugins";
 
-import { addXCConfigurationList } from "./xcode/addXCConfigurationList";
+import { addBuildPhases } from "./xcode/addBuildPhases";
+import { addPbxGroup } from "./xcode/addPbxGroup";
 import { addProductFile } from "./xcode/addProductFile";
+import { addTargetDependency } from "./xcode/addTargetDependency";
 import { addToPbxNativeTargetSection } from "./xcode/addToPbxNativeTargetSection";
 import { addToPbxProjectSection } from "./xcode/addToPbxProjectSection";
-import { addTargetDependency } from "./xcode/addTargetDependency";
-import { addPbxGroup } from "./xcode/addPbxGroup";
-import { addBuildPhases } from "./xcode/addBuildPhases";
+import { addXCConfigurationList } from "./xcode/addXCConfigurationList";
 
 export const withXcode: ConfigPlugin<{
   name: string;
@@ -24,7 +24,7 @@ export const withXcode: ConfigPlugin<{
     const xCConfigurationList = addXCConfigurationList(xcodeProject, {
       name,
       targetName,
-      currentProjectVersion: config.ios!.buildNumber || "1",
+      currentProjectVersion: config.ios?.buildNumber || "1",
       bundleIdentifier,
       deploymentTarget,
     });

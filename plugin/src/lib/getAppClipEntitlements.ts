@@ -1,14 +1,16 @@
-import { ExportedConfig, InfoPlist } from "@expo/config-plugins";
+import type { ExportedConfigWithProps, InfoPlist } from "expo/config-plugins";
 
 export function getAppClipEntitlements(
-  iosConfig: ExportedConfig["ios"],
+  iosConfig: ExportedConfigWithProps["ios"],
   {
     groupIdentifier,
     appleSignin,
+    applePayMerchantIds,
   }: {
     groupIdentifier?: string;
     appleSignin: boolean;
-  }
+    applePayMerchantIds?: string[];
+  },
 ) {
   const appBundleIdentifier = iosConfig?.bundleIdentifier;
 
@@ -21,19 +23,25 @@ export function getAppClipEntitlements(
 
   addApplicationGroupsEntitlement(entitlements, groupIdentifier);
 
-  appleSignin &&
-    (entitlements["com.apple.developer.applesignin"] = ["Default"]);
+  if (appleSignin) {
+    entitlements["com.apple.developer.applesignin"] = ["Default"];
+  }
 
-  iosConfig?.associatedDomains &&
-    (entitlements["com.apple.developer.associated-domains"] =
-      iosConfig.associatedDomains);
+  if (applePayMerchantIds) {
+    entitlements["com.apple.developer.in-app-payments"] = applePayMerchantIds;
+  }
+
+  if (iosConfig?.associatedDomains) {
+    entitlements["com.apple.developer.associated-domains"] =
+      iosConfig.associatedDomains;
+  }
 
   return entitlements;
 }
 
 export function addApplicationGroupsEntitlement(
   entitlements: InfoPlist,
-  groupIdentifier?: string
+  groupIdentifier?: string,
 ) {
   if (groupIdentifier) {
     const existingApplicationGroups =

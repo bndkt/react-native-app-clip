@@ -1,26 +1,30 @@
 import plist from "@expo/plist";
-import { ConfigPlugin, InfoPlist, withInfoPlist } from "@expo/config-plugins";
-import fs from "fs";
-import path from "path";
+import {
+  type InfoPlist,
+  withInfoPlist,
+  type ConfigPlugin,
+} from "expo/config-plugins";
+import fs from "node:fs";
+import path from "node:path";
 
-export const withAppClipPlist: ConfigPlugin<{
+export const withPlist: ConfigPlugin<{
   targetName: string;
   deploymentTarget: string;
-  requestEphemeralUserNotification?: boolean;
-  requestLocationConfirmation?: boolean;
+  requestEphemeralUserNotification: boolean;
+  requestLocationConfirmation: boolean;
 }> = (
   config,
   {
     targetName,
     deploymentTarget,
-    requestEphemeralUserNotification = false,
-    requestLocationConfirmation = false,
-  }
+    requestEphemeralUserNotification,
+    requestLocationConfirmation,
+  },
 ) => {
   return withInfoPlist(config, (config) => {
     const targetPath = path.join(
       config.modRequest.platformProjectRoot,
-      targetName
+      targetName,
     );
 
     // Info.plist
@@ -53,10 +57,13 @@ export const withAppClipPlist: ConfigPlugin<{
       MinimumOSVersion: deploymentTarget,
     };
 
-    config.ios?.infoPlist &&
-      Object.keys(config.ios?.infoPlist).forEach((key: string) => {
-        config.ios?.infoPlist && (infoPlist[key] = config.ios.infoPlist[key]);
-      });
+    if (config.ios?.infoPlist) {
+      for (const key of Object.keys(config.ios?.infoPlist)) {
+        if (config.ios?.infoPlist) {
+          infoPlist[key] = config.ios.infoPlist[key];
+        }
+      }
+    }
 
     fs.mkdirSync(path.dirname(filePath), {
       recursive: true,
@@ -66,7 +73,7 @@ export const withAppClipPlist: ConfigPlugin<{
     // Expo.plist
     const expoPlistFilePath = path.join(targetPath, "Supporting/Expo.plist");
     const expoPlist: InfoPlist = {
-      EXUpdatesRuntimeVersion: "50.0.0", // TODO
+      EXUpdatesRuntimeVersion: "exposdk:51.0.0", // TODO
       // EXUpdatesURL: "", // TODO
       EXUpdatesEnabled: false,
     };

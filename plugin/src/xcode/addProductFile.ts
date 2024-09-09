@@ -1,8 +1,8 @@
-import { XcodeProject } from "@expo/config-plugins";
+import type { XcodeProject } from "expo/config-plugins";
 
 export function addProductFile(
   xcodeProject: XcodeProject,
-  { targetName, groupName }: { targetName: string; groupName: string }
+  { targetName, groupName }: { targetName: string; groupName: string },
 ) {
   const options = {
     basename: `${targetName}.app`,

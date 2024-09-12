@@ -5,11 +5,13 @@
   "scripts": {
     "start": "expo start",
     "ios": "expo run:ios --scheme",
-    "android": "expo run:android"
+    "android": "expo run:android",
+    "build": "eas build --local --platform ios --profile simulator"
   },
   "dependencies": {
     "expo": "~51.0.32",
     "expo-build-properties": "~0.12.5",
+    "expo-dev-client": "~4.0.26",
     "react": "18.2.0",
     "react-native": "0.74.5"
   },

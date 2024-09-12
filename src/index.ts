@@ -23,7 +23,7 @@ export function displayOverlay(): void {
 
 export function setSharedCredential(
   groupIdentifier: string,
-  credential: string,
+  credential: string
 ): void {
   ReactNativeAppClipModule.setSharedCredential(groupIdentifier, credential);
 }

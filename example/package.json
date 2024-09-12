@@ -6,6 +6,7 @@
     "start": "expo start",
     "ios": "expo run:ios --scheme",
     "android": "expo run:android",
+    "prebuild": "expo prebuild --platform ios",
     "build": "eas build --local --platform ios --profile simulator"
   },
   "dependencies": {

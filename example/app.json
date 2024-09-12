@@ -20,7 +20,7 @@
         "../app.plugin.js",
         {
           "name": "Clipper Clip",
-          "bundleIdSuffix": "AppClip",
+          "bundleIdSuffix": "Clip",
           "targetSuffix": "Clip",
           "groupIdentifier": "example.clipper",
           "deploymentTarget": "14.2",

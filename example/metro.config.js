@@ -31,4 +31,17 @@ config.transformer.getTransformOptions = async () => ({
   },
 });
 
+// If you enable this flag, `*.clip.*` files will be prioritized. You can use this to optimize your JS bundle.
+const USE_CLIP_FILE_EXT = false;
+if (USE_CLIP_FILE_EXT && process.env.BUILDING_FOR_APP_CLIP) {
+    console.info("Building for App Clip");
+    config.resolver = {
+        ...config.resolver,
+        sourceExts: [].concat(
+            config.resolver.sourceExts.map(e => `clip.${e}`),
+            config.resolver.sourceExts,
+        ),
+    }
+}
+
 module.exports = config;

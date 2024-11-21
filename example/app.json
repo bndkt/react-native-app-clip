@@ -23,7 +23,7 @@
           "bundleIdSuffix": "Clip",
           "targetSuffix": "Clip",
           "groupIdentifier": "example.clipper",
-          "deploymentTarget": "14.2",
+          "deploymentTarget": "15.1",
           "requestEphemeralUserNotification": true,
           "requestLocationConfirmation": true,
           "appleSignin": true,

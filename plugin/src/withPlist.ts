@@ -7,6 +7,13 @@ import {
 import fs from "node:fs";
 import path from "node:path";
 
+/**
+ * List of keys that are not allowed in the Info.plist due to not being supported in App Clip. Add to this array as new build issues arise.
+ */
+const DisallowedPlistKeys = [
+  "UIBackgroundModes",
+];
+
 export const withPlist: ConfigPlugin<{
   targetName: string;
   deploymentTarget: string;
@@ -59,7 +66,7 @@ export const withPlist: ConfigPlugin<{
 
     if (config.ios?.infoPlist) {
       for (const key of Object.keys(config.ios?.infoPlist)) {
-        if (config.ios?.infoPlist) {
+        if (config.ios?.infoPlist && !DisallowedPlistKeys.some((disallowedKey) => disallowedKey === key)) {
           infoPlist[key] = config.ios.infoPlist[key];
         }
       }

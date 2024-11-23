@@ -9,6 +9,7 @@ import { withDeviceFamily } from "@expo/config-plugins/build/ios/DeviceFamily";
 
 const withAppClip: ConfigPlugin<{
   name?: string;
+  enabled?: boolean;
   bundleIdSuffix?: string;
   targetSuffix?: string;
   groupIdentifier?: string;
@@ -23,6 +24,7 @@ const withAppClip: ConfigPlugin<{
   config,
   {
     name,
+    enabled,
     bundleIdSuffix,
     targetSuffix,
     groupIdentifier,
@@ -32,7 +34,6 @@ const withAppClip: ConfigPlugin<{
     appleSignin,
     applePayMerchantIds,
     excludedPackages,
-    enabled,
     pushNotifications,
   } = {},
 ) => {

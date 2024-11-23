@@ -10,9 +10,10 @@ export const withEntitlements: ConfigPlugin<{
   groupIdentifier: string;
   appleSignin: boolean;
   applePayMerchantIds: string[];
+  pushNotifications: boolean;
 }> = (
   config,
-  { targetName, groupIdentifier, appleSignin, applePayMerchantIds },
+  { targetName, groupIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
 ) => {
   return withInfoPlist(config, (config) => {
     const targetPath = path.join(
@@ -29,6 +30,7 @@ export const withEntitlements: ConfigPlugin<{
       groupIdentifier,
       appleSignin,
       applePayMerchantIds,
+      pushNotifications,
     });
 
     fs.mkdirSync(path.dirname(filePath), { recursive: true });

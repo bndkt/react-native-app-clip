@@ -37,6 +37,7 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 -   **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
 -   **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
 -   **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
+-   **pushNotifications** (boolean): Enable push notification compatibility for the App Clip
 
 ## Native capabilities
 

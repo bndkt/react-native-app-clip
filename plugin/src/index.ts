@@ -18,6 +18,7 @@ const withAppClip: ConfigPlugin<{
   appleSignin?: boolean;
   applePayMerchantIds?: string[];
   excludedPackages?: string[];
+  pushNotifications?: boolean;
 }> = (
   config,
   {
@@ -32,6 +33,7 @@ const withAppClip: ConfigPlugin<{
     applePayMerchantIds,
     excludedPackages,
     enabled,
+    pushNotifications,
   } = {},
 ) => {
   name ??= "Clip";
@@ -40,6 +42,7 @@ const withAppClip: ConfigPlugin<{
   deploymentTarget ??= "15.1";
   appleSignin ??= false;
   enabled ??= true;
+  pushNotifications ??= false;
 
   if(!enabled) {
     return config;
@@ -55,11 +58,11 @@ const withAppClip: ConfigPlugin<{
     withDeviceFamily as ConfigPlugin,
     [
       withConfig,
-      { targetName, bundleIdentifier, appleSignin, applePayMerchantIds },
+      { targetName, bundleIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
     ],
     [
       withEntitlements,
-      { targetName, groupIdentifier, appleSignin, applePayMerchantIds },
+      { targetName, groupIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
     ],
     [withPodfile, { targetName, excludedPackages }],
     [

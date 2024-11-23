@@ -6,10 +6,12 @@ export function getAppClipEntitlements(
     groupIdentifier,
     appleSignin,
     applePayMerchantIds,
+    pushNotifications,
   }: {
     groupIdentifier?: string;
     appleSignin: boolean;
     applePayMerchantIds?: string[];
+    pushNotifications: boolean;
   },
 ) {
   const appBundleIdentifier = iosConfig?.bundleIdentifier;
@@ -29,6 +31,11 @@ export function getAppClipEntitlements(
 
   if (applePayMerchantIds) {
     entitlements["com.apple.developer.in-app-payments"] = applePayMerchantIds;
+  }
+
+  if (pushNotifications) {
+    // XCode automatically changes this to "production" when archiving https://stackoverflow.com/a/42293632/4047926
+    entitlements["aps-environment"] = "development";
   }
 
   if (iosConfig?.associatedDomains) {

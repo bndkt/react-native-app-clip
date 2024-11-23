@@ -1,35 +1,29 @@
-import ReactNativeAppClipModule from "./ReactNativeAppClipModule";
+import getBundleIdentifier from "./getBundleIdentifier";
+import isClip from "./isClip";
+import ReactNativeAppClipModuleIos from "./ReactNativeAppClipModule/ReactNativeAppClipModule.ios";
+import { ReactNativeAppClipModuleType } from "./ReactNativeAppClipModule/types";
 
-export function isClip(bundleIdSuffix = "Clip"): boolean {
-  const bundleIdentifier = ReactNativeAppClipModule.getBundleIdentifier() as
-    | string
-    | undefined;
-  const isClip =
-    bundleIdentifier?.slice(bundleIdentifier.lastIndexOf(".") + 1) ===
-    bundleIdSuffix;
+export const getContainerURL: ReactNativeAppClipModuleType["getContainerURL"] =
+	(groupIdentifier) => {
+		return ReactNativeAppClipModuleIos.getContainerURL(groupIdentifier);
+	};
 
-  return isClip;
-}
+export const displayOverlay: ReactNativeAppClipModuleType["displayOverlay"] =
+	() => {
+		return ReactNativeAppClipModuleIos.displayOverlay();
+	};
 
-export function getContainerURL(groupIdentifier: string): string {
-  return ReactNativeAppClipModule.getContainerURL(groupIdentifier);
-}
+export const setSharedCredential: ReactNativeAppClipModuleType["setSharedCredential"] =
+	(groupIdentifier, credential) => {
+		return ReactNativeAppClipModuleIos.setSharedCredential(
+			groupIdentifier,
+			credential,
+		);
+	};
 
-export function getBundleIdentifier(): string {
-  return ReactNativeAppClipModule.getBundleIdentifier();
-}
+export const getSharedCredential: ReactNativeAppClipModuleType["getSharedCredential"] =
+	(groupIdentifier) => {
+		return ReactNativeAppClipModuleIos.getSharedCredential(groupIdentifier);
+	};
 
-export function displayOverlay(): void {
-  ReactNativeAppClipModule.displayOverlay();
-}
-
-export function setSharedCredential(
-  groupIdentifier: string,
-  credential: string
-): void {
-  ReactNativeAppClipModule.setSharedCredential(groupIdentifier, credential);
-}
-
-export function getSharedCredential(groupIdentifier: string): string {
-  return ReactNativeAppClipModule.getSharedCredential(groupIdentifier);
-}
+export { getBundleIdentifier, isClip };

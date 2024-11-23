@@ -5,6 +5,7 @@ import { withEntitlements } from "./withEntitlements";
 import { withPlist } from "./withPlist";
 import { withPodfile } from "./withPodfile";
 import { withXcode } from "./withXcode";
+import { withDeviceFamily } from "@expo/config-plugins/build/ios/DeviceFamily";
 
 const withAppClip: ConfigPlugin<{
   name?: string;
@@ -46,6 +47,7 @@ const withAppClip: ConfigPlugin<{
   const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}${targetSuffix}`;
 
   const modifiedConfig = withPlugins(config, [
+    withDeviceFamily as ConfigPlugin,
     [
       withConfig,
       { targetName, bundleIdentifier, appleSignin, applePayMerchantIds },

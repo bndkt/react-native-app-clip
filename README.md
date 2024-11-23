@@ -41,10 +41,10 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 
 ```typescript
 import {
-	isClip,
-	displayOverlay,
-	setSharedCredential,
-	getSharedCredential,
+  isClip,
+  displayOverlay,
+  setSharedCredential,
+  getSharedCredential,
 } from "react-native-app-clip";
 ```
 
@@ -53,25 +53,6 @@ import {
 **displayOverlay()** shows the native iOS banner to promote the full app within the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/recommending_your_app_to_app_clip_users)).
 
 **setSharedCredential()** and **getSharedCredential()** allows sharing login data from the App Clip to the full app so that the user doesn't have to sign in again after downloading the full app (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/sharing_data_between_your_app_clip_and_your_full_app)).
-
-## App Clip file extension (.clip)
-
-You can configure an App Clip specific file extension similar to [React Native's native platform extensions](https://reactnative.dev/docs/platform-specific-code#native-specific-extensions-ie-sharing-code-with-nodejs-and-web). Enabling this can help optimize build sizes since only the `.clip` file will be included in the App Clip JS bundle. You can replace heavy assets, large components, or unsupported library features using this file extension. The `.clip` extension preference can be configured in `metro.config.js` by prepending `clip` to each of the existing source extensions when the env variable `BUILDING_FOR_APP_CLIP` is enabled.
-
-### Usage
-
-```typescript
-if (process.env.BUILDING_FOR_APP_CLIP) {
-	console.info("Building for App Clip");
-	config.resolver = {
-		...config.resolver,
-		sourceExts: [].concat(
-			config.resolver.sourceExts.map((e) => `clip.${e}`),
-			config.resolver.sourceExts,
-		),
-	};
-}
-```
 
 ## Before building for the App Store
 

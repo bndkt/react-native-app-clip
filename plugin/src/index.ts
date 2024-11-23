@@ -31,6 +31,7 @@ const withAppClip: ConfigPlugin<{
     appleSignin,
     applePayMerchantIds,
     excludedPackages,
+    enabled,
   } = {},
 ) => {
   name ??= "Clip";
@@ -38,7 +39,11 @@ const withAppClip: ConfigPlugin<{
   targetSuffix ??= "Clip";
   deploymentTarget ??= "15.1";
   appleSignin ??= false;
+  enabled ??= true;
 
+  if(!enabled) {
+    return config;
+  }
   if (!config.ios?.bundleIdentifier) {
     throw new Error("No bundle identifier specified in app config");
   }

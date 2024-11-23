@@ -26,16 +26,17 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 
 ## Additional parameters:
 
-- **name** (string): The public name of the App Clip (displayed when opening it).
-- **bundleIdSuffix** (string, default: "Clip"): The suffix that is appended to the bundle id to form the App Clip's bundle id. Please note: If you change this, you need to pass the new suffix when using the isClip() function (e.g. `isClip("AppClip")`).
-- **targetSuffix** (string, default: "Clip"): The suffix that is appended to the target name.
-- **groupIdentifier** (string): Configures an app group to share data between App Clip and full app (see [Apple Developer Docs](https://developer.apple.com/documentation/xcode/configuring-app-groups))
-- **deploymentTarget** (string): Sets the deployment target for the App Clip. If you set this to "16.0", your App Clip can be 15 MB instead of 10 MB.
-- **requestEphemeralUserNotification** (boolean): Enables notifications for the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/enabling_notifications_in_app_clips))
-- **requestLocationConfirmation** (boolean): Allow App Clip access to location data (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/confirming_the_user_s_physical_location))
-- **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
-- **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
-- **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
+-   **name** (string): The public name of the App Clip (displayed when opening it).
+-   **enabled** (boolean, default: true): Whether the App Clip should be built.
+-   **bundleIdSuffix** (string, default: "Clip"): The suffix that is appended to the bundle id to form the App Clip's bundle id. Please note: If you change this, you need to pass the new suffix when using the isClip() function (e.g. `isClip("AppClip")`).
+-   **targetSuffix** (string, default: "Clip"): The suffix that is appended to the target name.
+-   **groupIdentifier** (string): Configures an app group to share data between App Clip and full app (see [Apple Developer Docs](https://developer.apple.com/documentation/xcode/configuring-app-groups))
+-   **deploymentTarget** (string): Sets the deployment target for the App Clip. If you set this to "16.0", your App Clip can be 15 MB instead of 10 MB.
+-   **requestEphemeralUserNotification** (boolean): Enables notifications for the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/enabling_notifications_in_app_clips))
+-   **requestLocationConfirmation** (boolean): Allow App Clip access to location data (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/confirming_the_user_s_physical_location))
+-   **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
+-   **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
+-   **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
 
 ## Native capabilities
 

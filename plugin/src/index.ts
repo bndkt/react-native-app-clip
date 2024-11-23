@@ -35,7 +35,7 @@ const withAppClip: ConfigPlugin<{
   name ??= "Clip";
   bundleIdSuffix ??= "Clip";
   targetSuffix ??= "Clip";
-  deploymentTarget ??= "14.0";
+  deploymentTarget ??= "15.1";
   appleSignin ??= false;
 
   if (!config.ios?.bundleIdentifier) {

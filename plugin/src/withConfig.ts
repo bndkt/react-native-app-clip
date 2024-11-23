@@ -68,6 +68,7 @@ export const withConfig: ConfigPlugin<{
       //   config.ios?.entitlements ?? {},
       //   groupIdentifier,
       // ),
+      ...config.ios?.entitlements,
       "com.apple.developer.associated-appclip-app-identifiers": [
         `$(AppIdentifierPrefix)${bundleIdentifier}`,
       ],

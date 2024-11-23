@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "react-native-app-clip-example",
-    "slug": "react-native-app-clip-example",
+    "name": "Clipper",
+    "slug": "clipper",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -13,31 +13,21 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expo.modules.appclip.example"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "expo.modules.appclip.example"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "bundleIdentifier": "example.clipper"
     },
     "plugins": [
       [
         "../app.plugin.js",
         {
-          "name": "Example Clip",
-          "bundleIdSuffix": "AppClip",
+          "name": "Clipper Clip",
+          "bundleIdSuffix": "Clip",
           "targetSuffix": "Clip",
-          "groupIdentifier": "dev.example.app",
-          "deploymentTarget": "14.2",
+          "groupIdentifier": "example.clipper",
+          "deploymentTarget": "15.1",
           "requestEphemeralUserNotification": true,
           "requestLocationConfirmation": true,
           "appleSignin": true,
-          "applePayMerchantIds": ["dev.example.app"],
+          "applePayMerchantIds": ["example.clipper"],
           "excludedPackages": ["@shopify/react-native-skia"]
         }
       ],
@@ -49,6 +39,11 @@
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "588fcc97-16f5-477c-92bf-b59fbeba89a3"
+      }
+    }
   }
 }

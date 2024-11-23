@@ -1,11 +1,13 @@
 import ReactNativeAppClipModule from "./ReactNativeAppClipModule";
 
-export function isClip(): boolean {
+export function isClip(bundleIdSuffix = "Clip"): boolean {
   const bundleIdentifier = ReactNativeAppClipModule.getBundleIdentifier() as
     | string
     | undefined;
   const isClip =
-    bundleIdentifier?.slice(bundleIdentifier.lastIndexOf(".") + 1) === "Clip";
+    bundleIdentifier?.slice(bundleIdentifier.lastIndexOf(".") + 1) ===
+    bundleIdSuffix;
+
   return isClip;
 }
 
@@ -23,7 +25,7 @@ export function displayOverlay(): void {
 
 export function setSharedCredential(
   groupIdentifier: string,
-  credential: string,
+  credential: string
 ): void {
   ReactNativeAppClipModule.setSharedCredential(groupIdentifier, credential);
 }

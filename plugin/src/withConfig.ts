@@ -6,9 +6,10 @@ export const withConfig: ConfigPlugin<{
   bundleIdentifier: string;
   appleSignin: boolean;
   applePayMerchantIds: string[];
+  pushNotifications: boolean;
 }> = (
   config,
-  { targetName, bundleIdentifier, appleSignin, applePayMerchantIds },
+  { targetName, bundleIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
 ) => {
   let configIndex: null | number = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
@@ -56,6 +57,7 @@ export const withConfig: ConfigPlugin<{
         appleSignin,
         applePayMerchantIds,
         // groupIdentifier, // Throws an error in EAS
+        pushNotifications,
       }),
     };
   }

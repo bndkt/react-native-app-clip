@@ -5,9 +5,11 @@ import { withEntitlements } from "./withEntitlements";
 import { withPlist } from "./withPlist";
 import { withPodfile } from "./withPodfile";
 import { withXcode } from "./withXcode";
+import { withDeviceFamily } from "@expo/config-plugins/build/ios/DeviceFamily";
 
 const withAppClip: ConfigPlugin<{
   name?: string;
+  enabled?: boolean;
   bundleIdSuffix?: string;
   targetSuffix?: string;
   groupIdentifier?: string;
@@ -17,10 +19,12 @@ const withAppClip: ConfigPlugin<{
   appleSignin?: boolean;
   applePayMerchantIds?: string[];
   excludedPackages?: string[];
+  pushNotifications?: boolean;
 }> = (
   config,
   {
     name,
+    enabled,
     bundleIdSuffix,
     targetSuffix,
     groupIdentifier,
@@ -30,14 +34,22 @@ const withAppClip: ConfigPlugin<{
     appleSignin,
     applePayMerchantIds,
     excludedPackages,
+    pushNotifications,
   } = {},
 ) => {
   name ??= "Clip";
   bundleIdSuffix ??= "Clip";
   targetSuffix ??= "Clip";
   deploymentTarget ??= "15.1";
+  requestEphemeralUserNotification ??= false;
+  requestLocationConfirmation ??= false;
   appleSignin ??= false;
+  enabled ??= true;
+  pushNotifications ??= false;
 
+  if(!enabled) {
+    return config;
+  }
   if (!config.ios?.bundleIdentifier) {
     throw new Error("No bundle identifier specified in app config");
   }
@@ -46,13 +58,14 @@ const withAppClip: ConfigPlugin<{
   const targetName = `${IOSConfig.XcodeUtils.sanitizedName(config.name)}${targetSuffix}`;
 
   const modifiedConfig = withPlugins(config, [
+    withDeviceFamily as ConfigPlugin,
     [
       withConfig,
-      { targetName, bundleIdentifier, appleSignin, applePayMerchantIds },
+      { targetName, bundleIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
     ],
     [
       withEntitlements,
-      { targetName, groupIdentifier, appleSignin, applePayMerchantIds },
+      { targetName, groupIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
     ],
     [withPodfile, { targetName, excludedPackages }],
     [

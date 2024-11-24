@@ -41,6 +41,8 @@ const withAppClip: ConfigPlugin<{
   bundleIdSuffix ??= "Clip";
   targetSuffix ??= "Clip";
   deploymentTarget ??= "15.1";
+  requestEphemeralUserNotification ??= false;
+  requestLocationConfirmation ??= false;
   appleSignin ??= false;
   enabled ??= true;
   pushNotifications ??= false;

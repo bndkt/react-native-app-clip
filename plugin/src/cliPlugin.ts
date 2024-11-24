@@ -20,5 +20,10 @@ export const run = async (
 		}
 	}
 
+	// Removing excluded packages
+	for (const packageName of exclude) {
+		delete config.dependencies[packageName];
+	}
+
 	console.log(JSON.stringify(config));
 };

@@ -49,6 +49,7 @@ target '${targetName}' do
     ]
     exit(status.exitstatus)
   end
+
   # \`react-native-app-clip\` resolves to react-native-app-clip/build/index.js
   clip_command = [
     'node',
@@ -56,6 +57,8 @@ target '${targetName}' do
     '--eval',
     'require(require.resolve(\\'react-native-app-clip\\')+\\'/../../plugin/build/cliPlugin.js\\').run(' + json + ', [${(excludedPackages ?? []).map((packageName) => `"${packageName}"`).join(", ")}])'
   ]
+  json, _, status = Pod::Executable.capture_command(clip_command[0], clip_command[1..], capture: :both)
+  print json
 
   config = use_native_modules!(clip_command)
 

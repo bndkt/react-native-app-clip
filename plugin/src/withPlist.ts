@@ -53,6 +53,7 @@ export const withPlist: ConfigPlugin<{
         NSAllowsLocalNetworking: config.developmentClient,
       },
       CFBundleName: "$(PRODUCT_NAME)",
+      CFBundleDisplayName: "$(PRODUCT_NAME)",
       CFBundleIdentifier: "$(PRODUCT_BUNDLE_IDENTIFIER)",
       CFBundleVersion: "$(CURRENT_PROJECT_VERSION)",
       CFBundleExecutable: "$(EXECUTABLE_NAME)",

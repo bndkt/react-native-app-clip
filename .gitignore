@@ -2,6 +2,8 @@
 #
 .DS_Store
 
+tsconfig.tsbuildinfo
+
 # VSCode
 .vscode/
 jsconfig.json

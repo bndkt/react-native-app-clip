@@ -42,9 +42,9 @@ target '${targetName}' do
   end
 
   # Running the command in the same manner as \`use_react_native\` then running that result through our cliPlugin
-  json, _, status = Pod::Executable.capture_command(config_command[0], config_command[1..], capture: :both)
+  json, message, status = Pod::Executable.capture_command(config_command[0], config_command[1..], capture: :both)
   if not status.success?
-    Pod::UI.warn "The command: '#{config_command.join(" ").bold.yellow}' returned a status code of #{status.exitstatus.to_s.bold.red}", [
+    Pod::UI.warn "The command: '#{config_command.join(" ").bold.yellow}' returned a status code of #{status.exitstatus.to_s.bold.red}, #{message}", [
         "App Clip autolinking failed. Please ensure autolinking works correctly for the main app target and try again.",
     ]
     exit(status.exitstatus)

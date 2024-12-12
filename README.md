@@ -45,8 +45,6 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 import {
 	isClip,
 	displayOverlay,
-	setSharedCredential,
-	getSharedCredential,
 } from "react-native-app-clip";
 ```
 
@@ -54,7 +52,10 @@ import {
 
 **displayOverlay()** shows the native iOS banner to promote the full app within the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/recommending_your_app_to_app_clip_users)).
 
-**setSharedCredential()** and **getSharedCredential()** allows sharing login data from the App Clip to the full app so that the user doesn't have to sign in again after downloading the full app (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/sharing_data_between_your_app_clip_and_your_full_app)).
+## Sharing data between App Clip and full app
+
+Data can be shared from the App Clip to the full app by using [`expo-secure-store`](https://docs.expo.dev/versions/latest/sdk/securestore/) from iOS 15.4 onwards. Data is securely shared using the keychain and can be accessed by the full app after installation (see [Apple Developer Docs](https://developer.apple.com/documentation/appclip/sharing-data-between-your-app-clip-and-your-full-app#Review-keychain-usage)).
+
 
 ## App Clip file extension (.clip)
 

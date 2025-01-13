@@ -27,6 +27,7 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 You can add more parameters to the plugin configuration as specified in the [Additional parameters](#additional-parameters) section below.
 
 Generate the native code:
+
 ```sh
 npx expo prebuild
 ```

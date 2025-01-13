@@ -24,6 +24,34 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 }
 ```
 
+You can add more parameters to the plugin configuration as specified in the [Additional parameters](#additional-parameters) section below.
+
+Add a `bundleIdentifier` to the app config and generate the native code using:
+
+```sh
+npx expo prebuild
+```
+
+Run the base app:
+
+```sh
+npx expo run:ios
+```
+
+Close the base app and run the App Clip scheme:
+
+```sh
+npx expo run:ios --scheme
+```
+
+While the App Clip scheme is running, you can start the App Clip:
+
+```sh
+xcrun simctl launch <DEVICE-UUID> <APP_CLIP_BUNDLE_ID>
+```
+
+NOTE: You can find the simulator device UUID by running `xcrun simctl list`. The App Clip Bundle Identifier is the `bundleIdentifier` followed by the `bundleIdSuffix` (see [Additional parameters - bundleIdSuffix](additional-parameters) for more details) joined by a `.`.
+
 ## Additional parameters:
 
 -   **name** (string): The public name of the App Clip (displayed when opening it).

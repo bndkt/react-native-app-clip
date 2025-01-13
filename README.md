@@ -26,25 +26,17 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 
 You can add more parameters to the plugin configuration as specified in the [Additional parameters](#additional-parameters) section below.
 
-Add a `bundleIdentifier` to the app config and generate the native code using:
-
 ```sh
 npx expo prebuild
-```
-
-Run the base app:
-
-```sh
-npx expo run:ios
 ```
 
 Close the base app and run the App Clip scheme:
 
 ```sh
-npx expo run:ios --scheme
+npx expo run:ios --configuration Release --scheme
 ```
 
-While the App Clip scheme is running, you can start the App Clip:
+While the App Clip scheme is running, you can launch the App Clip:
 
 ```sh
 xcrun simctl launch <DEVICE-UUID> <APP_CLIP_BUNDLE_ID>

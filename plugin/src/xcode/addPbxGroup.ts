@@ -37,7 +37,7 @@ export function addPbxGroup(
   // Add PBX group
   const { uuid: pbxGroupUuid } = xcodeProject.addPbxGroup(
     [
-      "appdelegate.swift",
+      "AppDelegate.swift",
       "Info.plist",
       "Images.xcassets",
       "SplashScreen.storyboard",

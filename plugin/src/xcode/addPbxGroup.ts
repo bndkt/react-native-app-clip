@@ -18,9 +18,7 @@ export function addPbxGroup(
 
   const filesToCopy = [
     "SplashScreen.storyboard",
-    "AppDelegate.h",
-    "AppDelegate.mm",
-    "main.m",
+    "AppDelegate.swift",
   ];
 
   for (const file of filesToCopy) {
@@ -39,9 +37,7 @@ export function addPbxGroup(
   // Add PBX group
   const { uuid: pbxGroupUuid } = xcodeProject.addPbxGroup(
     [
-      "AppDelegate.h",
-      "AppDelegate.mm",
-      "main.m",
+      "AppDelegate.swift",
       "Info.plist",
       "Images.xcassets",
       "SplashScreen.storyboard",

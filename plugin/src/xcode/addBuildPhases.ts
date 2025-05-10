@@ -21,7 +21,7 @@ export function addBuildPhases(
   const buildPath = `"$(CONTENTS_FOLDER_PATH)/AppClips"`;
   const folderType = "watch2_app"; // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet
 
-  const buildPhaseFiles = ["AppDelegate.mm", "main.m"];
+  const buildPhaseFiles = ["AppDelegate.swift"];
 
   // Add shell script build phase "Start Packager"
   xcodeProject.addBuildPhase(

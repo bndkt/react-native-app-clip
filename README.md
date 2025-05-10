@@ -78,26 +78,6 @@ import {
 
 Data can be shared from the App Clip to the full app by using [`expo-secure-store`](https://docs.expo.dev/versions/latest/sdk/securestore/) from iOS 15.4 onwards. Data is securely shared using the keychain and can be accessed by the full app after installation (see [Apple Developer Docs](https://developer.apple.com/documentation/appclip/sharing-data-between-your-app-clip-and-your-full-app#Review-keychain-usage)).
 
-
-## App Clip file extension (.clip)
-
-You can configure an App Clip specific file extension similar to [React Native's native platform extensions](https://reactnative.dev/docs/platform-specific-code#native-specific-extensions-ie-sharing-code-with-nodejs-and-web). Enabling this can help optimize build sizes since only the `.clip` file will be included in the App Clip JS bundle. You can replace heavy assets, large components, or unsupported library features using this file extension. The `.clip` extension preference can be configured in `metro.config.js` by prepending `clip` to each of the existing source extensions when the env variable `BUILDING_FOR_APP_CLIP` is enabled.
-
-### Usage
-
-```typescript
-if (process.env.BUILDING_FOR_APP_CLIP) {
-	console.info("Building for App Clip");
-	config.resolver = {
-		...config.resolver,
-		sourceExts: [].concat(
-			config.resolver.sourceExts.map((e) => `clip.${e}`),
-			config.resolver.sourceExts,
-		),
-	};
-}
-```
-
 ## Before building for release (TestFlight and App Store)
 
 Please note that you must register a new App ID for the App Clip in your Apple Developer profile. Under "Certificates, Identifiers & Profiles", go to “Identifiers”, click on the plus icon and select "App IDs" to create a new App ID. Select "App Clip" as the type and on the next screen, select your main app as the "Parent App ID" and enter Clip as the product name (it is crucial that the product name is "Clip" and nothing else. At the bottom of the page, Apple shows a preview of the App Clip Bundle ID. If your main app’s bundle ID is com.example.my-app, the App Clip Bundle ID should now be com.example.my-app.Clip.
@@ -127,3 +107,24 @@ Launching from Xcode can often fix issues in which the App Clip doesn't show up 
 ### Build for production using EAS Build and test via TestFlight
 
 You can build your app and submit it to the App Store (see https://docs.expo.dev/build/introduction/) to test the App Clip using TestFlight. Refer to Apple’s developer docs about testing App Clips: https://developer.apple.com/documentation/app_clips/testing_the_launch_experience_of_your_app_clip.
+
+## App Clip file extension (.clip)
+
+You can configure an App Clip specific file extension similar to [React Native's native platform extensions](https://reactnative.dev/docs/platform-specific-code#native-specific-extensions-ie-sharing-code-with-nodejs-and-web). Enabling this can help optimize build sizes since only the `.clip` file will be included in the App Clip JS bundle. You can replace heavy assets, large components, or unsupported library features using this file extension. The `.clip` extension preference can be configured in `metro.config.js` by prepending `clip` to each of the existing source extensions when the env variable `BUILDING_FOR_APP_CLIP` is enabled. The App Clip file extension is an advanced optimization feature which requires a slightly more complex build setup. Using this feature is only recommended if you're trying to significantly customize and optimize the JS bundle of your production App Clip. Behavior customization is fully within the control of `metro.config.js`. The below snippet prioritizes `.clip` files, including assets, but you may need to customize further depending on your needs.
+
+`BUILDING_FOR_APP_CLIP` is automatically populated within the build stages only for the App Clip build stage. This means that you can continue to create only one iOS build, and the `BUILDING_FOR_APP_CLIP` value will only be set within the context of the App Clip and not within the main app.
+
+### Usage
+`metro.config.js`
+```typescript
+if (process.env.BUILDING_FOR_APP_CLIP) {
+	console.info("Building for App Clip");
+	config.resolver = {
+		...config.resolver,
+		sourceExts: [].concat(
+			config.resolver.sourceExts.map((e) => `clip.${e}`),
+			config.resolver.sourceExts,
+		),
+	};
+}
+```

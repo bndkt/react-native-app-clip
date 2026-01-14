@@ -7,6 +7,7 @@ export function addBuildPhases(
     targetUuid,
     groupName,
     productFile,
+    enableCompression,
   }: {
     targetUuid: string;
     groupName: string;
@@ -16,6 +17,7 @@ export function addBuildPhases(
       basename: string;
       group: string;
     };
+    enableCompression?: boolean;
   },
 ) {
   const buildPath = `"$(CONTENTS_FOLDER_PATH)/AppClips"`;
@@ -98,4 +100,20 @@ export function addBuildPhases(
     },
     buildPath,
   );
+
+  // Add compression build phase if enabled
+  if (enableCompression) {
+    xcodeProject.addBuildPhase(
+      [],
+      "PBXShellScriptBuildPhase",
+      "Compress JS Bundle",
+      targetUuid,
+      {
+        shellPath: "/bin/sh",
+        shellScript:
+          'if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then\n  source "$PODS_ROOT/../.xcode.env"\nfi\nif [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then\n  source "$PODS_ROOT/../.xcode.env.local"\nfi\n\nif [[ "$CONFIGURATION" != "Release" ]]; then\n  exit 0\nfi\n\nBUNDLE="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/main.jsbundle"\n\nif [ -f "$BUNDLE" ]; then\n  "$NODE_BINARY" -e "const fs=require(\'fs\');const zlib=require(\'zlib\');const data=fs.readFileSync(\'${BUNDLE}\');const compressed=zlib.gzipSync(data,{level:9});fs.writeFileSync(\'${BUNDLE}.gz\',compressed);fs.unlinkSync(\'${BUNDLE}\');"\nfi\n',
+      },
+      buildPath,
+    );
+  }
 }

@@ -20,6 +20,7 @@ const withAppClip: ConfigPlugin<{
   applePayMerchantIds?: string[];
   excludedPackages?: string[];
   pushNotifications?: boolean;
+  enableCompression?: boolean;
 }> = (
   config,
   {
@@ -35,6 +36,7 @@ const withAppClip: ConfigPlugin<{
     applePayMerchantIds,
     excludedPackages,
     pushNotifications,
+    enableCompression,
   } = {},
 ) => {
   name ??= "Clip";
@@ -84,6 +86,7 @@ const withAppClip: ConfigPlugin<{
         targetName,
         bundleIdentifier,
         deploymentTarget,
+        enableCompression,
       },
     ],
   ]);

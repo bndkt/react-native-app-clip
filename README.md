@@ -60,7 +60,7 @@ NOTE: You can find the simulator device UUID by running `xcrun simctl list`. The
 -   **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
 -   **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
 -   **pushNotifications** (boolean): Enable push notification compatibility for the App Clip
--   **enableCompression** (boolean): Enables gzip compression of the App Clip's JavaScript bundle to reduce its size, compressing during build and decompressing at runtime.
+-   **enableCompression** (boolean): Enables gzip compression of the App Clip's JavaScript bundle to reduce its size. Please note: This may increase the final binary size in some cases (see [App Clip Size Limits](#app-clip-size-limits)).
 
 ## App Clip Size Limits
 
@@ -76,7 +76,7 @@ For iOS 17+, the 100 MB limit has additional requirements:
 - Requires reliable internet connection usage scenarios
 - Does not support iOS 16 and earlier
 
-You can use compression (via `enableCompression` parameter) and exclude packages (via `excludedPackages` parameter) to help stay within these limits.
+You can exclude packages (via `excludedPackages` parameter) and use compression (via `enableCompression` parameter) to help stay within these limits. However, since the App Clip binary itself is compressed by Apple, pre-compressing the JS bundle with `enableCompression` might sometimes be counterproductive. Always verify the final size in TestFlight or the App Store Connect dashboard.
 
 ## Native capabilities
 

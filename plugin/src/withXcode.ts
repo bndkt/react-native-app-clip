@@ -1,7 +1,10 @@
 import { type ConfigPlugin, withXcodeProject } from "expo/config-plugins";
+import fs from "node:fs";
+import path from "node:path";
 
 import { addBuildPhases } from "./xcode/addBuildPhases";
 import { addPbxGroup } from "./xcode/addPbxGroup";
+import { modifyAppDelegate } from "./xcode/modifyAppDelegate";
 import { addProductFile } from "./xcode/addProductFile";
 import { addTargetDependency } from "./xcode/addTargetDependency";
 import { addToPbxNativeTargetSection } from "./xcode/addToPbxNativeTargetSection";
@@ -13,7 +16,8 @@ export const withXcode: ConfigPlugin<{
   targetName: string;
   bundleIdentifier: string;
   deploymentTarget: string;
-}> = (config, { name, targetName, bundleIdentifier, deploymentTarget }) => {
+  enableCompression?: boolean;
+}> = (config, { name, targetName, bundleIdentifier, deploymentTarget, enableCompression }) => {
   return withXcodeProject(config, (config) => {
     const xcodeProject = config.modResults;
 
@@ -51,10 +55,24 @@ export const withXcode: ConfigPlugin<{
       platformProjectRoot,
     });
 
+    if (enableCompression) {
+      const appDelegatePath = path.join(
+        platformProjectRoot,
+        targetName,
+        "AppDelegate.swift",
+      );
+      if (fs.existsSync(appDelegatePath)) {
+        modifyAppDelegate(appDelegatePath);
+      } else {
+        console.warn(`⚠️ AppDelegate not found at ${appDelegatePath}`);
+      }
+    }
+
     addBuildPhases(xcodeProject, {
       targetUuid,
       groupName,
       productFile,
+      enableCompression,
     });
 
     return config;

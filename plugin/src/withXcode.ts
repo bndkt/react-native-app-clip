@@ -31,6 +31,7 @@ export const withXcode: ConfigPlugin<{
       currentProjectVersion: config.ios?.buildNumber || "1",
       bundleIdentifier,
       deploymentTarget,
+      appleTeamId: config.ios?.appleTeamId,
     });
 
     const productFile = addProductFile(xcodeProject, {

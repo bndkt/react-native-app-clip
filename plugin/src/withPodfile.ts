@@ -7,8 +7,6 @@ export const withPodfile: ConfigPlugin<{
   targetName: string;
   excludedPackages?: string[];
 }> = (config, { targetName, excludedPackages }) => {
-  // return config;
-
   return withDangerousMod(config, [
     "ios",
     (config) => {
@@ -20,66 +18,145 @@ export const withPodfile: ConfigPlugin<{
 
       const useExpoModules =
         excludedPackages && excludedPackages.length > 0
-          ? `exclude = ["${excludedPackages.join(`", "`)}"]\n    use_expo_modules!(exclude: exclude)`
+          ? `exclude = ["${excludedPackages.join(`", "`)}"]\n  use_expo_modules!(exclude: exclude)`
           : "use_expo_modules!";
 
       const appClipTarget = `
-  target '${targetName}' do
-    ${useExpoModules}
+target '${targetName}' do
+  ${useExpoModules}
 
-    if ENV['EXPO_USE_COMMUNITY_AUTOLINKING'] == '1'
-      config_command = ['node', '-e', "process.argv=['', '', 'config'];require('@react-native-community/cli').run()"];
-    else
-      config_command = [
-        'npx',
-        'expo-modules-autolinking',
-        'react-native-config',
-        '--json',
-        '--platform',
-        'ios'
-      ]
-    end
-
-    # Running the command in the same manner as \`use_react_native\` then running that result through our cliPlugin
-    json, message, status = Pod::Executable.capture_command(config_command[0], config_command[1..], capture: :both)
-    if not status.success?
-      Pod::UI.warn "The command: '#{config_command.join(" ").bold.yellow}' returned a status code of #{status.exitstatus.to_s.bold.red}, #{message}", [
-          "App Clip autolinking failed. Please ensure autolinking works correctly for the main app target and try again.",
-      ]
-      exit(status.exitstatus)
-    end
-
-    # \`react-native-app-clip\` resolves to react-native-app-clip/build/index.js
-    clip_command = [
-      'node',
-      '--no-warnings',
-      '--eval',
-      'require(require.resolve(\\'react-native-app-clip\\')+\\'/../../plugin/build/cliPlugin.js\\').run(' + json + ', [${(excludedPackages ?? []).map((packageName) => `"${packageName}"`).join(", ")}])'
+  if ENV['EXPO_USE_COMMUNITY_AUTOLINKING'] == '1'
+    config_command = ['node', '-e', "process.argv=['', '', 'config'];require('@react-native-community/cli').run()"];
+  else
+    config_command = [
+      'npx',
+      'expo-modules-autolinking',
+      'react-native-config',
+      '--json',
+      '--platform',
+      'ios'
     ]
-
-    config = use_native_modules!(clip_command)
-
-    use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
-    use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
-
-    use_react_native!(
-      :path => config[:reactNativePath],
-      :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
-      # An absolute path to your application root.
-      :app_path => "#{Pod::Config.instance.installation_root}/..",
-      :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
-    )
   end
-      `;
+
+  # Running the command in the same manner as \`use_react_native\` then running that result through our cliPlugin
+  json, message, status = Pod::Executable.capture_command(config_command[0], config_command[1..], capture: :both)
+  if not status.success?
+    Pod::UI.warn "The command: '#{config_command.join(" ").bold.yellow}' returned a status code of #{status.exitstatus.to_s.bold.red}, #{message}", [
+        "App Clip autolinking failed. Please ensure autolinking works correctly for the main app target and try again.",
+    ]
+    exit(status.exitstatus)
+  end
+
+  # \`react-native-app-clip\` resolves to react-native-app-clip/build/index.js
+  clip_command = [
+    'node',
+    '--no-warnings',
+    '--eval',
+    'require(require.resolve(\\'react-native-app-clip\\')+\\'/../../plugin/build/cliPlugin.js\\').run(' + json + ', [])'
+  ]
+
+  config = use_native_modules!(clip_command)
+
+  use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
+  use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
+  )
+end`;
+
+      // Inject content at the top-level (sibling to the main target)
+      const anchor = "prepare_react_native_project!";
+      const offset = 1;
+
+      if (!podfileContent.includes(anchor)) {
+        throw new Error(
+          "[react-native-app-clip] Could not find 'prepare_react_native_project!' in Podfile. " +
+            "This plugin requires Expo SDK 53+ project structure."
+        );
+      }
 
       podfileContent = mergeContents({
         tag: "Generated by react-native-app-clip",
         src: podfileContent,
         newSrc: appClipTarget,
-        anchor: "use_expo_modules!",
-        offset: 0,
+        anchor: anchor,
+        offset: offset,
         comment: "#",
       }).contents;
+
+      // Inject Post-Install hook for explicit exclusion (Target Deps + Linker Flags)
+      const postInstallPatch = `
+    # [react-native-app-clip] Post-install cleanup for App Clip exclusions
+    excluded_from_clip = ${JSON.stringify(excludedPackages || [])}
+
+    installer.pods_project.targets.each do |target|
+      if target.name == 'Pods-${targetName}'
+        # 1. Remove explicit dependencies (Target Dependencies)
+        target.dependencies.delete_if do |dep|
+          excluded_from_clip.any? { |pkg| dep.name.include?(pkg) }
+        end
+
+        # 2. Remove Linked Libraries from xcconfig (OTHER_LDFLAGS)
+        target.build_configurations.each do |config|
+          if config.base_configuration_reference
+            xcconfig_path = config.base_configuration_reference.real_path
+            if File.exist?(xcconfig_path)
+              xcconfig = Xcodeproj::Config.new(xcconfig_path)
+              ld_flags = xcconfig.attributes['OTHER_LDFLAGS']
+              if ld_flags
+                flags_modified = false
+                excluded_from_clip.each do |pkg|
+                  # Flag patterns to remove: -l"Pkg", -lPkg, -framework "Pkg", -framework Pkg
+                  patterns = [/-l"#{pkg}"/, /-l#{pkg}\\b/, /-framework "#{pkg}"/, /-framework #{pkg}\\b/]
+                  patterns.each do |pattern|
+                    if ld_flags.match(pattern)
+                        ld_flags.gsub!(pattern, '')
+                        flags_modified = true
+                    end
+                  end
+                end
+                if flags_modified
+                  ld_flags.gsub!(/\\s+/, ' ') # Clean up spacing
+                  xcconfig.attributes['OTHER_LDFLAGS'] = ld_flags
+                  xcconfig.save_as(xcconfig_path)
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+      `;
+
+      // Check for existence of post_install block and either append or inject
+      if (podfileContent.includes("post_install do |installer|")) {
+        // Idempotent injection: check if our patch is already there
+        if (!podfileContent.includes("# [react-native-app-clip] Post-install cleanup")) {
+          podfileContent = podfileContent.replace(
+            /post_install\s+do\s+\|installer\|/,
+            `post_install do |installer|\n${postInstallPatch}`
+          );
+        } else {
+          // Update the excluded packages list dynamically
+          const newExclusions = JSON.stringify(excludedPackages || []);
+          podfileContent = podfileContent.replace(
+            /excluded_from_clip\s*=\s*\[.*?\]/g,
+            `excluded_from_clip = ${newExclusions}`
+          );
+        }
+      } else {
+        // Create new post_install block if missing
+        podfileContent += `
+          post_install do |installer|
+          ${postInstallPatch}
+          end
+        `;
+      }
 
       fs.writeFileSync(podFilePath, podfileContent);
 

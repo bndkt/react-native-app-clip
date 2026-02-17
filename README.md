@@ -58,10 +58,9 @@ NOTE: You can find the simulator device UUID by running `xcrun simctl list`. The
 -   **requestLocationConfirmation** (boolean): Allow App Clip access to location data (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/confirming_the_user_s_physical_location))
 -   **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
 -   **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
--   **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
 -   **pushNotifications** (boolean): Enable push notification compatibility for the App Clip
 -   **enableCompression** (boolean): Enables gzip compression of the App Clip's JavaScript bundle to reduce its size. Please note: This may increase the final binary size in some cases (see [App Clip Size Limits](#app-clip-size-limits)).
-
+-   **excludedPackages** (string[]): Packages to exclude from the App Clip to reduce binary size (see [Excluding packages](#excluding-packages)).
 ## App Clip Size Limits
 
 To ensure a fast launch experience, App Clips must be small. The size limits depend on the iOS deployment target:
@@ -76,7 +75,28 @@ For iOS 17+, the 100 MB limit has additional requirements:
 - Requires reliable internet connection usage scenarios
 - Does not support iOS 16 and earlier
 
-You can exclude packages (via `excludedPackages` parameter) and use compression (via `enableCompression` parameter) to help stay within these limits. However, since the App Clip binary itself is compressed by Apple, pre-compressing the JS bundle with `enableCompression` might sometimes be counterproductive. Always verify the final size in TestFlight or the App Store Connect dashboard.
+You can exclude packages (via `excludedPackages`) and use compression (via `enableCompression`) to help stay within these limits. However, since the App Clip binary itself is compressed by Apple, pre-compressing the JS bundle with `enableCompression` might sometimes be counterproductive. Always verify the final size in TestFlight or the App Store Connect dashboard.
+
+## Excluding packages
+
+`excludedPackages` accepts both **npm package names** and **CocoaPods pod names**. Two entries are often needed for the same package because each serves a different purpose:
+
+- **npm name** (e.g. `"expo-notifications"`) — passed to `use_expo_modules!` to remove the package from Expo's autolinking for the App Clip target
+- **pod name** (e.g. `"EXNotifications"`) — used in a `post_install` hook to strip the package's linker flags from the generated `.xcconfig` files
+
+For most Expo packages the pod name differs from the npm name, so both must be listed. For React Native community packages (e.g. `react-native-nfc-manager`) the pod name typically matches the npm name, so one entry is sufficient.
+
+```json
+"excludedPackages": [
+  "expo-notifications",
+  "EXNotifications",
+  "expo-web-browser",
+  "ExpoWebBrowser",
+  "react-native-nfc-manager"
+]
+```
+
+> **Note:** Under New Architecture, removing a package from the autolinking config prevents Codegen from generating its spec headers — but the pod's own source files still import those headers, causing compile errors. For this reason, packages are kept in the autolinking config and excluded only at the linker stage via xcconfig flag stripping.
 
 ## Native capabilities
 

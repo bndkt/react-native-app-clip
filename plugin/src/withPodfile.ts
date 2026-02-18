@@ -7,8 +7,6 @@ export const withPodfile: ConfigPlugin<{
   targetName: string;
   excludedPackages?: string[];
 }> = (config, { targetName, excludedPackages }) => {
-  // return config;
-
   return withDangerousMod(config, [
     "ios",
     (config) => {
@@ -20,64 +18,74 @@ export const withPodfile: ConfigPlugin<{
 
       const useExpoModules =
         excludedPackages && excludedPackages.length > 0
-          ? `exclude = ["${excludedPackages.join(`", "`)}"]\n    use_expo_modules!(exclude: exclude)`
+          ? `exclude = ["${excludedPackages.join(`", "`)}"]\n  use_expo_modules!(exclude: exclude)`
           : "use_expo_modules!";
 
       const appClipTarget = `
-  target '${targetName}' do
-    ${useExpoModules}
+target '${targetName}' do
+  ${useExpoModules}
 
-    if ENV['EXPO_USE_COMMUNITY_AUTOLINKING'] == '1'
-      config_command = ['node', '-e', "process.argv=['', '', 'config'];require('@react-native-community/cli').run()"];
-    else
-      config_command = [
-        'npx',
-        'expo-modules-autolinking',
-        'react-native-config',
-        '--json',
-        '--platform',
-        'ios'
-      ]
-    end
-
-    # Running the command in the same manner as \`use_react_native\` then running that result through our cliPlugin
-    json, message, status = Pod::Executable.capture_command(config_command[0], config_command[1..], capture: :both)
-    if not status.success?
-      Pod::UI.warn "The command: '#{config_command.join(" ").bold.yellow}' returned a status code of #{status.exitstatus.to_s.bold.red}, #{message}", [
-          "App Clip autolinking failed. Please ensure autolinking works correctly for the main app target and try again.",
-      ]
-      exit(status.exitstatus)
-    end
-
-    # \`react-native-app-clip\` resolves to react-native-app-clip/build/index.js
-    clip_command = [
-      'node',
-      '--no-warnings',
-      '--eval',
-      'require(require.resolve(\\'react-native-app-clip\\')+\\'/../../plugin/build/cliPlugin.js\\').run(' + json + ', [${(excludedPackages ?? []).map((packageName) => `"${packageName}"`).join(", ")}])'
+  if ENV['EXPO_USE_COMMUNITY_AUTOLINKING'] == '1'
+    config_command = ['node', '-e', "process.argv=['', '', 'config'];require('@react-native-community/cli').run()"];
+  else
+    config_command = [
+      'npx',
+      'expo-modules-autolinking',
+      'react-native-config',
+      '--json',
+      '--platform',
+      'ios'
     ]
-
-    config = use_native_modules!(clip_command)
-
-    use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
-    use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
-
-    use_react_native!(
-      :path => config[:reactNativePath],
-      :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
-      # An absolute path to your application root.
-      :app_path => "#{Pod::Config.instance.installation_root}/..",
-      :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
-    )
   end
-      `;
+
+  # Running the command in the same manner as \`use_react_native\` then running that result through our cliPlugin
+  json, message, status = Pod::Executable.capture_command(config_command[0], config_command[1..], capture: :both)
+  if not status.success?
+    Pod::UI.warn "The command: '#{config_command.join(" ").bold.yellow}' returned a status code of #{status.exitstatus.to_s.bold.red}, #{message}", [
+        "App Clip autolinking failed. Please ensure autolinking works correctly for the main app target and try again.",
+    ]
+    exit(status.exitstatus)
+  end
+
+  # \`react-native-app-clip\` resolves to react-native-app-clip/build/index.js
+  clip_command = [
+    'node',
+    '--no-warnings',
+    '--eval',
+    'require(require.resolve(\\'react-native-app-clip\\')+\\'/../../plugin/build/cliPlugin.js\\').run(' + json + ', [])'
+  ]
+
+  config = use_native_modules!(clip_command)
+
+  use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
+  use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
+  )
+end`;
+
+      // Inject content at the top-level (sibling to the main target)
+      const anchor = "prepare_react_native_project!";
+      const offset = 1;
+
+      if (!podfileContent.includes(anchor)) {
+        throw new Error(
+          "[react-native-app-clip] Could not find 'prepare_react_native_project!' in Podfile. " +
+            "This plugin requires Expo SDK 53+ project structure."
+        );
+      }
 
       podfileContent = mergeContents({
         tag: "Generated by react-native-app-clip",
         src: podfileContent,
         newSrc: appClipTarget,
-        anchor: "use_expo_modules!",
-        offset: 0,
+        anchor: anchor,
+        offset: offset,
         comment: "#",
       }).contents;
 

@@ -58,9 +58,9 @@ NOTE: You can find the simulator device UUID by running `xcrun simctl list`. The
 -   **requestLocationConfirmation** (boolean): Allow App Clip access to location data (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/confirming_the_user_s_physical_location))
 -   **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
 -   **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
--   **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
 -   **pushNotifications** (boolean): Enable push notification compatibility for the App Clip
 -   **enableCompression** (boolean): Enables gzip compression of the App Clip's JavaScript bundle to reduce its size. Please note: This may increase the final binary size in some cases (see [App Clip Size Limits](#app-clip-size-limits)).
+-   **excludedPackages** (string[]): node module names to exclude from autolinking for the App Clip to reduce binary size (see [App Clip Size Limits](#app-clip-size-limits)).
 
 ## App Clip Size Limits
 
@@ -76,7 +76,16 @@ For iOS 17+, the 100 MB limit has additional requirements:
 - Requires reliable internet connection usage scenarios
 - Does not support iOS 16 and earlier
 
-You can exclude packages (via `excludedPackages` parameter) and use compression (via `enableCompression` parameter) to help stay within these limits. However, since the App Clip binary itself is compressed by Apple, pre-compressing the JS bundle with `enableCompression` might sometimes be counterproductive. Always verify the final size in TestFlight or the App Store Connect dashboard.
+You can exclude packages (via `excludedPackages`) and use compression (via `enableCompression`) to help stay within these limits. However, since the App Clip binary itself is compressed by Apple, pre-compressing the JS bundle with `enableCompression` might sometimes be counterproductive. Always verify the final size in TestFlight or the App Store Connect dashboard.
+
+Excluded packages are removed from Expo's autolinking for the App Clip target via `use_expo_modules!`. Use node module package names:
+
+```json
+"excludedPackages": [
+  "expo-notifications",
+  "react-native-nfc-manager"
+]
+```
 
 ## Native capabilities
 

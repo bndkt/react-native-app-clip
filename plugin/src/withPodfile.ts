@@ -19,6 +19,10 @@ export const withPodfile: ConfigPlugin<{
         excludedPackages && excludedPackages.length > 0
           ? `exclude = ["${excludedPackages.join(`", "`)}"]\n  use_expo_modules!(exclude: exclude)`
           : "use_expo_modules!";
+      const excludedPackagesArg =
+        excludedPackages && excludedPackages.length > 0
+          ? JSON.stringify(excludedPackages)
+          : "[]";
 
       const appClipTarget = `
 # @generated begin react-native-app-clip
@@ -52,7 +56,7 @@ target '${targetName}' do
     'node',
     '--no-warnings',
     '--eval',
-    'require(require.resolve(\\'react-native-app-clip\\')+\\'/../../plugin/build/cliPlugin.js\\').run(' + json + ', [])'
+    'require(require.resolve(\\'react-native-app-clip\\')+\\'/../../plugin/build/cliPlugin.js\\').run(' + json + ', ${excludedPackagesArg})'
   ]
 
   config = use_native_modules!(clip_command)

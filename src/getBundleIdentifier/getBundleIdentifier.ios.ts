@@ -1,5 +1,5 @@
 import ReactNativeAppClipModule from "../ReactNativeAppClipModule";
-import { GetBundleIdentiferFn } from "./types";
+import type { GetBundleIdentiferFn } from "./types";
 
 let bundleIdentifier: string | null = null;
 const getBundleIdentifier: GetBundleIdentiferFn = () => {

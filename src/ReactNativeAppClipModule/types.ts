@@ -1,4 +1,4 @@
-import { GetBundleIdentiferFn } from "../getBundleIdentifier/types";
+import type { GetBundleIdentiferFn } from "../getBundleIdentifier/types";
 
 export interface ReactNativeAppClipModuleType {
 	getContainerURL: (groupIdentifier: string) => string | null;

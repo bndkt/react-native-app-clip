@@ -1,5 +1,5 @@
 import getBundleIdentifier from "../getBundleIdentifier";
-import { IsClipFn } from "./types";
+import type { IsClipFn } from "./types";
 
 const isClip: IsClipFn = (bundleIdSuffix = "Clip") => {
 	const bundleIdentifier = getBundleIdentifier();

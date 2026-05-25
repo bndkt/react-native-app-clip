@@ -1,4 +1,4 @@
-import { GetBundleIdentiferFn } from "./types";
+import type { GetBundleIdentiferFn } from "./types";
 
 const getBundleIdentifier: GetBundleIdentiferFn = () => {
 	return null;

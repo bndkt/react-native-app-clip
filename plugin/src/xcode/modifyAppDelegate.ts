@@ -13,7 +13,7 @@ export function modifyAppDelegate(appDelegatePath: string): void {
   if (!content.includes("import zlib")) {
     content = content.replace(
       /(import.*\n)+/,
-      (imports) => imports + "import zlib\n"
+      (imports: string) => imports + "import zlib\n"
     );
   }
 

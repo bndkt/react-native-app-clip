@@ -1,5 +1,5 @@
 import ReactNativeAppClipModule from "./ReactNativeAppClipModule";
-import { ReactNativeAppClipModuleType } from "./ReactNativeAppClipModule/types";
+import type { ReactNativeAppClipModuleType } from "./ReactNativeAppClipModule/types";
 import getBundleIdentifier from "./getBundleIdentifier";
 import isClip from "./isClip";
 

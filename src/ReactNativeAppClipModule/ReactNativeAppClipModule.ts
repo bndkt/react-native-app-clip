@@ -1,4 +1,4 @@
-import { ReactNativeAppClipModuleType } from "./types";
+import type { ReactNativeAppClipModuleType } from "./types";
 
 const ReactNativeAppClipModule: ReactNativeAppClipModuleType = {
 	getContainerURL: (groupIdentifier: string) => {

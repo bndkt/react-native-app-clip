@@ -1,4 +1,4 @@
-import { IsClipFn } from "./types";
+import type { IsClipFn } from "./types";
 
 const isClip: IsClipFn = () => {
 	return false;

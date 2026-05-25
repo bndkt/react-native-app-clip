@@ -1,4 +1,4 @@
-import { IsClipFn } from "./types";
+import type { IsClipFn } from "./types";
 
 /**
  * If this file is bundled in, that means that the `.clip` extension is configured and the current build target is an app clip.

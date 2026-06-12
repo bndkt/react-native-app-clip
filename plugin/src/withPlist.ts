@@ -52,7 +52,7 @@ export const withPlist: ConfigPlugin<{
         },
         NSAllowsLocalNetworking: config.developmentClient,
       },
-      CFBundleName: "$(PRODUCT_NAME)",
+      CFBundleName: "$(PRODUCT_MODULE_NAME)",
       CFBundleDisplayName: "$(PRODUCT_NAME)",
       CFBundleIdentifier: "$(PRODUCT_BUNDLE_IDENTIFIER)",
       CFBundleVersion: "$(CURRENT_PROJECT_VERSION)",
@@ -72,6 +72,8 @@ export const withPlist: ConfigPlugin<{
         }
       }
     }
+
+    infoPlist.CFBundleName = "$(PRODUCT_MODULE_NAME)";
 
     fs.mkdirSync(path.dirname(filePath), {
       recursive: true,

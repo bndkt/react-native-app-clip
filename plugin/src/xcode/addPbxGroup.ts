@@ -8,7 +8,13 @@ export function addPbxGroup(
     projectName,
     targetName,
     platformProjectRoot,
-  }: { projectName: string; targetName: string; platformProjectRoot: string },
+    appIconFileName,
+  }: {
+    projectName: string;
+    targetName: string;
+    platformProjectRoot: string;
+    appIconFileName?: string;
+  },
 ) {
   const targetPath = path.join(platformProjectRoot, targetName);
 
@@ -33,6 +39,14 @@ export function addPbxGroup(
     "Images.xcassets",
   );
   copyFolderRecursiveSync(imagesXcassetsSource, targetPath);
+
+  if (appIconFileName) {
+    fs.cpSync(
+      path.join(platformProjectRoot, projectName, appIconFileName),
+      path.join(targetPath, appIconFileName),
+      { recursive: true },
+    );
+  }
 
   // Add PBX group
   const { uuid: pbxGroupUuid } = xcodeProject.addPbxGroup(

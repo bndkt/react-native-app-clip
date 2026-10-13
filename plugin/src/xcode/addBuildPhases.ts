@@ -8,6 +8,7 @@ export function addBuildPhases(
     groupName,
     productFile,
     enableCompression,
+    resourcesPhaseName,
   }: {
     targetUuid: string;
     groupName: string;
@@ -18,6 +19,7 @@ export function addBuildPhases(
       group: string;
     };
     enableCompression?: boolean;
+    resourcesPhaseName?: string;
   },
 ) {
   const buildPath = `"$(CONTENTS_FOLDER_PATH)/AppClips"`;
@@ -81,7 +83,7 @@ export function addBuildPhases(
   xcodeProject.addBuildPhase(
     ["Images.xcassets", "SplashScreen.storyboard", "Supporting/Expo.plist"],
     "PBXResourcesBuildPhase",
-    groupName,
+    resourcesPhaseName ?? groupName,
     targetUuid,
     folderType,
     buildPath,

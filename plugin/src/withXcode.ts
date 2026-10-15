@@ -1,7 +1,12 @@
-import { type ConfigPlugin, withXcodeProject } from "expo/config-plugins";
+import {
+  IOSConfig,
+  type ConfigPlugin,
+  withXcodeProject,
+} from "expo/config-plugins";
 import fs from "node:fs";
 import path from "node:path";
 
+import { getAppClipIcon } from "./lib/getAppClipIcon";
 import { addBuildPhases } from "./xcode/addBuildPhases";
 import { addPbxGroup } from "./xcode/addPbxGroup";
 import { modifyAppDelegate } from "./xcode/modifyAppDelegate";
@@ -20,6 +25,7 @@ export const withXcode: ConfigPlugin<{
 }> = (config, { name, targetName, bundleIdentifier, deploymentTarget, enableCompression }) => {
   return withXcodeProject(config, (config) => {
     const xcodeProject = config.modResults;
+    const appClipIcon = getAppClipIcon(config);
 
     const targetUuid = xcodeProject.generateUuid();
     const groupName = "Embed App Clips";
@@ -32,6 +38,7 @@ export const withXcode: ConfigPlugin<{
       bundleIdentifier,
       deploymentTarget,
       appleTeamId: config.ios?.appleTeamId,
+      appIconName: appClipIcon?.name,
     });
 
     const productFile = addProductFile(xcodeProject, {
@@ -54,6 +61,7 @@ export const withXcode: ConfigPlugin<{
       projectName: projectName as string,
       targetName,
       platformProjectRoot,
+      appIconFileName: appClipIcon?.fileName,
     });
 
     if (enableCompression) {
@@ -74,7 +82,18 @@ export const withXcode: ConfigPlugin<{
       groupName,
       productFile,
       enableCompression,
+      resourcesPhaseName: appClipIcon ? "Resources" : undefined,
     });
+
+    if (appClipIcon) {
+      IOSConfig.XcodeUtils.addResourceFileToGroup({
+        filepath: appClipIcon.fileName,
+        groupName: targetName,
+        project: xcodeProject,
+        isBuildFile: true,
+        targetUuid,
+      });
+    }
 
     return config;
   });

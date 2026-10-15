@@ -7,6 +7,8 @@ import {
 import fs from "node:fs";
 import path from "node:path";
 
+import { getAppClipIcon } from "./lib/getAppClipIcon";
+
 /**
  * List of keys that are not allowed in the Info.plist due to not being supported in App Clip. Add to this array as new build issues arise.
  */
@@ -74,6 +76,10 @@ export const withPlist: ConfigPlugin<{
     }
 
     infoPlist.CFBundleName = "$(PRODUCT_MODULE_NAME)";
+    const appClipIcon = getAppClipIcon(config);
+    if (appClipIcon) {
+      infoPlist.CFBundleIconName = appClipIcon.name;
+    }
 
     fs.mkdirSync(path.dirname(filePath), {
       recursive: true,

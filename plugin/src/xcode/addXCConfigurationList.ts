@@ -9,6 +9,7 @@ export function addXCConfigurationList(
     bundleIdentifier,
     deploymentTarget,
     appleTeamId,
+    appIconName,
   }: {
     name: string;
     targetName: string;
@@ -16,10 +17,13 @@ export function addXCConfigurationList(
     bundleIdentifier: string;
     deploymentTarget: string;
     appleTeamId?: string;
+    appIconName?: string;
   },
 ) {
   const commonBuildSettings: Record<string, string> = {
-    ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon",
+    ASSETCATALOG_COMPILER_APPICON_NAME: appIconName
+      ? JSON.stringify(appIconName)
+      : "AppIcon",
     CLANG_ENABLE_MODULES: "YES",
     CURRENT_PROJECT_VERSION: `"${currentProjectVersion}"`,
     INFOPLIST_FILE: `${targetName}/Info.plist`,

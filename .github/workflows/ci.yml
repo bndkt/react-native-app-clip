@@ -17,3 +17,5 @@ jobs:
         run: bun install
       - name: Build react-native-app-clip
         run: bun run build
+      - name: Build config plugin
+        run: bun run build:plugin

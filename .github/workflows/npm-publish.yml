@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Stage npm release
 
 on:
   release:
@@ -9,7 +9,7 @@ permissions:
   id-token: write
 
 jobs:
-  publish-npm:
+  stage-npm:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,6 +20,8 @@ jobs:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
           package-manager-cache: false
+      - name: Install npm with staged publishing support
+        run: npm install --global npm@11.21.1
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Verify release version
@@ -33,8 +35,8 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/npm-package"
           npm pack --pack-destination "$RUNNER_TEMP/npm-package"
-      - name: Publish tarball
-        # Register npm-publish.yml as a trusted publisher in the npm package settings.
+      - name: Stage tarball for manual approval
+        # The trusted publisher only needs the npm stage publish permission.
         env:
           NPM_DIST_TAG: ${{ github.event.release.prerelease && 'next' || 'latest' }}
-        run: npm publish "$RUNNER_TEMP/npm-package/"*.tgz --access public --tag "$NPM_DIST_TAG"
+        run: npm stage publish "$RUNNER_TEMP/npm-package/"*.tgz --access public --tag "$NPM_DIST_TAG"

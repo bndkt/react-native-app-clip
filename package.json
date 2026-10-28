@@ -1,6 +1,7 @@
 {
   "name": "react-native-app-clip",
   "version": "0.9.2",
+  "packageManager": "bun@1.4.3",
   "description": "Config plugin to add an App Clip to a React Native iOS app",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -13,13 +14,13 @@
     "app.plugin.js"
   ],
   "scripts": {
-    "build": "expo-module build",
-    "build:plugin": "expo-module build plugin",
+    "build": "expo-module build && npm run build:plugin",
+    "build:plugin": "expo-module build plugin --force",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
     "test": "expo-module test",
     "prepare": "expo-module prepare",
-    "prepublishOnly": "expo-module prepublishOnly",
+    "prepack": "expo-module clean && expo-module clean plugin && npm run build",
     "expo-module": "expo-module",
     "open:ios": "xed example/ios",
     "open:android": "open -a \"Android Studio\" example/android"

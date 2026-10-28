@@ -5,15 +5,25 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   CI:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
       - name: Install dependencies
-        run: bun install
-      - name: Build react-native-app-clip
-        run: bun run build
+        run: bun install --frozen-lockfile
+      - name: Build and pack package
+        run: |
+          mkdir -p "$RUNNER_TEMP/npm-package"
+          npm pack --pack-destination "$RUNNER_TEMP/npm-package"

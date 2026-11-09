@@ -12,9 +12,7 @@ import { getAppClipIcon } from "./lib/getAppClipIcon";
 /**
  * List of keys that are not allowed in the Info.plist due to not being supported in App Clip. Add to this array as new build issues arise.
  */
-const DisallowedPlistKeys = [
-  "UIBackgroundModes",
-];
+const DisallowedPlistKeys = ["UIBackgroundModes"];
 
 export const withPlist: ConfigPlugin<{
   targetName: string;
@@ -67,9 +65,17 @@ export const withPlist: ConfigPlugin<{
       MinimumOSVersion: deploymentTarget,
     };
 
+    if (config.modResults.UIApplicationSceneManifest) {
+      infoPlist.UIApplicationSceneManifest =
+        config.modResults.UIApplicationSceneManifest;
+    }
+
     if (config.ios?.infoPlist) {
       for (const key of Object.keys(config.ios?.infoPlist)) {
-        if (config.ios?.infoPlist && !DisallowedPlistKeys.some((disallowedKey) => disallowedKey === key)) {
+        if (
+          config.ios?.infoPlist &&
+          !DisallowedPlistKeys.some((disallowedKey) => disallowedKey === key)
+        ) {
           infoPlist[key] = config.ios.infoPlist[key];
         }
       }

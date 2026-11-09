@@ -22,10 +22,16 @@ export function addPbxGroup(
     fs.mkdirSync(targetPath, { recursive: true });
   }
 
-  const filesToCopy = [
-    "SplashScreen.storyboard",
-    "AppDelegate.swift",
-  ];
+  const sourceFiles = ["AppDelegate.swift"];
+  if (
+    fs.existsSync(
+      path.join(platformProjectRoot, projectName, "SceneDelegate.swift"),
+    )
+  ) {
+    sourceFiles.push("SceneDelegate.swift");
+  }
+
+  const filesToCopy = ["SplashScreen.storyboard", ...sourceFiles];
 
   for (const file of filesToCopy) {
     const source = path.join(platformProjectRoot, projectName, file);
@@ -51,7 +57,7 @@ export function addPbxGroup(
   // Add PBX group
   const { uuid: pbxGroupUuid } = xcodeProject.addPbxGroup(
     [
-      "AppDelegate.swift",
+      ...sourceFiles,
       "Info.plist",
       "Images.xcassets",
       "SplashScreen.storyboard",
@@ -72,6 +78,8 @@ export function addPbxGroup(
       }
     }
   }
+
+  return sourceFiles;
 }
 
 function copyFileSync(source: string, target: string) {

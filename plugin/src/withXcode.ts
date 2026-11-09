@@ -22,7 +22,10 @@ export const withXcode: ConfigPlugin<{
   bundleIdentifier: string;
   deploymentTarget: string;
   enableCompression?: boolean;
-}> = (config, { name, targetName, bundleIdentifier, deploymentTarget, enableCompression }) => {
+}> = (
+  config,
+  { name, targetName, bundleIdentifier, deploymentTarget, enableCompression },
+) => {
   return withXcodeProject(config, (config) => {
     const xcodeProject = config.modResults;
     const appClipIcon = getAppClipIcon(config);
@@ -57,7 +60,7 @@ export const withXcode: ConfigPlugin<{
 
     addTargetDependency(xcodeProject, target);
 
-    addPbxGroup(xcodeProject, {
+    const sourceFiles = addPbxGroup(xcodeProject, {
       projectName: projectName as string,
       targetName,
       platformProjectRoot,
@@ -83,6 +86,7 @@ export const withXcode: ConfigPlugin<{
       productFile,
       enableCompression,
       resourcesPhaseName: appClipIcon ? "Resources" : undefined,
+      sourceFiles,
     });
 
     if (appClipIcon) {

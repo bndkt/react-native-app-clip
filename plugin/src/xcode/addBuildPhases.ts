@@ -9,6 +9,7 @@ export function addBuildPhases(
     productFile,
     enableCompression,
     resourcesPhaseName,
+    sourceFiles,
   }: {
     targetUuid: string;
     groupName: string;
@@ -20,12 +21,11 @@ export function addBuildPhases(
     };
     enableCompression?: boolean;
     resourcesPhaseName?: string;
+    sourceFiles: string[];
   },
 ) {
   const buildPath = `"$(CONTENTS_FOLDER_PATH)/AppClips"`;
   const folderType = "watch2_app"; // "watch2_app" uses the same subfolder spec (16), app_clip does not exist in cordova-node-xcode yet
-
-  const buildPhaseFiles = ["AppDelegate.swift"];
 
   // Add shell script build phase "Start Packager"
   xcodeProject.addBuildPhase(
@@ -43,7 +43,7 @@ export function addBuildPhases(
 
   // Sources build phase
   xcodeProject.addBuildPhase(
-    buildPhaseFiles,
+    sourceFiles,
     "PBXSourcesBuildPhase",
     groupName,
     targetUuid,
